@@ -1,7 +1,6 @@
 <?php
 
-echo '<div style="width: 5%; height: auto; padding-bottom: 15px; float: left;"></div>
-<div style="width: 80%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+echo '<div style="width: 5%; height: auto; padding-bottom: 15px; float: left;"></div>';
 
 $table_name = '' .$_SESSION['table']. '_' .$_SESSION['guild']. '_' .$_SESSION['region']. '_' .$_SESSION['realm']. '';
 		
@@ -239,23 +238,40 @@ elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 }
 
 elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
+	
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	
 	if($_SESSION['tracked'] == '0') {
 		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
 	}
 	elseif($_SESSION['tracked'] != '0') {
-		
+			
 		// INSPECT SINGLE CHARACTER
 		include('stream.php');
 		
+		$general_char_data = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
+		$class_color = mysqli_fetch_array(mysqli_query($stream, "SELECT `class`, `colorhex` FROM `ovw_classes` WHERE `id` = '" .$general_char_data['class']. "'"));	
+		$spec = mysqli_fetch_array(mysqli_query($stream, "SELECT `spec` FROM `ovw_weapons` WHERE `id` = '" .$general_char_data['spec']. "'"));
+		
 		echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
 		' .$error. '
-		<span style="color: orange; text-align: center; font-size: 20px;">Charname</span>
+		<span style="color: orange; text-align: center; font-size: 20px;">' .$general_char_data['name']. ' - ' .$spec['spec']. ' <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span></span>
+		<br />
+		<span style="color: orange; text-align: center; font-size: 16px;">Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). ' - Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
+		Armory - Wowprogress - Adv Arm Acc - <a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a><br />
+		Compare with...<form action="" method="get"><select onchange="this.form.submit()"></select></form></span>
+			
+		
 		</div>';
 	}
+	
+	echo '</div>';
 }
 
 // ROSTER OVERVIEW
-elseif(!isset($_GET)) {
+else {
+	echo '<div style="width: 80%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+
 	// AUTO REDIRECT
 	if($_SESSION['tracked'] == '0') {
 		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
@@ -267,8 +283,10 @@ elseif(!isset($_GET)) {
 		
 		include('roster/core.php');
 	}
+	
+	echo '</div>';
 }
 
-echo '</div>';
+
 
 ?>
