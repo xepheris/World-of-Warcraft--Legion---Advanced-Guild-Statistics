@@ -424,10 +424,10 @@ function crawl($character) {
 					
 					// WEAPONS INSERTION
 					if($mhrelic1 != '') {
-						$insert = mysqli_query($stream, "INSERT INTO `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` (`item_id`, `itemlevel`, `bonus`, `r1`, `r2`, `r3`) VALUES('" .$weapon['weapon_id']. "', '" .$mhilvl. "', '" .$mh_bonus. "', '" .$mhrelic0. "', '" .$mhrelic1. "', '" .$mhrelic2. "')");
+						$insert = mysqli_query($stream, "INSERT INTO `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` (`item_id`, `itemlevel`, `bonus`, `r1`, `bonus_r1`, `r2`, `bonus_r2`, `r3`, `bonus_r3`) VALUES('" .$weapon['weapon_id']. "', '" .$mhilvl. "', '" .$mh_bonus. "', '" .$mhrelic0. "', '" .$mhrelicbonus0. "', '" .$mhrelic1. "', '" .$mhrelicbonus1. "', '" .$mhrelic2. "', '" .$mhrelicbonus2. "')");
 					}
 					elseif($ohrelic1 != '') {
-						$insert = mysqli_query($stream, "INSERT INTO `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` (`item_id`, `itemlevel`, `bonus`, `r1`, `r2`, `r3`) VALUES('" .$weapon['weapon_id']. "', '" .$ohilvl. "', '" .$oh_bonus. "', '" .$ohrelic0. "', '" .$ohrelic1. "', '" .$ohrelic2. "')");
+						$insert = mysqli_query($stream, "INSERT INTO `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` (`item_id`, `itemlevel`, `bonus`, `r1`, `bonus_r1`, `r2`, `bonus_r2`, `r3`, `bonus_r3`) VALUES('" .$weapon['weapon_id']. "', '" .$ohilvl. "', '" .$oh_bonus. "', '" .$ohrelic0. "', '" .$ohrelicbonus0. "', '" .$ohrelic1. "', '" .$ohrelicbonus1. "', '" .$ohrelic2. "', '" .$ohrelicbonus2. "')");
 					}
 					
 					// RAID INSERTION

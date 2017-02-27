@@ -304,8 +304,8 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 			var wowhead_tooltips = {
 			iconizelinks: true,
 			renamelinks: true,
+			droppedby: true,
 				"hide": {
-				"droppedby": true,
 				"dropchance": true,
 				"sellprice": true,
 				"maxstack": true,
@@ -371,9 +371,9 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 			<td colspan="3"><a href="http://wowhead.com/?item=' .$weapon['item_id']. '&bonus=' .$weapon['bonus']. '" rel="gems=' .$weapon['r1']. ':' .$weapon['r2']. ':' .$weapon['r3']. '">' .$weapon['item_id']. '</a> (' .$weapon['itemlevel']. ')</td>
 		</tr>
 		<tr>
-			<td><a href="http://wowhead.com/?item=' .$weapon['r1']. '">' .$weapon['r1']. '</a></td>
-			<td><a href="http://wowhead.com/?item=' .$weapon['r2']. '">' .$weapon['r2']. '</a></td>
-			<td><a href="http://wowhead.com/?item=' .$weapon['r3']. '">' .$weapon['r3']. '</a></td>
+			<td><a href="http://wowhead.com/?item=' .$weapon['r1']. '" rel="bonus=' .$weapon['bonus_r1']. '">' .$weapon['r1']. '</a></td>
+			<td><a href="http://wowhead.com/?item=' .$weapon['r2']. '" rel="bonus=' .$weapon['bonus_r2']. '">' .$weapon['r2']. '</a></td>
+			<td><a href="http://wowhead.com/?item=' .$weapon['r3']. '" rel="bonus=' .$weapon['bonus_r3']. '">' .$weapon['r3']. '</a></td>
 		</tr>		
 		</tbody>
 		</table>

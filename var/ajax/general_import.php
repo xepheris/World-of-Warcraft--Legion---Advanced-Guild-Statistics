@@ -44,8 +44,8 @@ if($data != '') {
 				
 				// CREATE INDIVIDUAL CHARACTER TABLES
 				$legendary_table = "CREATE TABLE IF NOT EXISTS `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_legendaries` (`id` int(11) NOT NULL AUTO_INCREMENT, `item_id` int(6) NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=2 ;";
-				
-				$weapon_table = "CREATE TABLE IF NOT EXISTS `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` (`id` int(11) NOT NULL AUTO_INCREMENT, `item_id` mediumint(6) NOT NULL, `itemlevel` mediumint(4) NOT NULL, `bonus` varchar(20) COLLATE latin1_german2_ci NOT NULL, `r1` mediumint(6) NOT NULL, `r2` mediumint(6) NOT NULL, `r3` mediumint(6) NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=2 ;";
+								
+				$weapon_table = "CREATE TABLE IF NOT EXISTS `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` (`id` int(11) NOT NULL AUTO_INCREMENT, `item_id` mediumint(6) NOT NULL, `itemlevel` mediumint(4) NOT NULL, `bonus` varchar(20) COLLATE latin1_german2_ci NOT NULL, `r1` mediumint(6) NOT NULL, `bonus_r1` varchar(20) COLLATE latin1_german2_ci NOT NULL, `r2` mediumint(6) NOT NULL, `bonus_r2` varchar(20) COLLATE latin1_german2_ci NOT NULL, `r3` mediumint(6) NOT NULL, `bonus_r3` varchar(20) COLLATE latin1_german2_ci NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=3";
 				
 				$dungeons_table = "CREATE TABLE IF NOT EXISTS `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` (`id` int(11) NOT NULL AUTO_INCREMENT, `normal` mediumint(5) NOT NULL, `heroic` mediumint(5) NOT NULL, `mythic` mediumint(5) NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=2 ;";
 				
