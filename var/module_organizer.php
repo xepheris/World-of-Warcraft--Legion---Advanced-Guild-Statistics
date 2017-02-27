@@ -7,8 +7,9 @@ $table_name = '' .$_SESSION['table']. '_' .$_SESSION['guild']. '_' .$_SESSION['r
 // IMPORT
 if(isset($_GET['import'])) {
 	
-	include('stream.php');
+	echo '<div style="width: 100%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 	
+	include('stream.php');
 	if($_SESSION['llogin'] == '0') {
 		echo '<span style="color: orange; font-size: 18px;">Welcome! This appears to be your first visit. Please add characters before proceeding:</span><br />';
 		$refresh_login = mysqli_query($stream, "UPDATE `ovw_guilds` SET `last_login` = '" .time('now'). "' WHERE `id` = '" .$_SESSION['table']. "'");
@@ -154,6 +155,8 @@ if(isset($_GET['import'])) {
 		<input type="text" name="roles" value="" hidden />
 		</form>';
 	}
+	
+	echo '</div>';
 }
 // LOGOUT
 elseif(isset($_GET['logout'])) {
@@ -258,8 +261,38 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		<span style="color: orange; text-align: center; font-size: 20px;">' .$general_char_data['name']. ' - ' .$spec['spec']. ' <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span></span>
 		<br />
 		<span style="color: orange; text-align: center; font-size: 16px;">Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). ' - Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
-		Armory - Wowprogress - Adv Arm Acc - <a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a><br />
-		Compare with...<form action="" method="get"><select onchange="this.form.submit()"></select></form></span>
+		<a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple">Armory</a> -
+		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '">Wowprogress</a> -
+		<a href="http://check.artifactpower.info/?c=' .$general_char_data['name']. '&r=' .$_SESSION['region']. '&s=' .$_SESSION['realm']. '">Adv Arm Acc</a> -
+		<a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a><br />
+		Compare with... <form action="" method="get" style="display: inline;"><select onchange="this.form.submit()">';
+		
+		echo '<optgroup label="Same class">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}		
+		
+		echo '</optgroup>
+		<optgroup label="Same spec">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' AND `spec` = '" .$general_char_data['spec']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		echo '</optgroup>
+		<optgroup label="Everyone else">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` != '" .$general_char_data['class']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		
+		echo '</optgroup>
+		</select></form></span>
 			
 		
 		</div>';
