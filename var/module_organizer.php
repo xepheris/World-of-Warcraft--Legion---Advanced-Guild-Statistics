@@ -253,6 +253,11 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		include('stream.php');
 		
 		$general_char_data = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
+		
+		if($general_char_data['name'] == '') {
+			$error = '<span style="color: red;">A character with this ID could not be found.<span>';
+		}
+		
 		$class_color = mysqli_fetch_array(mysqli_query($stream, "SELECT `class`, `colorhex` FROM `ovw_classes` WHERE `id` = '" .$general_char_data['class']. "'"));	
 		$spec = mysqli_fetch_array(mysqli_query($stream, "SELECT `spec` FROM `ovw_weapons` WHERE `id` = '" .$general_char_data['spec']. "'"));
 		
@@ -261,17 +266,15 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		<span style="color: orange; text-align: center; font-size: 20px;">' .$general_char_data['name']. ' - ' .$spec['spec']. ' <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span></span>
 		<br />
 		<span style="color: orange; text-align: center; font-size: 16px;">Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). ' - Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
-		<a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple">Armory</a> -
-		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '">Wowprogress</a> -
-		<a href="http://check.artifactpower.info/?c=' .$general_char_data['name']. '&r=' .$_SESSION['region']. '&s=' .$_SESSION['realm']. '">Adv Arm Acc</a> -
-		<a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a><br />
-		Compare with... <form action="" method="get" style="display: inline;"><select onchange="this.form.submit()">';
+		<a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple">Armory</a> - <a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '">Wowprogress</a> - <a href="http://check.artifactpower.info/?c=' .$general_char_data['name']. '&r=' .$_SESSION['region']. '&s=' .$_SESSION['realm']. '">Adv Arm Acc</a> - <a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a>
+		<br />
+		Compare with... <form action="" method="get" style="display: inline;"><select onchange="this.form.submit()" name="compare"><option selected disabled>select</option>';
 		
 		echo '<optgroup label="Same class">';
 		
 		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
 		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
 		}		
 		
 		echo '</optgroup>
@@ -279,7 +282,7 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		
 		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' AND `spec` = '" .$general_char_data['spec']. "' ORDER BY `name` ASC");
 		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
 		}
 		
 		echo '</optgroup>
@@ -287,15 +290,69 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		
 		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` != '" .$general_char_data['class']. "' ORDER BY `name` ASC");
 		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
-		}
-		
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}	
 		
 		echo '</optgroup>
-		</select></form></span>
-			
+		</select>
+		</form>
+		</span>
+		</div>
 		
-		</div>';
+		<script defer src="http://wow.zamimg.com/widgets/power.js"></script>
+		<script>
+			var wowhead_tooltips = {
+			iconizelinks: true,
+			renamelinks: true,
+				"hide": {
+				"droppedby": true,
+				"dropchance": true,
+				"sellprice": true,
+				"maxstack": true,
+			}
+		}
+		</script>
+		<style>
+		tr:nth-child(even) {
+			background-color: #90805f !important;
+		}
+		</style>
+		
+		<div style="width: 40%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
+		<span style="color: orange; font-size: 20px;">Current Equipment</span>
+		<table style="margin: 0 auto; text-align: left;">
+		<tbody>';
+		
+		$slots = array('1' => 'Head', '2' => 'Neck', '3' => 'Shoulders', '4' => 'Back', '5' => 'Chest', '6' => 'Wrists', '7' => 'Hands', '8' => 'Waist', '9' => 'Legs', '10' => 'Feet', '11' => 'Finger1', '12' => 'Finger2', '13' => 'Trinket1', '14' => 'Trinket2');
+		
+		foreach($slots as $id => $slot) {
+			$item_info = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_equip` WHERE `id` = '" .$id. "'"));
+			
+			// GEM CHECK
+			if((strpos($item_info['bonus'], '1808') !== FALSE) && ($item_info['gem'] == '')) {
+				$gem = '<img src="img/mg.png" title="missing gem" alt="missing gem" />';
+			}
+			
+			$enchantable = array('2', '3', '4', '11', '12');
+			
+			if(in_array($enchantable, $id) && $item_info['enchant'] == '') {
+				$enchant = '<img src="img/me.png" title="missing enchant" alt="missing gem" />';
+			}
+			
+			// ENCHANT CHECK
+			
+			echo '<tr>
+				<td>' .$slot. '</td>
+				<td><a href="http://wowhead.com/?item=' .$item_info['itemid']. '&bonus=' .$item_info['bonus']. '" rel="ench=' .$item_info['enchant']. '&gems=' .$item_info['gem']. '"><span style="color: ' .$rarity. ';">' .$item_info['itemid']. '</span></a></td>
+				<td>' .$item_info['itemlevel']. '</td>
+				<td>' .$enchant. '</td>
+				<td>' .$gem. '</td>
+			</tr>';
+			
+			unset($enchant); unset($gem);
+		}		
+				
+		echo '</tbody></table></div>';
 	}
 	
 	echo '</div>';
