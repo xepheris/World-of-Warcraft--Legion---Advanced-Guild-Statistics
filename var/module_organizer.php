@@ -167,82 +167,95 @@ elseif(isset($_GET['logout'])) {
 elseif(isset($_GET['update'])) {
 	// UPDATE EVERYTHING
 	if($_GET['update'] == 'all') {
-		
+		die();
 	}
 	// UPDATE SINGLE CHARACTER
 	elseif(is_numeric($_GET['update'])) {
-		
+		die();
 	}
 }
 
 // WEEKLY INFORMATION
 elseif(isset($_GET['weekly'])) {
-	
+	die();
 }
 // COMPARE
 elseif(isset($_GET['compare'])) {
-	
+	die();
 }
 // CONTACT FORM
 elseif(isset($_GET['contact'])) {
-
+	die();
 }
 
-elseif(isset($_GET['bench'])) {
-	if(is_numeric($_GET['bench'])) {
+elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
+	
+	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">benching...</span>';
 		
-		echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">benching...</span>';
+	include('stream.php');
 		
-		include('stream.php');
+	$bench = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `status` = '1' WHERE `id` = '" .$_GET['bench']. "'");
 		
-		$bench = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `status` = '1' WHERE `id` = '" .$_GET['bench']. "'");
-		
-		if($bench) {
-			echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
-		}
-		elseif(!$bench) {
-			$error = '<span style="color: red; text-align: center;">Could not <u>bench</u> player (ID ' .$_GET['bench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
-		}
-	}
-}
-elseif(isset($_GET['unbench'])) {
-	if(is_numeric($_GET['unbench'])) {
-		
-		echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">unbenching...</span>';
-		
-		include('stream.php');
-		
-		$unbench = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `status` = '0' WHERE `id` = '" .$_GET['unbench']. "'");
-		
-		if($unbench) {
-			echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
-		}
-		elseif(!$unbench) {
-			$error = '<span style="color: red; text-align: center;">Could not unbench player (ID ' .$_GET['unbench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
-		}
-	}
-}
-elseif(isset($_GET['kick'])) {
-	if(is_numeric($_GET['kick'])) {
-		
-		echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">removing...</span>';
-		
-		include('stream.php');
-		
-		$kick = mysqli_query($stream, "DROP TABLE `" .$_SESSION['table']. "_" .$_GET['kick']. "_dungeons`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_equip`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_general`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_legendaries`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_1`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_2`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_3`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_4`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_weapons`;");
-		
-		$update = mysqli_query($stream, "DELETE FROM `" .$table_name. "` WHERE `id` = '" .$_GET['kick']. "'");
-		$realm_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `ovw_realms` WHERE `region` = '" .$_SESSION['region']. "' AND `name` = '" .$_SESSION['realm']. "'"));
-		
-		$update = mysqli_query($stream, "UPDATE `ovw_guilds` SET `tracked_chars` = `tracked_chars` -1 WHERE `guild_name` = '" .$_SESSION['guild']. "' AND `region` = '" .$_SESSION['region']. "' AND `realm` = '" .$realm_id['id']. "'");
-		
-		$_SESSION['tracked'] = $_SESSION['tracked']-1;
-		
+	if($bench) {
 		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
 	}
+	elseif(!$bench) {
+		$error = '<span style="color: red; text-align: center;">Could not <u>bench</u> player (ID ' .$_GET['bench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
+	}
+
+}
+elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
+		
+	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">unbenching...</span>';
+		
+	include('stream.php');
+		
+	$unbench = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `status` = '0' WHERE `id` = '" .$_GET['unbench']. "'");
+		
+	if($unbench) {
+		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
+	}
+	elseif(!$unbench) {
+		$error = '<span style="color: red; text-align: center;">Could not unbench player (ID ' .$_GET['unbench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
+	}
+
+}
+elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
+		
+	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">removing...</span>';
+		
+	include('stream.php');
+		
+	$kick = mysqli_query($stream, "DROP TABLE `" .$_SESSION['table']. "_" .$_GET['kick']. "_dungeons`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_equip`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_general`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_legendaries`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_1`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_2`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_3`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_4`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_weapons`;");
+		
+	$update = mysqli_query($stream, "DELETE FROM `" .$table_name. "` WHERE `id` = '" .$_GET['kick']. "'");
+	$realm_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `ovw_realms` WHERE `region` = '" .$_SESSION['region']. "' AND `name` = '" .$_SESSION['realm']. "'"));
+		
+	$update = mysqli_query($stream, "UPDATE `ovw_guilds` SET `tracked_chars` = `tracked_chars` -1 WHERE `guild_name` = '" .$_SESSION['guild']. "' AND `region` = '" .$_SESSION['region']. "' AND `realm` = '" .$realm_id['id']. "'");
+		
+	$_SESSION['tracked'] = $_SESSION['tracked']-1;
+		
+	echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
 }
 
-elseif(!isset($_GET['import']) && !isset($_GET['logout']) && !isset($_GET['weekly']) && !isset($_POST['compare']) && !isset($_GET['contact'])) {
+elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
+	if($_SESSION['tracked'] == '0') {
+		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
+	}
+	elseif($_SESSION['tracked'] != '0') {
+		
+		// INSPECT SINGLE CHARACTER
+		include('stream.php');
+		
+		echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
+		' .$error. '
+		<span style="color: orange; text-align: center; font-size: 20px;">Charname</span>
+		</div>';
+	}
+}
+
+// ROSTER OVERVIEW
+elseif(!isset($_GET)) {
 	// AUTO REDIRECT
 	if($_SESSION['tracked'] == '0') {
 		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
