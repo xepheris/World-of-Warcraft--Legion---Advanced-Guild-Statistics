@@ -6,18 +6,18 @@ echo '<div style="width: 47.5%; height: auto; padding-top: 15px; padding-bottom:
 <thead>
 <tr>
 	<th><span title="Court of Farondis">Azsuna</span></th>
-	<th><span title="Dreamweavers">Valsharah</span></th>
+	<th><span title="Legionfall">Broken Shore</span></th>	
 	<th><span title="Highmountain Tribe">Highmountain</span></th>
-	<th><span title="Legionfall">Broken Shore</span></th>			
+	<th><span title="The Valarjar">Stormheim</span></th>	
 	<th><span title="The Nightfallen">Suramar</span></th>
+	<th><span title="Dreamweavers">Valsharah</span></th>
 	<th><span title="The Wardens">Wardens</span></th>
-	<th><span title="The Valarjar">Stormheim</span></th>			
 </tr>
 </thead>
 <tbody>
 <tr>';
 		
-$reputation_array = array($general_table['rep_farondis'], $general_table['rep_dreamweaver'], $general_table['rep_highmountain'], $general_table['rep_legionfall'], $general_table['rep_nightfallen'], $general_table['rep_wardens'], $general_table['rep_valarjar']);
+$reputation_array = array($general_table['rep_farondis'], $general_table['rep_legionfall'], $general_table['rep_highmountain'], $general_table['rep_valarjar'], $general_table['rep_nightfallen'], $general_table['rep_dreamweaver'], $general_table['rep_wardens']);
 		
 foreach($reputation_array as $faction) {
 	if($faction >= '42000') {

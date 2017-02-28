@@ -94,7 +94,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	$tos_mythic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_m` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_4` WHERE `mythic` > '0'"));
 			
 	if($fetch_general_data['alvl'] <= '27') {
-		$alvl_color = 'red';
+		$alvl_color = 'coral';
 	}
 	elseif($fetch_general_data['alvl'] > '27' && $fetch_general_data['alvl'] < '54') {
 		$alvl_color = 'orange';
@@ -106,7 +106,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	$artifact_level = '<span style="color: ' .$alvl_color. ';">' .$fetch_general_data['alvl']. '</span>';
 			
 	if($fetch_general_data['ak'] <= '12') {
-		$ak_color = 'red';
+		$ak_color = 'coral';
 	}
 	elseif($fetch_general_data['ak'] > '12' && $fetch_general_data['ak'] < '25') {
 		$ak_color = 'orange';
@@ -118,7 +118,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	$artifact_knowledge = '<span style="color: ' .$ak_color. ';">' .$fetch_general_data['ak']. '</span>';
 			
 	if($fetch_general_data['m_achv'] <= '2') {
-		$mplus_color = 'red';
+		$mplus_color = 'coral';
 	}
 	elseif($fetch_general_data['m_achv'] > '2' && $fetch_general_data['m_achv'] <= '5') {
 		$mplus_color = 'orange';
@@ -173,7 +173,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$en_hc_color = 'orange';
 	}
 	elseif($en_heroic_progress['en_hc'] == '0') {
-		$en_hc_color = 'red';
+		$en_hc_color = 'coral';
 	}
 	$en_hc = '<span style="color: ' .$en_hc_color. ';">' .$en_heroic_progress['en_hc']. '</span>';
 	
@@ -184,7 +184,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$en_m_color = 'orange';
 	}
 	elseif($en_mythic_progress['en_m'] == '0') {
-		$en_m_color = 'red';
+		$en_m_color = 'coral';
 	}
 	$en_m = '<span style="color: ' .$en_m_color. ';">' .$en_mythic_progress['en_m']. '</span>';
 	
@@ -196,7 +196,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$tov_hc_color = 'orange';
 	}
 	elseif($tov_heroic_progress['tov_hc'] == '0') {
-		$tov_hc_color = 'red';
+		$tov_hc_color = 'coral';
 	}
 	$tov_hc = '<span style="color: ' .$tov_hc_color. ';">' .$tov_heroic_progress['tov_hc']. '</span>';
 			
@@ -207,7 +207,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$tov_m_color = 'orange';
 	}
 	elseif($tov_mythic_progress['tov_m'] == '0') {
-		$tov_m_color = 'red';
+		$tov_m_color = 'coral';
 	}
 	$tov_m = '<span style="color: ' .$tov_m_color. ';">' .$tov_mythic_progress['tov_m']. '</span>';
 			
@@ -219,7 +219,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$nh_hc_color = 'orange';
 	}
 	elseif($nh_heroic_progress['nh_hc'] == '0') {
-		$nh_hc_color = 'red';
+		$nh_hc_color = 'coral';
 	}
 	$nh_hc = '<span style="color: ' .$nh_hc_color. ';">' .$nh_heroic_progress['nh_hc']. '</span>';
 	
@@ -230,7 +230,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$nh_m_color = 'orange';
 	}
 	elseif($nh_mythic_progress['nh_m'] == '0') {
-		$nh_m_color = 'red';
+		$nh_m_color = 'coral';
 	}
 	$nh_m = '<span style="color: ' .$nh_m_color. ';">' .$nh_mythic_progress['nh_m']. '</span>';
 	
@@ -242,7 +242,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$tos_hc_color = 'orange';
 	}
 	elseif($tos_heroic_progress['tos_hc'] == '0') {
-		$tos_hc_color = 'red';
+		$tos_hc_color = 'coral';
 	}
 	$tos_hc = '<span style="color: ' .$tos_hc_color. ';">' .$tos_heroic_progress['tos_hc']. '</span>';
 	
@@ -253,7 +253,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$tos_m_color = 'orange';
 	}
 	elseif($tos_mythic_progress['tos_m'] == '0') {
-		$tos_m_color = 'red';
+		$tos_m_color = 'coral';
 	}
 	$tos_m = '<span style="color: ' .$tos_m_color. ';">' .$tos_mythic_progress['tos_m']. '</span>';
 		

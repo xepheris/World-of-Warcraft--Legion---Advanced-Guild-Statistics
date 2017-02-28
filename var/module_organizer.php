@@ -38,13 +38,13 @@ if(isset($_GET['import'])) {
 				if($a_or_b == 'a') {
 					$set_role_1 = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `role1` = '" .$role. "' WHERE `name` = '" .substr($var, '0', '-2'). "';");
 					if(!$set_role_1) {
-						echo '<span style="text-align: center; color: red;">An error occured setting the role for ' .substr($var, '0', '-2'). '. Please try again.</span><br />';
+						echo '<span style="text-align: center; color: coral;">An error occured setting the role for ' .substr($var, '0', '-2'). '. Please try again.</span><br />';
 					}
 				}
 				elseif($a_or_b == 'b') {
 					$set_role_2 = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `role2` = '" .$role. "' WHERE `name` = '" .substr($var, '0', '-2'). "';");
 					if(!$set_role_2) {
-						echo '<span style="text-align: center; color: red;">An error occured setting the role for ' .substr($var, '0', '-2'). '. Please try again.</span><br />';
+						echo '<span style="text-align: center; color: coral;">An error occured setting the role for ' .substr($var, '0', '-2'). '. Please try again.</span><br />';
 					}
 				}
 			}
@@ -205,7 +205,7 @@ elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
 		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
 	}
 	elseif(!$bench) {
-		$error = '<span style="color: red; text-align: center;">Could not <u>bench</u> player (ID ' .$_GET['bench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
+		$error = '<span style="color: coral; text-align: center;">Could not <u>bench</u> player (ID ' .$_GET['bench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
 	}
 	
 	echo '</div>';
@@ -227,7 +227,7 @@ elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
 		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
 	}
 	elseif(!$unbench) {
-		$error = '<span style="color: red; text-align: center;">Could not unbench player (ID ' .$_GET['unbench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
+		$error = '<span style="color: coral; text-align: center;">Could not unbench player (ID ' .$_GET['unbench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
 	}
 	
 	echo '</div>';
@@ -261,6 +261,8 @@ elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 
 elseif(isset($_GET['edit_legendaries']) && is_numeric($_GET['edit_legendaries'])) {
 	
+	include('stream.php');
+	
 	include('inspect/edit_legendaries.php');
 }
 
@@ -278,81 +280,15 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		// INSPECT SINGLE CHARACTER
 		include('stream.php');
 		
-		$general_char_data = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
+		// INSPECT HEAD
 		
-		if($general_char_data['name'] == '') {
-			$error = '<span style="color: red;">A character with this ID could not be found.<span>';
-		}
-		
-		$class_color = mysqli_fetch_array(mysqli_query($stream, "SELECT `class`, `colorhex` FROM `ovw_classes` WHERE `id` = '" .$general_char_data['class']. "'"));	
-		$spec = mysqli_fetch_array(mysqli_query($stream, "SELECT `spec` FROM `ovw_weapons` WHERE `id` = '" .$general_char_data['spec']. "'"));
-		
-		echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
-		' .$error. '
-		<span style="color: orange; text-align: center; font-size: 20px;"><a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple">' .$general_char_data['name']. '</a> - <a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$general_char_data['talents']. '">' .$spec['spec']. '</a> <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span></span>
-		<br />
-		<span style="color: orange; text-align: center; font-size: 16px;">Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). ' - Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
-		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '">Wowprogress</a> - <a href="http://check.artifactpower.info/?c=' .$general_char_data['name']. '&r=' .$_SESSION['region']. '&s=' .$_SESSION['realm']. '">Adv Arm Acc</a> - <a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a>
-		<br />
-		Compare with... <form action="" method="get" style="display: inline;"><select onchange="this.form.submit()" name="compare"><option selected disabled>select</option>';
-		
-		echo '<optgroup label="Same class">';
-		
-		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
-		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
-		}		
-		
-		echo '</optgroup>
-		<optgroup label="Same spec">';
-		
-		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' AND `spec` = '" .$general_char_data['spec']. "' ORDER BY `name` ASC");
-		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
-		}
-		
-		echo '</optgroup>
-		<optgroup label="Everyone else">';
-		
-		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` != '" .$general_char_data['class']. "' ORDER BY `name` ASC");
-		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
-		}	
-		
-		echo '</optgroup>
-		</select>
-		</form>
-		</span>
-		</div>
-		
-		<script defer src="http://wow.zamimg.com/widgets/power.js"></script>
-		<script>
-			var wowhead_tooltips = {
-			iconizelinks: true,
-			renamelinks: true,
-			droppedby: true,
-				"hide": {
-				"dropchance": true,
-				"sellprice": true,
-				"maxstack": true,
-			}
-		}
-		</script>
-		<style>
-		tr:nth-child(even) {
-			background-color: #90805f !important;
-		}
-		</style>';
+		include('inspect/head.php');
 		
 		// EQUIPMENT
 		
-		include('inspect/equip.php');
-		
-		// GENERAL INFORMATION
-		
-		include('inspect/general.php');
-		
-		// DUNGEON PROGRESS -->
+		include('inspect/equip.php');		
+				
+		// DUNGEON PROGRESS
 		
 		include('inspect/dungeons.php');
 		
@@ -363,6 +299,10 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		// KNOWN LEGENDARIES
 		
 		include('inspect/legendaries.php');
+		
+		// GENERAL INFORMATION
+		
+		include('inspect/general.php');
 		
 		// RAIDPROGRESS
 		

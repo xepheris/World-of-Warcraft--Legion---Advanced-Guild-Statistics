@@ -3,7 +3,7 @@
 echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">
 <span style="color: orange; font-size: 20px;">Raidprogress</span>
 <br />
-<span style="color: black; font-size: 10px;">mythic only - hover over numbers to see other difficulties</span>
+<span style="color: black; font-size: 10px;">heroic & mythic - hover over numbers to see other difficulties</span>
 <table style="margin: 0 auto; text-align: center; margin-top: 15px; width: 90%;">
 <thead>
 <tr>';
@@ -24,14 +24,21 @@ echo '</tr>
 for($i = '1'; $i <= '7'; $i++) {
 	$en_kills = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_raid_1` WHERE `id` = '" .$i. "'"));
 	
-	if($en_kills['mythic'] > '0') {
-		$color = 'yellowgreen';
+	if($en_kills['heroic'] > '0') {
+		$color_hc = 'yellowgreen';
 	}
 	else {
-		$color = 'red';
+		$color_hc = 'coral';
 	}
 	
-	echo '<td><span title="' .$en_kills['lfr']. ' LFR ' .$en_kills['normal']. ' N ' .$en_kills['heroic']. ' HC" style="color: ' .$color. ';">' .$en_kills['mythic']. '</span></td>';			
+	if($en_kills['mythic'] > '0') {
+		$color_m = 'yellowgreen';
+	}
+	else {
+		$color_m = 'coral';
+	}
+	
+	echo '<td><span title="' .$en_kills['lfr']. ' LFR ' .$en_kills['normal']. ' N"><span style="color: ' .$color_hc. ';">' .$en_kills['heroic']. ' HC</span> <span style="color: ' .$color_m. ';">' .$en_kills['mythic']. ' M</span></span></td>';
 }	
 		
 echo '</tr>
@@ -57,14 +64,21 @@ echo '</tr>
 for($i = '1'; $i <= '3'; $i++) {
 	$tov_kills = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_raid_2` WHERE `id` = '" .$i. "'"));	
 	
-	if($tov_kills['mythic'] > '0') {
-		$color = 'yellowgreen';
+	if($tov_kills['heroic'] > '0') {
+		$color_hc = 'yellowgreen';
 	}
 	else {
-		$color = 'red';
+		$color_hc = 'coral';
+	}
+	
+	if($tov_kills['mythic'] > '0') {
+		$color_m = 'yellowgreen';
+	}
+	else {
+		$color_m = 'coral';
 	}
 		
-	echo '<td><span title="' .$tov_kills['lfr']. ' LFR ' .$tov_kills['normal']. ' N ' .$tov_kills['heroic']. ' HC" style="color: ' .$color. ';">' .$tov_kills['mythic']. '</span></td>';			
+	echo '<td><span title="' .$tov_kills['lfr']. ' LFR ' .$tov_kills['normal']. ' N"><span style="color: ' .$color_hc. ';">' .$tov_kills['heroic']. ' HC</span> <span style="color: ' .$color_m. ';">' .$tov_kills['mythic']. ' M</span></span></td>';		
 }	
 		
 echo '</tr>
@@ -90,14 +104,21 @@ echo '</tr>
 for($i = '1'; $i <= '10'; $i++) {
 	$nh_kills = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_raid_3` WHERE `id` = '" .$i. "'"));
 			
-	if($nh_kills['mythic'] > '0') {
-		$color = 'yellowgreen';
+	if($nh_kills['heroic'] > '0') {
+		$color_hc = 'yellowgreen';
 	}
 	else {
-		$color = 'red';
+		$color_hc = 'coral';
 	}
 	
-	echo '<td><span title="' .$nh_kills['lfr']. ' LFR ' .$nh_kills['normal']. ' N ' .$nh_kills['heroic']. ' HC" style="color: ' .$color. ';">' .$nh_kills['mythic']. '</span></td>';			
+	if($nh_kills['mythic'] > '0') {
+		$color_m = 'yellowgreen';
+	}
+	else {
+		$color_m = 'coral';
+	}
+		
+	echo '<td><span title="' .$nh_kills['lfr']. ' LFR ' .$nh_kills['normal']. ' N"><span style="color: ' .$color_hc. ';">' .$nh_kills['heroic']. ' HC</span> <span style="color: ' .$color_m. ';">' .$nh_kills['mythic']. ' M</span></span></td>';	
 }	
 		
 echo '</tr>
@@ -120,17 +141,24 @@ echo '</tr>
 
 // TOMB OF SARGERAS PROGRESS
 		
-for($i = '1'; $i <= '10'; $i++) {
+for($i = '1'; $i <= '9'; $i++) {
 	$tos_kills = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_raid_4` WHERE `id` = '" .$i. "'"));
 			
-	if($tos_kills['mythic'] > '0') {
-		$color = 'yellowgreen';
+	if($tos_kills['heroic'] > '0') {
+		$color_hc = 'yellowgreen';
 	}
 	else {
-		$color = 'red';
+		$color_hc = 'coral';
 	}
 	
-	echo '<td><span title="' .$tos_kills['lfr']. ' LFR ' .$tos_kills['normal']. ' N ' .$tos_kills['heroic']. ' HC" style="color: ' .$color. ';">' .$tos_kills['mythic']. '</span></td>';			
+	if($tos_kills['mythic'] > '0') {
+		$color_m = 'yellowgreen';
+	}
+	else {
+		$color_m = 'coral';
+	}
+		
+	echo '<td><span title="' .$tos_kills['lfr']. ' LFR ' .$tos_kills['normal']. ' N"><span style="color: ' .$color_hc. ';">' .$tos_kills['heroic']. ' HC</span> <span style="color: ' .$color_m. ';">' .$tos_kills['mythic']. ' M</span></span></td>';	
 }	
 		
 echo '</tr>

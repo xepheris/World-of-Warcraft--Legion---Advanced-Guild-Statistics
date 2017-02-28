@@ -1,5 +1,24 @@
 <?php
 
+echo '<script defer src="http://wow.zamimg.com/widgets/power.js"></script>
+<script>
+		var wowhead_tooltips = {
+		iconizelinks: true,
+		renamelinks: true,
+		droppedby: true,
+			"hide": {
+			"dropchance": true,
+			"sellprice": true,
+			"maxstack": true,
+		}
+	}
+</script>
+<style>
+	tr:nth-child(even) {
+		background-color: #90805f !important;
+	}
+</style>';
+
 $itemlevels = mysqli_fetch_array(mysqli_query($stream, "SELECT `ilvl_on`, `ilvl_off` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
 
 echo '<div style="width: 47.5%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">
@@ -56,11 +75,18 @@ echo '</tbody>
 <tr>
 	<td colspan="3"><a href="http://wowhead.com/?item=' .$weapon['item_id']. '&bonus=' .$weapon['bonus']. '" rel="gems=' .$weapon['r1']. ':' .$weapon['r2']. ':' .$weapon['r3']. '">' .$weapon['item_id']. '</a> (' .$weapon['itemlevel']. ')</td>
 </tr>
-<tr>
-	<td><a href="http://wowhead.com/?item=' .$weapon['r1']. '" rel="bonus=' .$weapon['bonus_r1']. '">' .$weapon['r1']. '</a></td>
-	<td><a href="http://wowhead.com/?item=' .$weapon['r2']. '" rel="bonus=' .$weapon['bonus_r2']. '">' .$weapon['r2']. '</a></td>
-	<td><a href="http://wowhead.com/?item=' .$weapon['r3']. '" rel="bonus=' .$weapon['bonus_r3']. '">' .$weapon['r3']. '</a></td>
-</tr>		
+<tr>';
+
+for($i = '1'; $i <= '3'; $i++) {
+	if($weapon['r' .$i. ''] != '0') {
+		echo '<td><a href="http://wowhead.com/?item=' .$weapon['r' .$i. '']. '" rel=" bonus' .$weapon['bonus_r' .$i. '']. '">' .$weapon['r' .$i. '']. '</a></td>';
+	}
+	elseif($weapon['r' .$i. ''] == '0') {
+		echo '<td>no relic in slot ' .$i. '</td>';
+	}
+}
+
+echo '</tr>		
 </tbody>
 </table>
 </div>';
