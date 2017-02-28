@@ -11,7 +11,7 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 
 		<a href="">Login & Register</a> |
 		<a href="">Demo</a> |
 		<span style="color: white;" onclick="' .$contact. '">Contact</span> |
-		<a href="https://github.com/xepheris/">Github</a> |
+		<a href="https://github.com/xepheris/World-of-Warcraft--Legion---Advanced-Guild-Statistics">Github</a> |
 		<div class="dd">
 			Other Tools
 			<div class="dd-c">

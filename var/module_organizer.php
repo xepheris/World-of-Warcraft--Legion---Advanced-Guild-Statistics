@@ -192,6 +192,8 @@ elseif(isset($_GET['contact'])) {
 
 elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
 	
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
+	
 	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">benching...</span>';
 		
 	include('stream.php');
@@ -204,9 +206,13 @@ elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
 	elseif(!$bench) {
 		$error = '<span style="color: red; text-align: center;">Could not <u>bench</u> player (ID ' .$_GET['bench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
 	}
+	
+	echo '</div>';
 
 }
 elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
+	
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
 		
 	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">unbenching...</span>';
 		
@@ -220,9 +226,13 @@ elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
 	elseif(!$unbench) {
 		$error = '<span style="color: red; text-align: center;">Could not unbench player (ID ' .$_GET['unbench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';
 	}
+	
+	echo '</div>';
 
 }
 elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
+	
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
 		
 	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">removing...</span>';
 		
@@ -238,6 +248,8 @@ elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 	$_SESSION['tracked'] = $_SESSION['tracked']-1;
 		
 	echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
+	
+	echo '</div>';
 }
 
 elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
@@ -263,7 +275,7 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		
 		echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
 		' .$error. '
-		<span style="color: orange; text-align: center; font-size: 20px;">' .$general_char_data['name']. ' - ' .$spec['spec']. ' <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span></span>
+		<span style="color: orange; text-align: center; font-size: 20px;">' .$general_char_data['name']. ' - <a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$general_char_data['talents']. '">' .$spec['spec']. '</a> <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span></span>
 		<br />
 		<span style="color: orange; text-align: center; font-size: 16px;">Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). ' - Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
 		<a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple">Armory</a> - <a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '">Wowprogress</a> - <a href="http://check.artifactpower.info/?c=' .$general_char_data['name']. '&r=' .$_SESSION['region']. '&s=' .$_SESSION['realm']. '">Adv Arm Acc</a> - <a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a>
@@ -316,68 +328,32 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		tr:nth-child(even) {
 			background-color: #90805f !important;
 		}
-		</style>
+		</style>';
 		
-		<div style="width: 40%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
-		<span style="color: orange; font-size: 20px;">Current Equipment</span>
-		<table style="margin: 0 auto; text-align: left; margin-top: 15px; border-bottom: 1px solid white;">
-		<tbody>';
+		// EQUIPMENT
 		
-		$slots = array('1' => 'Head', '2' => 'Neck', '3' => 'Shoulders', '4' => 'Back', '5' => 'Chest', '6' => 'Wrists', '7' => 'Hands', '8' => 'Waist', '9' => 'Legs', '10' => 'Feet', '11' => 'Finger1', '12' => 'Finger2', '13' => 'Trinket1', '14' => 'Trinket2');
-		$weapon = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_weapons`"));
+		include('inspect/equip.php');
 		
-		foreach($slots as $id => $slot) {
-			$item_info = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_equip` WHERE `id` = '" .$id. "'"));
-						
-			// GEM CHECK
-			if((strpos($item_info['bonus'], '1808') !== FALSE) && ($item_info['gem'] == '0')) {
-				$gem = '<img src="img/mg.png" title="missing gem" alt="missing gem" />';
-			}
-			elseif($item_info['gem'] != '0') {
-				$gem = '<a href="http://wowhead.com/?item=' .$item_info['gem']. '">' .$item_info['gem']. '</a>';
-			}
-			
-			$enchantable = array('2', '3', '4', '11', '12');
-			
-			if(in_array($id, $enchantable) && $item_info['enchant'] == '0') {
-				$enchant = '<img src="img/me.png" title="missing enchant" alt="missing gem" />';
-			}
-			elseif($item_info['enchant'] != '0') {
-				$conversion = mysqli_fetch_array(mysqli_query($stream, "SELECT `wowhead_id` FROM `ovw_enchants` WHERE `enchant_id` = '" .$item_info['enchant']. "'"));
-				$gem = '<a href="http://wowhead.com/?item=' .$conversion['wowhead_id']. '">' .$conversion['wowhead_id']. '</a>';
-			}
-			
-			if($item_info['itemlevel'] == '940') {
-				$rarity = '#ff8000';
-			}
-			
-			// ENCHANT CHECK
-			
-			echo '<tr>
-				<td>' .$slot. '</td>
-				<td><a href="http://wowhead.com/?item=' .$item_info['itemid']. '&bonus=' .$item_info['bonus']. '" rel="ench=' .$item_info['enchant']. '&gems=' .$item_info['gem']. '">' .$item_info['itemid']. '</a></td>
-				<td><span style="color: ' .$rarity. ';">' .$item_info['itemlevel']. '</span></td>
-				<td>' .$enchant. ' ' .$gem. ' </td>
-			</tr>';
-			
-			unset($rarity); unset($enchant); unset($gem);
-		}		
-				
-		echo '</tbody>
-		</table>
-		<table style="margin: 0 auto; text-align: center;">
-		<tbody>
-		<tr>
-			<td colspan="3"><a href="http://wowhead.com/?item=' .$weapon['item_id']. '&bonus=' .$weapon['bonus']. '" rel="gems=' .$weapon['r1']. ':' .$weapon['r2']. ':' .$weapon['r3']. '">' .$weapon['item_id']. '</a> (' .$weapon['itemlevel']. ')</td>
-		</tr>
-		<tr>
-			<td><a href="http://wowhead.com/?item=' .$weapon['r1']. '" rel="bonus=' .$weapon['bonus_r1']. '">' .$weapon['r1']. '</a></td>
-			<td><a href="http://wowhead.com/?item=' .$weapon['r2']. '" rel="bonus=' .$weapon['bonus_r2']. '">' .$weapon['r2']. '</a></td>
-			<td><a href="http://wowhead.com/?item=' .$weapon['r3']. '" rel="bonus=' .$weapon['bonus_r3']. '">' .$weapon['r3']. '</a></td>
-		</tr>		
-		</tbody>
-		</table>
-		</div>';
+		// GENERAL INFORMATION
+		
+		include('inspect/general.php');
+		
+		// DUNGEON PROGRESS -->
+		
+		include('inspect/dungeons.php');
+		
+		// REPUTATION
+		
+		include('inspect/reputation.php');
+		
+		// KNOWN LEGENDARIES
+		
+		include('inspect/legendaries.php');
+		
+		// RAIDPROGRESS
+		
+		include('inspect/raid.php');
+		
 	}
 	
 	echo '</div>';
