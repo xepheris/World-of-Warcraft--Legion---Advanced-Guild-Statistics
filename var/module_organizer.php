@@ -190,6 +190,7 @@ elseif(isset($_GET['contact'])) {
 	die();
 }
 
+// BENCH
 elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
 	
 	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
@@ -210,6 +211,8 @@ elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
 	echo '</div>';
 
 }
+
+// UNBENCH
 elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
 	
 	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
@@ -230,6 +233,8 @@ elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
 	echo '</div>';
 
 }
+
+// KICK
 elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 	
 	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
@@ -251,6 +256,15 @@ elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 	
 	echo '</div>';
 }
+
+// MANUALLY ADD LEGENDARIES VIA INSPECT MODULE
+
+elseif(isset($_GET['edit_legendaries']) && is_numeric($_GET['edit_legendaries'])) {
+	
+	include('inspect/edit_legendaries.php');
+}
+
+// INSPECT
 
 elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 	
@@ -275,10 +289,10 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		
 		echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
 		' .$error. '
-		<span style="color: orange; text-align: center; font-size: 20px;">' .$general_char_data['name']. ' - <a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$general_char_data['talents']. '">' .$spec['spec']. '</a> <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span></span>
+		<span style="color: orange; text-align: center; font-size: 20px;"><a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple">' .$general_char_data['name']. '</a> - <a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$general_char_data['talents']. '">' .$spec['spec']. '</a> <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span></span>
 		<br />
 		<span style="color: orange; text-align: center; font-size: 16px;">Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). ' - Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
-		<a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple">Armory</a> - <a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '">Wowprogress</a> - <a href="http://check.artifactpower.info/?c=' .$general_char_data['name']. '&r=' .$_SESSION['region']. '&s=' .$_SESSION['realm']. '">Adv Arm Acc</a> - <a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a>
+		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '">Wowprogress</a> - <a href="http://check.artifactpower.info/?c=' .$general_char_data['name']. '&r=' .$_SESSION['region']. '&s=' .$_SESSION['realm']. '">Adv Arm Acc</a> - <a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '">Warcraftlogs</a>
 		<br />
 		Compare with... <form action="" method="get" style="display: inline;"><select onchange="this.form.submit()" name="compare"><option selected disabled>select</option>';
 		

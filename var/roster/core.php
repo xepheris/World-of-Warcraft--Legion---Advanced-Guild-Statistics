@@ -19,7 +19,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 <th>Spec</th>
 <th>Talents</th>
 <th>Itemlevel</th>
-<th>Legendaries<br />(seen with)</th>
+<th>Legendaries</th>
 <th><span title="Artifact Power">AP</span></th>
 <th><span title="Artifact Knowledge">AK</span></th>
 <th><span title="Artifact Level">AL</span></th>
@@ -55,6 +55,16 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 		</tbody>
 	</table>
 </th>
+<th><span title="Tomb of Sargeras">ToS</span><br />
+	<table>
+		<tbody>
+			<tr>
+				<td>HC</td>
+				<td>M</td>
+			</tr>
+		</tbody>
+	</table>
+</th>
 <th>Bench</th>
 <th>Inspect</th>
 </tr>
@@ -80,8 +90,8 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	$nh_heroic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `nh_hc` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_3` WHERE `heroic` > '0'"));
 	$nh_mythic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `nh_m` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_3` WHERE `mythic` > '0'"));
 			
-	#$tos_heroic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_hc` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_4` WHERE `heroic` > '0'"));
-	#$tos_mythic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_m` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_4` WHERE `mythic` > '0'"));
+	$tos_heroic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_hc` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_4` WHERE `heroic` > '0'"));
+	$tos_mythic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_m` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_4` WHERE `mythic` > '0'"));
 			
 	if($fetch_general_data['alvl'] <= '27') {
 		$alvl_color = 'red';
@@ -223,6 +233,29 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$nh_m_color = 'red';
 	}
 	$nh_m = '<span style="color: ' .$nh_m_color. ';">' .$nh_mythic_progress['nh_m']. '</span>';
+	
+	// COLORIZATION OF INDIVIDUAL TOMB OF SARGERAS PROGRESS
+	if($tos_heroic_progress['tos_hc'] == '9') {
+		$tos_hc_color = 'greenyellow';
+	}
+	elseif($tos_heroic_progress['tos_hc'] > '0' && $tos_heroic_progress['tos_hc'] < '9') {
+		$tos_hc_color = 'orange';
+	}
+	elseif($tos_heroic_progress['tos_hc'] == '0') {
+		$tos_hc_color = 'red';
+	}
+	$tos_hc = '<span style="color: ' .$tos_hc_color. ';">' .$tos_heroic_progress['tos_hc']. '</span>';
+	
+	if($tos_mythic_progress['tos_m'] == '9') {
+		$tos_m_color = 'greenyellow';
+	}
+	elseif($tos_mythic_progress['tos_m'] > '0' && $tos_mythic_progress['tos_m'] < '9') {
+		$tos_m_color = 'orange';
+	}
+	elseif($tos_mythic_progress['tos_m'] == '0') {
+		$tos_m_color = 'red';
+	}
+	$tos_m = '<span style="color: ' .$tos_m_color. ';">' .$tos_mythic_progress['tos_m']. '</span>';
 		
 	echo '<tr>
 	<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '">' .$guild_table['name']. '</a></td>
@@ -266,6 +299,16 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 				<tr>
 					<td>' .$nh_hc. '</td>
 					<td>' .$nh_m. '</td>
+				</tr>
+			</tbody>
+		</table>
+	</td>
+	<td>
+		<table>
+			<tbody>
+				<tr>
+					<td>' .$tos_hc. '</td>
+					<td>' .$tos_m. '</td>
 				</tr>
 			</tbody>
 		</table>

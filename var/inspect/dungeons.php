@@ -15,18 +15,23 @@ echo '<div style="width: 47.5%; height: auto; padding-top: 15px; padding-bottom:
 	<th><span title="Maw of Souls">MoS</span></th>
 	<th><span title="Neltharions Lair">NEL</span></th>
 	<th><span title="The Arcway">ARC</span></th>
-	<th><span title="Upper Karazhan">UKZ</span></th>
-	<th><span title="Vault of the Wardens">VotW</span></th>
 	<th><span title="The Violet Hold">VH</span></th>
+	<th><span title="Upper Karazhan">UKZ</span></th>	
+	<th><span title="Vault of the Wardens">VotW</span></th>	
+	<th>Total</th>
 </tr>
 </thead>
 <tbody>
 <tr>';
 		
+$sum = array();
 for($i = '1'; $i <= '13'; $i++) {
 	$dungeon_stats = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_dungeons` WHERE `id` = '" .$i. "'"));
 	echo '<td><span title="' .$dungeon_stats['normal']. ' N ' .$dungeon_stats['heroic']. ' HC">' .$dungeon_stats['mythic']. '</span></td>';
+	array_push($sum, $dungeon_stats['mythic']);
 }
+
+echo '<td>' .array_sum($sum). '</td>';
 		
 echo '</tr>
 </tbody>
