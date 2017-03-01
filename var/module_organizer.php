@@ -268,6 +268,13 @@ elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 	echo '</div>';
 }
 
+elseif(isset($_GET['change_role']) && is_numeric($_GET['change_role'])) {
+	
+	include('stream.php');
+	
+	include('inspect/change_role.php');
+}
+
 // MANUALLY ADD LEGENDARIES VIA INSPECT MODULE
 
 elseif(isset($_GET['edit_legendaries']) && is_numeric($_GET['edit_legendaries'])) {

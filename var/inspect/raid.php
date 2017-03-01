@@ -3,7 +3,8 @@
 echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">
 <span style="color: orange; font-size: 20px;">Raidprogress & highest parse for difficulty</span>
 <br />
-<span style="color: black; font-size: 10px;">heroic & mythic - hover over numbers to see other difficulties</span>
+<span style="color: black; font-size: 10px;">heroic & mythic - hover over numbers to see other difficulties<br />
+Warcraftlogs API is still in development and may not necessarily be absolutely correct</span>
 <table style="margin: 0 auto; text-align: center; margin-top: 15px; width: 90%;">
 <thead>
 <tr>';
