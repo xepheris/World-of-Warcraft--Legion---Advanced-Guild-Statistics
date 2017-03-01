@@ -79,7 +79,7 @@ echo '</tbody>
 
 for($i = '1'; $i <= '3'; $i++) {
 	if($weapon['r' .$i. ''] != '0') {
-		echo '<td><a href="http://wowhead.com/?item=' .$weapon['r' .$i. '']. '" rel=" bonus' .$weapon['bonus_r' .$i. '']. '">' .$weapon['r' .$i. '']. '</a></td>';
+		echo '<td><a href="http://wowhead.com/?item=' .$weapon['r' .$i. '']. '" rel="bonus=' .$weapon['bonus_r' .$i. '']. '">' .$weapon['r' .$i. '']. '</a></td>';
 	}
 	elseif($weapon['r' .$i. ''] == '0') {
 		echo '<td>no relic in slot ' .$i. '</td>';

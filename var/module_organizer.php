@@ -10,6 +10,7 @@ if(isset($_GET['import'])) {
 	echo '<div style="width: 100%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 	
 	include('stream.php');
+	
 	if($_SESSION['llogin'] == '0') {
 		echo '<span style="color: orange; font-size: 18px;">Welcome! This appears to be your first visit. Please add characters before proceeding:</span><br />';
 		$refresh_login = mysqli_query($stream, "UPDATE `ovw_guilds` SET `last_login` = '" .time('now'). "' WHERE `id` = '" .$_SESSION['table']. "'");
@@ -62,22 +63,28 @@ if(isset($_GET['import'])) {
 		
 	if(!isset($_POST['c']) && !isset($_POST['roles'])) {		
 					
-		$table_start = mysqli_query($stream, "CREATE TABLE IF NOT EXISTS `" .$table_name. "` (`id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL, `realm` smallint(4) NOT NULL, `class` tinyint(2) NOT NULL, `logout` int(10) NOT NULL, `updated` int(10) NOT NULL, `spec` tinyint(2) NOT NULL, `status` tinyint(1) NOT NULL, `role1` tinyint(1) NOT NULL, `role2` tinyint(1) NOT NULL, `talents` varchar(12) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `name` (`name`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1 ;");			
+		$table_start = mysqli_query($stream, "CREATE TABLE IF NOT EXISTS `" .$table_name. "` (`id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL, `realm` smallint(4) NOT NULL, `class` tinyint(2) NOT NULL, `logout` int(10) NOT NULL, `updated` int(10) NOT NULL, `spec` tinyint(2) NOT NULL, `status` tinyint(1) NOT NULL, `role1` tinyint(1) NOT NULL, `role2` tinyint(1) NOT NULL, `talents` varchar(12) NOT NULL, `wlogs_id` int(9) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `name` (`name`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1 ;");			
 			
 		echo '<span style="color: orange; font-size: 18px;">Character Import, individually by Guild rank<br /><span style="font-size: 12px;">only showing characters that have not been imported yet</span></span>
 		<br />
 		<br />
 		<form method="POST" style="text-align: center;">
-		<select multiple name="c[]" style="width: 250px; height: 80vh;">';
+		<select multiple name="c[]" style="width: 250px; height: 70vh;">';
 			
 		$key = mysqli_fetch_array(mysqli_query($stream, "SELECT `wow_key` FROM `ovw_api` WHERE `id` = '1'"));
 		
-		$url = 'https://' .$_SESSION['region']. '.api.battle.net/wow/guild/' .$_SESSION['realm']. '/' .$_SESSION['guild']. '?fields=members&locale=en_GB&apikey=' .$key['wow_key']. '';
-		$arrContextOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, ),);
+		$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `name` = '" .$_SESSION['realm']. "'"));
+		
+		$escaped_guild_name = str_replace(' ', '%20', $_SESSION['guild']);
+		
+		$url = 'https://' .$_SESSION['region']. '.api.battle.net/wow/guild/' .$actual_realm_name['short']. '/' .$escaped_guild_name. '?fields=members&locale=en_GB&apikey=' .$key['wow_key']. '';
 
+		$arrContextOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, ),);
+		
 		$data = @file_get_contents($url, false, stream_context_create($arrContextOptions));
 		if($data != '') {
 			$data = json_decode($data, true);
+						
 			$chararray = array();
 			
 			for($rank = '0'; $rank <= '9'; $rank++) {
@@ -109,6 +116,10 @@ if(isset($_GET['import'])) {
 	
 				echo '</optgroup>';
 			}
+		}
+		else {
+			echo '</select>
+			<p style="color: coral;">UNKNOWN ERROR - please contact the admin with your guild information!</p>';
 		}
 		
 		echo '</select>
@@ -300,9 +311,9 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		
 		include('inspect/legendaries.php');
 		
-		// GENERAL INFORMATION
+		// WARCRAFTLOGS
 		
-		include('inspect/general.php');
+		include('inspect/wlogs.php');
 		
 		// RAIDPROGRESS
 		

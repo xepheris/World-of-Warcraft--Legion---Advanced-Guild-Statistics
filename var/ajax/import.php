@@ -19,16 +19,19 @@ function crawl($character) {
 		$key = mysqli_fetch_array(mysqli_query($stream, "SELECT `wow_key` FROM `ovw_api` WHERE `id` = '1'"));
 		
 		$url = 'https://' .$_SESSION['region']. '.api.battle.net/wow/character/' .$actual_realm_name['short']. '/' .$character. '?fields=guild,items,statistics,achievements,talents&locale=en_GB&apikey=' .$key['wow_key']. '';
-		
+				
 		// ENABLE SSL
 		$arrContextOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, ),);
 		
 		$data = @file_get_contents($url, false, stream_context_create($arrContextOptions));
 	
 		if($data != '') {		
-			$data = json_decode($data, true);			
+			$data = json_decode($data, true);
 			
-			if($data['guild']['name'] == $_SESSION['guild']) {
+			$escaped_session_guild_name = str_replace(' ', '%20', $_SESSION['guild']);
+			$escaped_source_guild_name = str_replace(' ', '%20', $data['guild']['name']);
+			
+			if($escaped_session_guild_name == $escaped_source_guild_name) {
 				
 				// 110 CHECK
 				if($data['level'] == '110') {
@@ -105,8 +108,7 @@ function crawl($character) {
 					$update = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `spec` = '" .$fetch_spec_var['id']. "' WHERE `name` = '" .$character. "'");
 					
 					// FETCH INTERNAL SPEC ID
-					$spec = $fetch_spec_var['id'];
-					
+					$spec = $fetch_spec_var['id'];					
 					
 					// FETCH WEAPON ID OF SUPPOSEDLY EQUIPPED WEAPON (always assuming here that you have your artifact weapon equipped)
 					$weapon = mysqli_fetch_array(mysqli_query($stream, "SELECT `weapon_id` FROM `ovw_weapons` WHERE `id` = '" .$spec. "'"));					
@@ -483,9 +485,100 @@ function crawl($character) {
 					$dungeon_13_insertion = mysqli_query($stream, "INSERT INTO `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` (`id`, `normal`, `heroic`, `mythic`) VALUES ('13', '" .$votw_normal. "', '" .$votw_heroic. "', '" .$votw_mythic. "')");
 					
 					
+					////////
+					// WARCRAFTLOGS API
+					////////
 					
+					// INTERNAL WLOGS ZONE IDs
+					$zones = array('10' => 'Emerald Nightmare', '11' => 'The Nighthold', '12' => 'Trial of Valor', '13' => 'Tomb of Sargeras');
+					
+					// MAKE CURRENT LOGS ROLE NOT SPEC DEPENDANT
+					$primary_role = mysqli_fetch_array(mysqli_query($stream, "SELECT `role1` FROM `" .$table_name. "` WHERE `name` = '" .$character. "'"));
+					
+					if($primary_role['role1'] == '0' || $primary_role['role1'] == '1' || $primary_role['role1'] == '2') {
+						$metric = 'dps';
+					}
+					elseif($primary_role['role1'] == '3') {
+						// FETCH HPS STATS FOR HEALER
+						$metric = 'hps';
+					}
+					
+					$key = mysqli_fetch_array(mysqli_query($stream, "SELECT `wlogs_key` FROM `ovw_api` WHERE `id` = '1'"));
+					
+					foreach($zones as $zone_id => $name) {
+												
+						$url = 'https://www.warcraftlogs.com/v1/parses/character/' .$character. '/' .$_SESSION['realm']. '/' .$_SESSION['region']. '?zone=' .$zone_id. '&metric=' .$metric. '&api_key=' .$key['wlogs_key']. '';
+						
+						$arrContextOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, ),);
+						
+						$data = @file_get_contents($url, false, stream_context_create($arrContextOptions));
+						
+						if($data != '') {
+							$data = json_decode($data, true);
+							
+							foreach($data as $encounter) {
+								if($zone_id == '10') {
+									// INTERNAL TABLE CODE
+									$internal_table_var = '1';
+									// ITERATE THROUGH BOSSES
+									$encounter_names = array("Nythendra", "Elerethe Renferal", "Il'gynoth, Heart of Corruption", "Ursoc", "Dragons of Nightmare", "Cenarius", "Xavius");
+								}
+								elseif($zone_id == '11') {
+									$internal_table_var = '3';
+									$encounter_names = array("Skorpyron", "Chronomatic Anomaly", "Trilliax", "Spellblade Aluriel", "Star Augur Etraeus", "High Botanist Tel'arn", "Krosus", "Tichondrius", "Grand Magistrix Elisande", "Gul'dan");
+								}
+								elseif($zone_id == '12') {
+									$internal_table_var = '2';
+									$encounter_names = array('Odyn', 'Guarm', 'Helya');
+								}
+								elseif($zone_id == '13') {
+									$internal_table_var = '4';
+									$encounter_names = array("Goroth", "Demonic Inquisition", "Harjatan the Bludger", "Mistress Sassz'ine", "Sisters of the Moon", "The Desolate Host", "Maiden of Vigilance", "Fallen Avatar", "Kil'jaeden");
+								}
+								
+								if(in_array($encounter['name'], $encounter_names)) {
+									if(!isset($wlogs_id)) {
+										// UNIQUE WLOGS CHAR ID
+										$wlogs_id = $data['0']['specs']['0']['data']['0']['character_id'];
+										$update_guild_table = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `wlogs_id` = '" .$wlogs_id. "' WHERE `name` = '" .$character. "'");
+									}
+									
+									if($encounter['name'] == "Il'gynoth, Heart of Corruption") {
+										$encounter['name'] = "Il'gynoth";
+									}
+									elseif($encounter['name'] == 'Grand Magistrix Elisande') {
+										$encounter['name'] = 'Elisande';
+									}
+									
+									if($encounter['difficulty'] == '1') {
+										$dif = 'lfr';
+									}
+									elseif($encounter['difficulty'] == '3') {
+										$dif = 'normal';
+									}
+									elseif($encounter['difficulty'] == '4') {
+										$dif = 'heroic';
+									}
+									elseif($encounter['difficulty'] == '5') {
+										$dif = 'mythic';
+									}
+									
+									$query = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_" .$internal_table_var. "` SET `" .$dif. "_parse` = '" .round($encounter['specs']['0']['data']['0']['percent'], 0). "', `" .$dif. "_log` = '" .$encounter['specs']['0']['data']['0']['report_code']. "' WHERE `name` = '" .addslashes($encounter['name']). "'");
+								}
+							}
+						}
+					}										
 				}
-			}			
+				else {
+					echo '<span style="color: coral; text-align: center;">The character ' .$character. ' is not level 110.</span>';
+				}
+			}
+			else {
+				echo '<span style="color: coral; text-align: center;">The character ' .$character. ' is no longer in your guild according to the armory.</span>';
+			}		
+		}
+		else {
+			echo '<span style="color: coral; text-align: center;">UNKNOWN ERROR - please report this problem with your guild information to the admin.</span>';
 		}
 	}	
 }

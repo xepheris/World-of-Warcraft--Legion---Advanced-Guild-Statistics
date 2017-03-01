@@ -1,6 +1,40 @@
 <?php
 
 $general_char_data = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
+
+switch ($general_char_data['role1']) {
+	case '0':
+		$role1 = 'Primary role (log role): <img src="img/dps.png" alt="404" title="Primary: Melee DPS" style="width: 16px; vertical-align: sub;" />';
+		break;
+	case '1':
+		$role1 = 'Primary role (log role): <img src="img/rdps.png" alt="404" title="Primary: Ranged DPS" style="width: 16px; vertical-align: sub;" />';
+		break;
+	case '2':
+		$role1 = 'Primary role (log role): <img src="img/tank.png" alt="404" title="Primary: Tank" style="width: 16px; vertical-align: sub;" />';
+		break;
+	case '3':
+		$role1 = 'Primary role (log role): <img src="img/heal.png" alt="404" title="Primary: Heal" style="width: 16px; vertical-align: sub;" />';
+		break;					
+}
+			
+switch ($general_char_data['role2']) {
+	case '0':
+		$role2 = ' / Secondary role: <img src="img/dps.png" alt="404" title="Secondary: Melee DPS" style="width: 16px; vertical-align: sub;" />';
+		break;
+	case '1':
+		$role2 = ' / Secondary role: <img src="img/rdps.png" alt="404" title="Secondary: Ranged DPS" style="width: 16px; vertical-align: sub;" />';
+		break;
+	case '2':
+		$role2 = ' / Secondary role: <img src="img/tank.png" alt="404" title="Secondary: Tank" style="width: 16px; vertical-align: sub;" />';
+		break;
+	case '3':
+		$role2 = ' / Secondary role: <img src="img/heal.png" alt="404" title="Secondary: Heal" style="width: 16px; vertical-align: sub;" />';
+		break;
+	case '4':
+		$role2 = '';
+		break;
+}
+
 		
 if($general_char_data['name'] == '') {
 	$error = '<span style="color: coral;">A character with this ID could not be found.<span>';
@@ -19,16 +53,17 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 	</div>
 
 	<div style="padding-right: 6px; text-align: right;">
-	<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;">WoWProgress</a> <a href="https://www.warcraftlogs.com/search/?term=' .$general_char_data['name']. '"><span style="font-family: Avenir, Arial, sans-serif; color: rgb(30,180,135); text-shadow: 2px 2px 10px black;">WARCRAFT</span><span style="font-family: Avenir, Arial, sans-serif; color: rgb(230,230,230); text-shadow: 2px 2px 10px black;">LOGS</span></a>
+	<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;">WoWProgress</a> <a href="https://www.warcraftlogs.com/rankings/character/' .$general_char_data['wlogs_id']. '/latest"><span style="font-family: Avenir, Arial, sans-serif; color: rgb(30,180,135); text-shadow: 2px 2px 10px black;">WARCRAFT</span><span style="font-family: Avenir, Arial, sans-serif; color: rgb(230,230,230); text-shadow: 2px 2px 10px black;">LOGS</span></a>
 	</div>
 </div>
 
 <div style="width: 100%; height: auto; float: left;">
 	<div style="width: 50%; height: auto; float: left; padding-top: 10px; text-align: left;">
-		<div style="padding-left: 6px;">
-		<span style="color: orange; text-align: center; font-size: 16px;">Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). '<br />
+		<div style="padding-left: 6px;">		
+		<span style="color: orange; text-align: center; font-size: 16px;">
+		' .$role1. '' .$role2. ' <a href="?change_role=' .$_GET['inspect']. '" style="font-size: 13px;">(change roles)</a><br />
+		Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). '<br />
 		Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
-		<br />
 		Compare with... <form action="" method="get" style="display: inline;">
 		<select onchange="this.form.submit()" name="compare">
 		<option selected disabled>select</option>';
@@ -101,7 +136,7 @@ elseif($general_table['m_achv'] < '10') {
 
 echo '<div style="width: 50%; height: auto; text-align: right; float: left; color: orange; font-size: 16px; padding-top: 10px;">
 	<div style="padding-right: 6px;">
-		' .number_format($general_table['ap']). '</span> AP Collected | Artifact Level ' .$alvl. ' | Artifact Knowledge ' .$ak. '<br />
+		' .number_format($general_table['ap']). ' AP collected | Artifact Level ' .$alvl. ' | Artifact Knowledge ' .$ak. '<br />
 		' .$general_table['wq']. ' World Quests completed<br />
 		<u>' .$general_table['m2']. 'x</u> Mythic +2 | <u>' .$general_table['m5']. 'x</u> Mythic +5 | <u>' .$general_table['m10']. 'x</u> Mythic +10 | <u>' .$general_table['m15']. 'x</u> Mythic +15 completed<br />
 		' .$m_achv. ' highest Mythic+ in time achievement
