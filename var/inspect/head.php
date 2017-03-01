@@ -42,6 +42,11 @@ if($general_char_data['name'] == '') {
 		
 $class_color = mysqli_fetch_array(mysqli_query($stream, "SELECT `class`, `colorhex` FROM `ovw_classes` WHERE `id` = '" .$general_char_data['class']. "'"));	
 $spec = mysqli_fetch_array(mysqli_query($stream, "SELECT `spec` FROM `ovw_weapons` WHERE `id` = '" .$general_char_data['spec']. "'"));
+
+// LOADING DIV
+echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); display: none; margin-top: 15px; margin-bottom: 15px; opacity: 1.0 !important;" id="patience">
+<span style="text-align: center; color: orange; text-transform: uppercase; font-size: 20px;">Updating this character - please be patient!<br />Page will refresh on success.</span>
+</div>';
 		
 echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
 ' .$error. '
@@ -62,7 +67,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 		<div style="padding-left: 6px;">		
 		<span style="color: orange; text-align: center; font-size: 16px;">
 		' .$role1. '' .$role2. ' <a href="?change_role=' .$_GET['inspect']. '" style="font-size: 13px;">(change roles)</a><br />
-		Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). '<br />
+		Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). ' <img src="img/update.png" alt="404" title="Update ' .$general_char_data['name']. '" style="width: 16px;" id="upd" onclick="update();" /><br />
 		Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
 		Compare with... <form action="" method="get" style="display: inline;">
 		<select onchange="this.form.submit()" name="compare">

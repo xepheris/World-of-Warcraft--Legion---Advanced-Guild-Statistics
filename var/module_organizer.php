@@ -288,7 +288,19 @@ elseif(isset($_GET['edit_legendaries']) && is_numeric($_GET['edit_legendaries'])
 
 elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	echo '<script type="text/javascript">
+		function update() {
+			var inspect_container = document.getElementById("inspect");
+			inspect_container.style.opacity = "0.4";
+			inspect_container.style.filter  = "alpha(opacity=40)";
+			
+			var patience_container = document.getElementById("patience");
+			patience_container.style.display = "block";
+			patience_container.style.opacity = "1.0";
+		};
+	</script>';
+	
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;" id="inspect">';
 	
 	if($_SESSION['tracked'] == '0') {
 		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
