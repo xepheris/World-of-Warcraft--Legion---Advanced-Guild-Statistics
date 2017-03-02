@@ -7,7 +7,7 @@ $table_name = '' .$_SESSION['table']. '_' .$_SESSION['guild']. '_' .$_SESSION['r
 // IMPORT
 if(isset($_GET['import'])) {
 	
-	echo '<div style="width: 100%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">';
 	
 	include('stream.php');
 	
@@ -53,7 +53,9 @@ if(isset($_GET['import'])) {
 		
 		echo '<span style="text-align: center; color: orange; font-size: 18px;">Maintenance scripts will run now to fetch all necessary information of selected characters.<br />
 		Depending on the amount of characters you imported, this will take up to a few minutes, please stand by!<br />
-		The loading animation will disappear when completed.<br /><br />
+		You will recieve a confirmation as soon as the import is finished.
+		<br />
+		<br />
 		<div id="loading"><img src="img/load.gif" alt="404" onload="general_import()" /></div>
 		<div id="loading2" onload="live_update()"></div>
 		<div id="finished"></div>
@@ -130,7 +132,12 @@ if(isset($_GET['import'])) {
 	
 	if(isset($_POST['c'])) {		
 			
-		echo '<span style="color: orange; font-size: 16px; margin-top: 15px;">Attribute roles</span>
+		echo '<style>
+			tr:nth-child(even) {
+				background-color: #90805f !important;
+			}
+		</style>
+		<span style="color: orange; font-size: 16px; margin-top: 15px;">Attribute roles</span>
 		<br />
 		<br />
 		<form method="POST" style="text-align: center;">
@@ -167,7 +174,9 @@ if(isset($_GET['import'])) {
 		</form>';
 	}
 	
-	echo '</div>';
+	echo '</div>
+	<div style="width: 5%; float: left;">
+	</div>';
 }
 // LOGOUT
 elseif(isset($_GET['logout'])) {

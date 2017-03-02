@@ -27,8 +27,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 <th>Itemlevel</th>
 <th>Legendaries</th>
 <th><span title="Artifact Power">AP</span></th>
-<th><span title="Artifact Knowledge">AK</span></th>
-<th><span title="Artifact Level">AL</span></th>
+<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
 <th>Mythics<br />(M+ Achv)</th>
 <th>World Quests</th>
 <th><span title="Emerald Nightmare">EN</span><br />
@@ -276,8 +275,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	<td>
 		<span title="' .number_format($fetch_general_data['ap']). '">' .number_format($fetch_general_data['ap']/1000000). 'M</span>
 	</td>
-	<td>' .$artifact_knowledge. '</td>
-	<td>' .$artifact_level. '</td>
+	<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 	<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
 	<td>' .$fetch_general_data['wq']. '</td>
 	<td>
@@ -327,7 +325,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a>
 	</td>
 	<td>
-		<span id="' .$id['id']. '"><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" /></span>
+		<span id="' .$id['id']. '"><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" /><img src="img/update_gif.gif" alt="404" style="display: none; width: 21px;"/></span>
 	</td>	
 	</tr>';
 }

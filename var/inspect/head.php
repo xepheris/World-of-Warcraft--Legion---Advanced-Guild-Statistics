@@ -54,7 +54,10 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 
 <span style="text-align: center; color: orange; text-transform: uppercase; font-size: 20px;">Updating this character - please be patient!<br /></span>
 <div id="answer"></div>
 </div>';
-		
+
+
+// REGULAR CONTENT
+
 echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);" class="inspect">
 ' .$error. '
 
@@ -134,24 +137,10 @@ elseif($general_table['ak'] < '12') {
 	$ak = '<span style="color: coral;">' .$general_table['ak']. '</span>';
 }
 
-// MYTHIC+ ACHIEVEMENT THRESHOLDS
-
-if($general_table['m_achv'] == '15') {
-	$m_achv = '<span style="color: yellowgreen;">15</span>';
-}
-elseif($general_table['m_achv'] < '15' && $general_table['m_achv'] >= '10') {
-	$m_achv = '<span style="color: orange;">' .$general_table['m_achv']. '</span>';
-}
-elseif($general_table['m_achv'] < '10') {
-	$m_achv = '<span style="color: coral;">' .$general_table['m_achv']. '</span>';
-}
-
 echo '<div style="width: 50%; height: auto; text-align: right; float: left; color: orange; font-size: 16px; padding-top: 10px;">
 	<div style="padding-right: 6px;">
 		' .number_format($general_table['ap']). ' AP collected | Artifact Level ' .$alvl. ' | Artifact Knowledge ' .$ak. '<br />
-		' .$general_table['wq']. ' World Quests completed<br />
-		<u>' .$general_table['m2']. 'x</u> Mythic +2 | <u>' .$general_table['m5']. 'x</u> Mythic +5 | <u>' .$general_table['m10']. 'x</u> Mythic +10 | <u>' .$general_table['m15']. 'x</u> Mythic +15 completed<br />
-		' .$m_achv. ' highest Mythic+ in time achievement
+		' .$general_table['wq']. ' World Quests completed
 	</div>
 </div>
 </div>

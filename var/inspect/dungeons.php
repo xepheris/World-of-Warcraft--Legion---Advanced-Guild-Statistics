@@ -35,7 +35,35 @@ echo '<td>' .array_sum($sum). '</td>';
 		
 echo '</tr>
 </tbody>
-</table>
-</div>';
+</table>';
+
+ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript">
+      google.charts.load("current", {"packages":["corechart"]});
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+         ["Month", "Bolivia", "Ecuador", "Madagascar", "Papua New Guinea", "Rwanda", "Average"],
+         ["2004/05",  165,      938,         522,             998,           450,      614.6]
+      ]);
+
+    var options = {
+      title : "Monthly Coffee Production by Country",
+      vAxis: {title: "Cups"},
+      hAxis: {title: "Month"},
+      seriesType: "bars",
+      series: {5: {type: "line"}}
+    };
+
+    var chart = new google.visualization.ComboChart(document.getElementById("chart_div"));
+    chart.draw(data, options);
+  }
+    </script>
+
+
+	<div id="chart_div" style="width: 900px; height: 500px;"></div>
+	</div>';
 	
 ?>
