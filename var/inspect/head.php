@@ -35,6 +35,12 @@ switch ($general_char_data['role2']) {
 		break;
 }
 
+if(time('now')-$general_char_data['updated'] <= '86400') {
+	$last_update = '<span style="color: yellowgreen;">' .date('d.m.y - H:i:s', $general_char_data['updated']). '</span>';
+}
+else {
+	$last_udpate = '<span style="color: coral;">' .date('d.m.y - H:i:s', $general_char_data['updated']). '</span>';
+}
 		
 if($general_char_data['name'] == '') {
 	$error = '<span style="color: coral;">A character with this ID could not be found.<span>';
@@ -45,10 +51,11 @@ $spec = mysqli_fetch_array(mysqli_query($stream, "SELECT `spec` FROM `ovw_weapon
 
 // LOADING DIV
 echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); display: none; margin-top: 15px; margin-bottom: 15px; opacity: 1.0 !important;" id="patience">
-<span style="text-align: center; color: orange; text-transform: uppercase; font-size: 20px;">Updating this character - please be patient!<br />Page will refresh on success.</span>
+<span style="text-align: center; color: orange; text-transform: uppercase; font-size: 20px;">Updating this character - please be patient!<br /></span>
+<div id="answer"></div>
 </div>';
 		
-echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
+echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);" class="inspect">
 ' .$error. '
 
 <div style="width: 100%; height: auto; float: left; border-bottom: 1px solid white; padding-bottom: 10px; font-size: 20px;">
@@ -67,8 +74,8 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 		<div style="padding-left: 6px;">		
 		<span style="color: orange; text-align: center; font-size: 16px;">
 		' .$role1. '' .$role2. ' <a href="?change_role=' .$_GET['inspect']. '" style="font-size: 13px;">(change roles)</a><br />
-		Last update: ' .date('d.m.y - H:m.i', $general_char_data['updated']). ' <img src="img/update.png" alt="404" title="Update ' .$general_char_data['name']. '" style="width: 16px;" id="upd" onclick="update();" /><br />
-		Last known logout: ' .date('d.m.y - H:m:i', $general_char_data['logout']). '<br />
+		Last update: ' .$last_update. ' <img src="img/update.png" alt="404" title="Update ' .$general_char_data['name']. '" style="width: 16px;" id="' .$_GET['inspect']. '" onclick="update(this.id);" /><br />
+		Last known logout: ' .date('d.m.y - H:i:s', $general_char_data['logout']). '<br />
 		Compare with... <form action="" method="get" style="display: inline;">
 		<select onchange="this.form.submit()" name="compare">
 		<option selected disabled>select</option>';

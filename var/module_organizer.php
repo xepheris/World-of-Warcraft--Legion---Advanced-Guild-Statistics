@@ -289,18 +289,53 @@ elseif(isset($_GET['edit_legendaries']) && is_numeric($_GET['edit_legendaries'])
 elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 	
 	echo '<script type="text/javascript">
-		function update() {
-			var inspect_container = document.getElementById("inspect");
-			inspect_container.style.opacity = "0.4";
-			inspect_container.style.filter  = "alpha(opacity=40)";
+		function update(str) {
+			var inspect_container = document.getElementsByClassName("inspect");
+			
+			for(var i=0; i<inspect_container.length; i++) {
+				inspect_container[i].style.opacity = "0.4";
+				inspect_container[i].style.filter  = "alpha(opacity=40)";
+				
+				var all_active_sublinks = inspect_container[i].getElementsByTagName("a");
+				for(var k=0; k<all_active_sublinks.length; k++) {
+					all_active_sublinks[k].style.pointerEvents = "none";
+				}
+				
+				var all_active_selects = inspect_container[i].getElementsByTagName("select");
+				for(var k=0; k<all_active_selects.length; k++) {
+					all_active_selects[k].style.pointerEvents = "none";
+				}
+             }
 			
 			var patience_container = document.getElementById("patience");
 			patience_container.style.display = "block";
 			patience_container.style.opacity = "1.0";
+					
+			var wowhead_container = document.getElementsByClassName("wowhead-tooltip");
+			for(var i=0; i<wowhead_container.length; i++) {
+				if (wowhead_container[i]) {
+					wowhead_container[i].parentNode.removeChild(wowhead_container[i]);
+				}
+			}
+			
+			$.ajax({
+				type: "GET",
+				dataType: "html",
+				url: "var/ajax/update.php",
+				data: { character: +str
+				},
+				success: function(data) {
+					$( "#answer").html(data);
+					
+					setTimeout(function() {
+						location.reload();
+					}, 5000);
+				}
+			});
 		};
 	</script>';
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;" id="inspect">';
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 	
 	if($_SESSION['tracked'] == '0') {
 		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';

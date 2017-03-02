@@ -1,3 +1,9 @@
+<script type="text/javascript">
+	function update() {
+		
+	};
+</script>
+
 <?php
 
 if($_SESSION['tracked'] >= '20') {
@@ -67,6 +73,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 </th>
 <th>Bench</th>
 <th>Inspect</th>
+<th>Update</th>
 </tr>
 </thead>
 <tbody>';
@@ -258,11 +265,11 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	$tos_m = '<span style="color: ' .$tos_m_color. ';">' .$tos_mythic_progress['tos_m']. '</span>';
 		
 	echo '<tr>
-	<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '">' .$guild_table['name']. '</a></td>
+	<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
 	<td>' .$role1. ' ' .$role2. '</td>
 	<td>' .$spec['spec']. '</td>
 	<td>
-		<a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '">Calc</a>
+		<a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a>
 	</td>
 	<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>
 	<td>' .$legendaries['amount']. '</td>
@@ -314,11 +321,14 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		</table>
 	</td>
 	<td>
-		<a href="?bench=' .$id['id']. '"><img src="img/bench.png" alt="404" width="21px" title="Bench" /></a>
+		<a href="?bench=' .$id['id']. '"><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" /></a>
 	</td>
 	<td>
-		<a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" width="21px" title="Inspect" /></a>
+		<a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a>
 	</td>
+	<td>
+		<span id="' .$id['id']. '"><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" /></span>
+	</td>	
 	</tr>';
 }
 		

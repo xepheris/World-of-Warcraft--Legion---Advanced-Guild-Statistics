@@ -135,4 +135,6 @@ echo '<!DOCTYPE html>
 </body>
 </html>';
 
+mysqli_close($stream);
+
 ?>

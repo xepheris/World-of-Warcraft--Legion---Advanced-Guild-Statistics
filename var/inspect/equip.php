@@ -21,7 +21,7 @@ echo '<script defer src="http://wow.zamimg.com/widgets/power.js"></script>
 
 $itemlevels = mysqli_fetch_array(mysqli_query($stream, "SELECT `ilvl_on`, `ilvl_off` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
 
-echo '<div style="width: 47.5%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">
+echo '<div style="width: 47.5%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;" class="inspect">
 <span style="color: orange; font-size: 20px;">Current Equipment (' .$itemlevels['ilvl_on']. '/' .$itemlevels['ilvl_off']. ')</span>
 <br />
 <span style="color: black; font-size: 10px;">legendaries dropped after 7.1.5 are currently bugged and show as 910 which reduces itemlevel averages</span>

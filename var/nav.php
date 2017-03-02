@@ -11,26 +11,26 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 
 		<a href="">Login & Register</a> |
 		<a href="">Demo</a> |
 		<span style="color: white;" onclick="' .$contact. '">Contact</span> |
-		<a href="https://github.com/xepheris/World-of-Warcraft--Legion---Advanced-Guild-Statistics">Github</a> |
 		<div class="dd">
-			Other Tools
+			Links
 			<div class="dd-c">
 				<a href="http://check.artifactpower.info" style="color: black;">Advanced Armory Access</a>
 				<br />
 				<a href="http://youtube.com/c/Xepheris" style="color: black;">High M+ Vengeance Demon Hunter VODs</a>
+				<br />
+				<a href="https://github.com/xepheris/World-of-Warcraft--Legion---Advanced-Guild-Statistics" style="color: black;">Github repository</a>
 			</div>
 		</div>
 		</span>';
 	}
 	// LOGGED IN
 	elseif(isset($_SESSION['guild'])) {
-		echo '<span style="font-size: 18px; color: white;"><a href="">Update All</a> |
+		echo '<span style="font-size: 18px; color: white;"><a href="">Update</a> |
 		<a href="?import">Import</a> |
-		<a href="">Weekly Statistics</a> |
-		<a href="">Compare</a> |
-		<a href="">Share</a> |
-		<a href="">Settings</a> |
-		<a href="">Contact</a> |
+		<a href="?compare">Compare</a> |
+		<a href="?share">Share</a> |
+		<a href="?settings">Settings</a> |
+		<a href="?contact">Contact</a> |
 		<a href="?logout">Logout</a>
 		</span>';
 	}
