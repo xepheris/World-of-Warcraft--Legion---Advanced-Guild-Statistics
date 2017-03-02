@@ -21,8 +21,12 @@ if(isset($_GET['rmv'])) {
 	$remove_legendary = mysqli_query($stream, "DELETE FROM `" .$_SESSION['table']. "_" .$_GET['edit_legendaries']. "_legendaries` WHERE `item_id` = '" .$_GET['rmv']. "'");
 		
 	if($remove_legendary) {
-		echo '<span style="color: orange; font-size: 18px; text-align: center;"><a href="http://wowhead.com/?item=' .$_GET['rmv']. '">' .$_GET['rmv']. '</a> has been sucecssfully removed.<br />
-		<a href="?edit_legendaries=' .$_GET['edit_legendaries']. '">Click here</a> to continue editing legendaries or <a href="?inspect=' .$_GET['edit_legendaries']. '">click here</a> to go back to your profile</span>';
+		echo '<span style="color: yellowgreen; font-size: 18px; text-align: center;"><a href="http://wowhead.com/?item=' .$_GET['rmv']. '">' .$_GET['rmv']. '</a> has been sucecssfully removed.<br />
+		<a href="?inspect=' .$_GET['edit_legendaries']. '">Profile</a> or <a href="?edit_legendaries=' .$_GET['edit_legendaries']. '">continue editing legendaries</a>.</span>';
+	}
+	else {
+		echo '<span style="color: coral; text-align: center;">Could not remove legendary at this point - pleasea try again!<br />
+		<a href="?edit_legendaries=' .$_GET['edit_legendaries']. '">Go back.</a></span>';
 	}
 }
 	

@@ -61,7 +61,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 <div style="width: 100%; height: auto; float: left; border-bottom: 1px solid white; padding-bottom: 10px; font-size: 20px;">
 
 	<div style="float: left; padding-left: 6px; color: orange;">
-	<a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple" title="WoW Armory link">' .$general_char_data['name']. '</a> - <a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$general_char_data['talents']. '" title="WoW Talent Calculator link">' .$spec['spec']. '</a> <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span>
+	<a href="http://' .$_SESSION['region']. '.battle.net/wow/en/character/' .$_SESSION['realm']. '/' .$general_char_data['name']. '/simple" title="WoW Armory link">' .$general_char_data['name']. '</a> - <a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$general_char_data['talents']. '" title="WoW Talent Calculator link">' .$spec['spec']. '</a> <span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span> <a href="?change_name=' .$_GET['inspect']. '" title="Change name of ' .$general_char_data['name']. '" style="font-size: 13px;">(change name)</a>
 	</div>
 
 	<div style="padding-right: 6px; text-align: right;">

@@ -268,6 +268,17 @@ elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 	echo '</div>';
 }
 
+// MANUALLY CHANGE NAME VIA INSPECT MODULE
+
+elseif(isset($_GET['change_name']) && is_numeric($_GET['change_name'])) {
+	
+	include('stream.php');
+	
+	include('inspect/change_name.php');
+}
+
+// MANUALLY REASSIGN ROLES VIA INSPECT MODULE
+
 elseif(isset($_GET['change_role']) && is_numeric($_GET['change_role'])) {
 	
 	include('stream.php');

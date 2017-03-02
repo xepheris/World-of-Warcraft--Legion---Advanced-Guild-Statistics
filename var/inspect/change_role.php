@@ -11,7 +11,7 @@ if(isset($_POST['role1']) || isset($_POST['role2'])) {
 		
 		if($_POST['role1'] == $roles['role1']) {
 			echo '<span style="color: orange; text-align: center;">Nothing was changed, as you assigned the same primary role as before.<br />
-			<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to continue editing roles or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go back to your profile.</span>';
+			<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 		}
 		else {
 			
@@ -20,11 +20,11 @@ if(isset($_POST['role1']) || isset($_POST['role2'])) {
 			if($upd) {
 				echo '<span style="color: yellowgreen; text-align: center;">New primary role has been successfully assigned.<br />
 				Since you changed the primary = log role, you need to update the character data as well to see the updated parses, if they exist.<br />
-				<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to continue editing roles or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go back to your profile.</span>';
+				<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 			}
 			elseif(!$upd) {
 				echo '<span style="color: coral; text-align: center;">Sorry, something went wrong - could not change roles. Please try again.<br />
-				<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to go back or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go to your profile.</span>';
+				<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 			}
 		}
 	}
@@ -33,18 +33,18 @@ if(isset($_POST['role1']) || isset($_POST['role2'])) {
 		
 		if($_POST['role2'] == $roles['role2']) {
 			echo '<span style="color: orange; text-align: center;">Nothing was changed, as you assigned the same secondary role as before.<br />
-			<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to continue editing roles or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go back to your profile.</span>';
+			<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 		}
 		else {
 			$upd = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `role2` = '" .$_POST['role2']. "'  WHERE `id` = '" .$_GET['change_role']. "'");
 			
 			if($upd) {
 				echo '<span style="color: yellowgreen; text-align: center;">New secondary role has been successfully assigned.<br />
-				<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to continue editing roles or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go back to your profile.</span>';
+				<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 			}
 			elseif(!$upd) {
 				echo '<span style="color: coral; text-align: center;">Sorry, something went wrong - could not change roles. Please try again.<br />
-				<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to go back or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go to your profile.</span>';
+				<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 			}
 		}
 	}
@@ -53,7 +53,7 @@ if(isset($_POST['role1']) || isset($_POST['role2'])) {
 		
 		if(($_POST['role1'] == $roles['role1']) && ($_POST['role2'] == $roles['role2'])) {
 			echo '<span style="color: orange; text-align: center;">Nothing was changed, as you assigned the same roles as before.<br />
-			<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to continue editing roles or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go back to your profile.</span>';
+			<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 		}
 		else {
 			$upd = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `role1` = '" .$_POST['role1']. "', `role2` = '" .$_POST['role2']. "'  WHERE `id` = '" .$_GET['change_role']. "'");
@@ -61,11 +61,11 @@ if(isset($_POST['role1']) || isset($_POST['role2'])) {
 			if($upd) {
 				echo '<span style="color: yellowgreen; text-align: center;">New roles have been successfully assigned.<br />
 				Since you changed the primary = log role, you need to update the character data as well to see the updated parses, if they exist.<br />
-				<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to continue editing roles or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go back to your profile.</span>';
+				<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 			}
 			elseif(!$upd) {
 				echo '<span style="color: coral; text-align: center;">Sorry, something went wrong - could not change roles. Please try again.<br />
-				<a href="?change_role=' .$_GET['change_role']. '">Click here</a> to go back or <a href="?inspect=' .$_GET['change_role']. '">click here</a> to go to your profile.</span>';
+				<a href="?inspect=' .$_GET['change_role']. '">Profile</a> or <a href="?change_role=' .$_GET['change_role']. '">continue editing roles</a>.</span>';
 			}
 		}
 	}	
