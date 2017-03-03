@@ -98,7 +98,7 @@ if($benchcheck['id'] != '') {
 			$alvl_color = 'orange';
 		}
 		elseif($fetch_general_data['alvl'] == '54') {
-			$alvl_color = 'greenyellow';
+			$alvl_color = 'yellowgreen';
 		}			
 	
 		$artifact_level = '<span style="color: ' .$alvl_color. ';">' .$fetch_general_data['alvl']. '</span>';
@@ -110,7 +110,7 @@ if($benchcheck['id'] != '') {
 			$ak_color = 'orange';
 		}
 		elseif($fetch_general_data['ak'] == '25') {
-			$ak_color = 'greenyellow';
+			$ak_color = 'yellowgreen';
 		}
 	
 		$artifact_knowledge = '<span style="color: ' .$ak_color. ';">' .$fetch_general_data['ak']. '</span>';
@@ -125,7 +125,7 @@ if($benchcheck['id'] != '') {
 			$mplus_color = 'yellow';
 		}
 		elseif($fetch_general_data['m_achv'] == '15') {
-			$mplus_color = 'greenyellow';
+			$mplus_color = 'yellowgreen';
 		}
 	
 		$m_achievement = '<span style="color: ' .$mplus_color. ';">' .$fetch_general_data['m_achv']. '</span>';
@@ -165,7 +165,7 @@ if($benchcheck['id'] != '') {
 			
 		// COLORIZATION OF INDIVIDUAL EMERALD NIGHTMARE PROGRESS			
 		if($en_heroic_progress['en_hc'] == '7') {
-			$en_hc_color = 'greenyellow';
+			$en_hc_color = 'yellowgreen';
 		}
 		elseif($en_heroic_progress['en_hc'] > '0' && $en_heroic_progress['en_hc'] < '7') {
 			$en_hc_color = 'orange';
@@ -176,7 +176,7 @@ if($benchcheck['id'] != '') {
 		$en_hc = '<span style="color: ' .$en_hc_color. ';">' .$en_heroic_progress['en_hc']. '</span>';
 		
 		if($en_mythic_progress['en_m'] == '7') {
-			$en_m_color = 'greenyellow';
+			$en_m_color = 'yellowgreen';
 		}
 		elseif($en_mythic_progress['en_m'] > '0' && $en_mythic_progress['en_m'] < '7') {
 			$en_m_color = 'orange';
@@ -188,7 +188,7 @@ if($benchcheck['id'] != '') {
 	
 		// COLORIZATION OF INDIVIDUAL TRIAL OF VALOR PROGRESS
 		if($tov_heroic_progress['tov_hc'] == '3') {
-			$tov_hc_color = 'greenyellow';
+			$tov_hc_color = 'yellowgreen';
 		}
 		elseif($tov_heroic_progress['tov_hc'] > '0' && $tov_heroic_progress['tov_hc'] < '3') {
 			$tov_hc_color = 'orange';
@@ -199,7 +199,7 @@ if($benchcheck['id'] != '') {
 		$tov_hc = '<span style="color: ' .$tov_hc_color. ';">' .$tov_heroic_progress['tov_hc']. '</span>';
 			
 		if($tov_mythic_progress['tov_m'] == '3') {
-			$tov_m_color = 'greenyellow';
+			$tov_m_color = 'yellowgreen';
 		}
 		elseif($tov_mythic_progress['tov_m'] > '0' && $tov_mythic_progress['tov_m'] < '3') {
 			$tov_m_color = 'orange';
@@ -211,7 +211,7 @@ if($benchcheck['id'] != '') {
 			
 		// COLORIZATION OF INDIVIDUAL NIGHTHOLD PROGRESS
 		if($nh_heroic_progress['nh_hc'] == '10') {
-			$nh_hc_color = 'greenyellow';
+			$nh_hc_color = 'yellowgreen';
 		}
 		elseif($nh_heroic_progress['nh_hc'] > '0' && $nh_heroic_progress['nh_hc'] < '10') {
 			$nh_hc_color = 'orange';
@@ -222,7 +222,7 @@ if($benchcheck['id'] != '') {
 		$nh_hc = '<span style="color: ' .$nh_hc_color. ';">' .$nh_heroic_progress['nh_hc']. '</span>';
 	
 		if($nh_mythic_progress['nh_m'] == '10') {
-			$nh_m_color = 'greenyellow';
+			$nh_m_color = 'yellowgreen';
 		}
 		elseif($nh_mythic_progress['nh_m'] > '0' && $nh_mythic_progress['nh_m'] < '10') {
 			$nh_m_color = 'orange';
@@ -234,7 +234,7 @@ if($benchcheck['id'] != '') {
 	
 		// COLORIZATION OF INDIVIDUAL TOMB OF SARGERAS PROGRESS
 		if($tos_heroic_progress['tos_hc'] == '9') {
-			$tos_hc_color = 'greenyellow';
+			$tos_hc_color = 'yellowgreen';
 		}
 		elseif($tos_heroic_progress['tos_hc'] > '0' && $tos_heroic_progress['tos_hc'] < '9') {
 			$tos_hc_color = 'orange';
@@ -245,7 +245,7 @@ if($benchcheck['id'] != '') {
 		$tos_hc = '<span style="color: ' .$tos_hc_color. ';">' .$tos_heroic_progress['tos_hc']. '</span>';
 		
 		if($tos_mythic_progress['tos_m'] == '9') {
-			$tos_m_color = 'greenyellow';
+			$tos_m_color = 'yellowgreen';
 		}
 		elseif($tos_mythic_progress['tos_m'] > '0' && $tos_mythic_progress['tos_m'] < '9') {
 			$tos_m_color = 'orange';
@@ -262,6 +262,22 @@ if($benchcheck['id'] != '') {
 			$last_udpate = '<span style="color: coral;">' .date('d.m.y - H:i:s', $guild_table['updated']). '</span>';
 		}
 		
+		if(strlen($fetch_general_data['ap']) <= '3') {
+			$ap = number_format($fetch_general_data['ap']);
+		}
+		elseif(strlen($fetch_general_data['ap']) > '3' && strlen($fetch_general_data['ap']) < '7') {
+			$ap = '' .number_format($fetch_general_data['ap']/1000). ' K';
+		}
+		elseif(strlen($fetch_general_data['ap']) > '6' && strlen($fetch_general_data['ap']) < '10') {
+			$ap = '' .number_format($fetch_general_data['ap']/1000000). ' M';
+		}
+		elseif(strlen($fetch_general_data['ap']) > '10' && strlen($fetch_general_data['ap']) < '14') {
+			$ap = '' .number_format($fetch_general_data['ap']/1000000000). ' B';
+		}
+		elseif(strlen($fetch_general_data['ap']) > '14' && strlen($fetch_general_data['ap']) < '18') {
+			$ap = '' .number_format($fetch_general_data['ap']/1000000000000). ' T';
+		}
+		
 		echo '
 		<tr>
 			<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
@@ -272,7 +288,7 @@ if($benchcheck['id'] != '') {
 			<td><a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 			<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>
 			<td>' .$legendaries['amount']. '</td>
-			<td><span title="' .number_format($fetch_general_data['ap']). '">' .number_format($fetch_general_data['ap']/1000000). 'M</span></td>
+			<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span></td>
 			<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 			<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
 			<td>' .$fetch_general_data['wq']. '</td>

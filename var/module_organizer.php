@@ -215,7 +215,7 @@ elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
 	
 	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
 	
-	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">benching...</span>';
+	echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">benching...</span>';
 		
 	include('stream.php');
 		
@@ -237,7 +237,7 @@ elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
 	
 	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
 		
-	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">unbenching...</span>';
+	echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">unbenching...</span>';
 		
 	include('stream.php');
 		
@@ -259,7 +259,7 @@ elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 	
 	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
 		
-	echo '<span style="color: greenyellow; text-align: center; font-size: 20px;">removing...</span>';
+	echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">removing...</span>';
 		
 	include('stream.php');
 		
