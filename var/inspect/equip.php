@@ -12,12 +12,7 @@ echo '<script defer src="http://wow.zamimg.com/widgets/power.js"></script>
 			"maxstack": true,
 		}
 	}
-</script>
-<style>
-	tr:nth-child(even) {
-		background-color: #90805f !important;
-	}
-</style>';
+</script>';
 
 $itemlevels = mysqli_fetch_array(mysqli_query($stream, "SELECT `ilvl_on`, `ilvl_off` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
 

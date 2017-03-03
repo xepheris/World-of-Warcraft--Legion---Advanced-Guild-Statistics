@@ -345,6 +345,9 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 				data: { character: +str
 				},
 				success: function(data) {
+					var patience_text = document.getElementById("patience_text");
+					patience_text.style.display = "none";
+					
 					$( "#answer").html(data);
 					
 					setTimeout(function() {
@@ -399,7 +402,8 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 }
 
 // ROSTER OVERVIEW
-else {
+else {	
+	
 	echo '<div style="width: 80%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 
 	// AUTO REDIRECT
@@ -415,6 +419,13 @@ else {
 	}
 	
 	echo '</div>';
+	
+	echo '<script type="text/javascript">
+	var roster = document.getElementById("roster").offsetHeight;
+	var bench = document.getElementById("bench").offsetHeight;
+	var sidebar = document.getElementById("sidebar");
+	sidebar.style.height = roster+bench-15+"px";
+	</script>';
 }
 
 

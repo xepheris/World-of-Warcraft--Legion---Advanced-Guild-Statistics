@@ -1,7 +1,7 @@
 <?php
 
 // RIGHT COLUMN TOP		
-echo '<div style="width: auto; height: 82.434vh; padding-top: 15px; float: right; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-right: 5%; min-height: 575px; padding-bottom: 15px;">
+echo '<div id="sidebar" style="width: auto; height: 82.434vh; padding-top: 15px; float: right; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-right: 5%; min-height: 575px; padding-bottom: 15px;">
 <ul style="list-style-type: none; text-align: left; padding-left: 15px; padding-right: 12px;">';
 		
 $classes = array('1' => 'Warrior', '2' => 'Paladin', '3' => 'Hunter', '4' => 'Rogue', '5' => 'Priest', '6' => 'Death Knight', '7' => 'Shaman', '8' => 'Mage', '9' => 'Warlock', '10' => 'Monk', '11' => 'Druid', '12' => 'Demon Hunter');

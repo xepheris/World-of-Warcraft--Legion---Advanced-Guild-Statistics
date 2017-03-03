@@ -14,6 +14,9 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 
 		<div class="dd">
 			Links
 			<div class="dd-c">
+				<br />
+				<a href="http://reddit.com/r/competitivewow">Competitive WoW subreddit</a>
+				<br />
 				<a href="http://check.artifactpower.info" style="color: black;">Advanced Armory Access</a>
 				<br />
 				<a href="http://youtube.com/c/Xepheris" style="color: black;">High M+ Vengeance Demon Hunter VODs</a>

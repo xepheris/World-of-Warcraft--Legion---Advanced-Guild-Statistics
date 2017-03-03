@@ -12,67 +12,69 @@ if($_SESSION['tracked'] >= '20') {
 else {
 	$overflow = 'overflow: hidden;';
 }
-		
-echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
+
+echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
 ' .$error. '
 <span style="color: orange; text-align: center; font-size: 20px;">Current Roster</span>
 <div style="overflow-y: scroll; max-height: 742px; ' .$overflow. '">
 <table style="margin: 0 auto; margin-top: 15px;">
 <thead>
 <tr>
-<th></th>
-<th>Roles</th>
-<th>Spec</th>
-<th>Talents</th>
-<th>Itemlevel</th>
-<th>Legendaries</th>
-<th><span title="Artifact Power">AP</span></th>
-<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
-<th>Mythics<br />(M+ Achv)</th>
-<th>World Quests</th>
-<th><span title="Emerald Nightmare">EN</span><br />
-	<table>
-		<tbody>
-			<tr>
-				<td>HC</td>
-				<td>M</td>
-			</tr>
-		</tbody>
-	</table>
-</th>
-<th><span title="Trial of Valor">ToV</span><br />
-	<table>
-		<tbody>
-			<tr>
-				<td>HC</td>
-				<td>M</td>
-			</tr>
-		</tbody>
-	</table>
-</th>
-<th><span title="The Nighthold">NH</span><br />
-	<table>
-		<tbody>
-			<tr>
-				<td>HC</td>
-				<td>M</td>
-			</tr>
-		</tbody>
-	</table>
-</th>
-<th><span title="Tomb of Sargeras">ToS</span><br />
-	<table>
-		<tbody>
-			<tr>
-				<td>HC</td>
-				<td>M</td>
-			</tr>
-		</tbody>
-	</table>
-</th>
-<th>Bench</th>
-<th>Inspect</th>
-<th>Update</th>
+	<th></th>
+	<th><span style="color: white;" id="updated" onclick="sort(this.id);">Last update</span></th>
+	<th><span style="color: white;" id="logout" onclick="sort(this.id);">Last logout</span></th>
+	<th>Roles</th>
+	<th><span style="color: white;" id="spec" onclick="sort(this.id);">Spec</span></th>
+	<th>Talents</th>
+	<th><span style="color: white;" id="itemlevel" onclick="sort(this.id);">Itemlevel</span></th>
+	<th><span style="color: white;" id="legendaries" onclick="sort(this.id);">Legendaries</span></th>
+	<th><span title="Artifact Power">AP</span></th>
+	<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
+	<th><span style="color: white;" id="mythics" onclick="sort(this.id);">Mythics<br />(M+ Achv)</span></th>
+	<th><span style="color: white;" id="worldquests" onclick="sort(this.id);">World Quests</span></th>
+	<th><span title="Emerald Nightmare">EN</span><br />
+		<table>
+			<tbody>
+				<tr>
+					<td>HC</td>
+					<td>M</td>
+				</tr>
+			</tbody>
+		</table>
+	</th>
+	<th><span title="Trial of Valor">ToV</span><br />
+		<table>
+			<tbody>
+				<tr>
+					<td>HC</td>
+					<td>M</td>
+				</tr>
+			</tbody>
+		</table>
+	</th>
+	<th><span title="The Nighthold">NH</span><br />
+		<table>
+			<tbody>
+				<tr>
+					<td>HC</td>
+					<td>M</td>
+				</tr>
+			</tbody>
+		</table>
+	</th>
+	<th><span title="Tomb of Sargeras">ToS</span><br />
+		<table>
+			<tbody>
+				<tr>
+					<td>HC</td>
+					<td>M</td>
+				</tr>
+			</tbody>
+		</table>
+	</th>
+	<th>Bench</th>
+	<th>Inspect</th>
+	<th>Update</th>
 </tr>
 </thead>
 <tbody>';
@@ -262,71 +264,71 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$tos_m_color = 'coral';
 	}
 	$tos_m = '<span style="color: ' .$tos_m_color. ';">' .$tos_mythic_progress['tos_m']. '</span>';
+	
+	if(time('now')-$guild_table['updated'] <= '86400') {
+		$last_update = '<span style="color: yellowgreen;">' .date('d.m.y - H:i:s', $guild_table['updated']). '</span>';
+	}
+	else {
+		$last_udpate = '<span style="color: coral;">' .date('d.m.y - H:i:s', $guild_table['updated']). '</span>';
+	}
 		
-	echo '<tr>
-	<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
-	<td>' .$role1. ' ' .$role2. '</td>
-	<td>' .$spec['spec']. '</td>
-	<td>
-		<a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a>
-	</td>
-	<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>
-	<td>' .$legendaries['amount']. '</td>
-	<td>
-		<span title="' .number_format($fetch_general_data['ap']). '">' .number_format($fetch_general_data['ap']/1000000). 'M</span>
-	</td>
-	<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
-	<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
-	<td>' .$fetch_general_data['wq']. '</td>
-	<td>
-		<table>
-			<tbody>
-				<tr>
-					<td>' .$en_hc. '</td>
-					<td>' .$en_m. '</td>
-				</tr>
-			</tbody>
-		</table>
-	</td>
-	<td>
-		<table>
-			<tbody>
-				<tr>
-					<td>' .$tov_hc. '</td>
-					<td>' .$tov_m. '</td>
-				</tr>
-			</tbody>
-		</table>
-	</td>
-	<td>
-		<table>
-			<tbody>
-				<tr>
-					<td>' .$nh_hc. '</td>
-					<td>' .$nh_m. '</td>
-				</tr>
-			</tbody>
-		</table>
-	</td>
-	<td>
-		<table>
-			<tbody>
-				<tr>
-					<td>' .$tos_hc. '</td>
-					<td>' .$tos_m. '</td>
-				</tr>
-			</tbody>
-		</table>
-	</td>
-	<td>
-		<a href="?bench=' .$id['id']. '"><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" /></a>
-	</td>
-	<td>
-		<a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a>
-	</td>
-	<td>
-		<span id="' .$id['id']. '"><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" /><img src="img/update_gif.gif" alt="404" style="display: none; width: 21px;"/></span>
-	</td>	
+	echo '
+	<tr>
+		<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
+		<td>' .$last_update. '</td>
+		<td>' .date('d.m.y - H:i:s',$guild_table['logout']). '</td>
+		<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
+		<td>' .$spec['spec']. '</td>
+		<td><a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
+		<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>
+		<td>' .$legendaries['amount']. '</td>
+		<td><span title="' .number_format($fetch_general_data['ap']). '">' .number_format($fetch_general_data['ap']/1000000). 'M</span></td>
+		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
+		<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
+		<td>' .$fetch_general_data['wq']. '</td>
+		<td>
+			<table>
+				<tbody>
+					<tr>
+						<td>' .$en_hc. '</td>
+						<td>' .$en_m. '</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+		<td>
+			<table>
+				<tbody>
+					<tr>
+						<td>' .$tov_hc. '</td>
+						<td>' .$tov_m. '</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+		<td>
+			<table>
+				<tbody>
+					<tr>
+						<td>' .$nh_hc. '</td>
+						<td>' .$nh_m. '</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+		<td>
+			<table>
+				<tbody>
+					<tr>
+						<td>' .$tos_hc. '</td>
+						<td>' .$tos_m. '</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+		<td><a href="?bench=' .$id['id']. '"><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
+		<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
+		<td><span id="' .$id['id']. '"><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" /><img src="img/update_gif.gif" alt="404" style="display: none; width: 21px;"/></span></td>	
 	</tr>';
 }
 		
@@ -337,10 +339,6 @@ echo '</tbody>
 		
 // LEFT COLUMN BOTTOM
 include('bench.php');
-		
-// RIGHT COLUMN BOTTOM
-
-include('toplist.php');
 
 // SIDEBAR
 include('sidebar.php');

@@ -601,19 +601,21 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 								
 									if(in_array($encounter['name'], $encounter_names)) {
 										$wlogs_id_check = mysqli_fetch_array(mysqli_query($stream, "SELECT `wlogs_id` FROM `" .$table_name. "` WHERE `name` = '" .$character. "'"));
-										if($wlogs_id_check(['wlogs_id']) == '0') {
+										if($wlogs_id_check['wlogs_id'] == '0') {
 											// UNIQUE WLOGS CHAR ID
 											$wlogs_id = $data['0']['specs']['0']['data']['0']['character_id'];
 											$update_guild_table = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `wlogs_id` = '" .$wlogs_id. "' WHERE `name` = '" .$character. "'");
 										}
 									
+										// CONVERT WARCRAFTLOGS BOSS NAMES TO DB CONFORM VALUES
 										if($encounter['name'] == "Il'gynoth, Heart of Corruption") {
 											$encounter['name'] = "Il'gynoth";
 										}
 										elseif($encounter['name'] == 'Grand Magistrix Elisande') {
 											$encounter['name'] = 'Elisande';
 										}
-									
+										
+										// CONVERT WARCRAFTLOGS DIFFICULTY TO DB CONFORM VALUES									
 										if($encounter['difficulty'] == '1') {
 											$dif = 'lfr';
 										}
@@ -631,29 +633,31 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 									}
 								}
 							}
-						}										
+						}
+						
+						echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">Character successfully updated! Will reload page in 5 seconds.</span>';
+
 					}
 					else {
 						$update_guild_table = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `updated` = '" .time('now'). "' WHERE `name` = '" .$character. "'");
 
-						echo '<span style="color: coral; text-align: center;">According to the Armory, the character has not logged out since the last update.</span>';
+						echo '<span style="color: coral; text-align: center; font-size: 20px;">According to the Armory, the character has not logged out since the last update.<br />Refreshing page in 5 seconds.</span>';
 					}
 				}
 				else {
-						echo '<span style="color: coral; text-align: center;">According to the Armory, the character ' .$character. ' is not level 110.<br />Possible reasons: transfer, rename or simply the Armory bugged out.</span>';
+						echo '<span style="color: coral; text-align: center; font-size: 20px;">According to the Armory, the character ' .$character. ' is not level 110.<br />Possible reasons: transfer, rename or simply the Armory bugged out.<br />Refreshing page in 5 seconds.</span>';
 					}
 			}
 			else {
-				echo '<span style="color: coral; text-align: center;">According to the Armory, the character ' .$character. ' is no longer in your guild.</span>';
+				echo '<span style="color: coral; text-align: center; font-size: 20px;">According to the Armory, the character ' .$character. ' is no longer in your guild.<br />Refreshing page in 5 seconds.</span>';
 			}
 		}
 		else {
-			#echo '<span style="color: coral; text-align: center;">According to the Armory, this character can no longer be found.<br />Possible reasons: transfer, rename, inactivity or simply the Armory being under maintenance.</span>';
-			echo '<span style="color: black; text-align: center;">DEBUG<br />TABLE NAME: ' .$table_name. '<br />CHAR NAME: ' .$character. '<br />URL: <a href="' .$url. '">' .$url. '</a></span>';
+			echo '<span style="color: coral; text-align: center; font-size: 20px;">According to the Armory, this character can no longer be found.<br />Possible reasons: transfer, rename, inactivity or simply the Armory being under maintenance.<br />Refreshing page in 5 seconds.</span>';
 		}
 	}
 	else {
-		echo '<span style="color: coral; text-align: center;">The character has been updated within the last 5 minutes, please wait ' .(300-$timediff). ' seconds before trying to update again.</span>';
+		echo '<span style="color: coral; text-align: center; font-size: 20px;">The character has been updated within the last 5 minutes, please wait ' .(300-$timediff). ' seconds before trying to update again.<br />Refreshing page in 5 seconds.</span>';
 	}
 }
 
