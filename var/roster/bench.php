@@ -22,49 +22,22 @@ if($benchcheck['id'] != '') {
 		<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
 		<th>Mythics<br />(M+ Achv)</th>
 		<th>World Quests</th>
+		<th><a href="?eq">EQ</a></th>
 		<th><span title="Emerald Nightmare">EN</span><br />
-			<table>
-				<tbody>
-					<tr>
-						<td>HC</td>
-						<td>M</td>
-					</tr>
-				</tbody>
-			</table>
+			HC M
 		</th>
 		<th><span title="Trial of Valor">ToV</span><br />
-			<table>
-				<tbody>
-					<tr>
-						<td>HC</td>
-						<td>M</td>
-					</tr>
-				</tbody>
-			</table>
+			HC M
 		</th>
 		<th><span title="The Nighthold">NH</span><br />
-			<table>
-				<tbody>
-					<tr>
-						<td>HC</td>
-						<td>M</td>
-					</tr>
-				</tbody>
-			</table>
+			HC M
 		</th>
 		<th><span title="Tomb of Sargeras">ToS</span><br />
-			<table>
-				<tbody>
-					<tr>
-						<td>HC</td>
-						<td>M</td>
-					</tr>
-				</tbody>
-			</table>
-			</th>
-		<th>Unbench</th>
-		<th>Inspect</th>
-		<th>Kick</th>
+			HC M
+		</th>
+		<th></th>
+		<th></th>
+		<th></th>
 	</tr>
 	</thead>
 	<tbody>';
@@ -173,7 +146,7 @@ if($benchcheck['id'] != '') {
 		elseif($en_heroic_progress['en_hc'] == '0') {
 			$en_hc_color = 'coral';
 		}
-		$en_hc = '<span style="color: ' .$en_hc_color. ';">' .$en_heroic_progress['en_hc']. '</span>';
+		$en_hc = '<span style="color: ' .$en_hc_color. ';">' .$en_heroic_progress['en_hc']. ' |</span>';
 		
 		if($en_mythic_progress['en_m'] == '7') {
 			$en_m_color = 'yellowgreen';
@@ -196,7 +169,7 @@ if($benchcheck['id'] != '') {
 		elseif($tov_heroic_progress['tov_hc'] == '0') {
 			$tov_hc_color = 'coral';
 		}
-		$tov_hc = '<span style="color: ' .$tov_hc_color. ';">' .$tov_heroic_progress['tov_hc']. '</span>';
+		$tov_hc = '<span style="color: ' .$tov_hc_color. ';">' .$tov_heroic_progress['tov_hc']. ' |</span>';
 			
 		if($tov_mythic_progress['tov_m'] == '3') {
 			$tov_m_color = 'yellowgreen';
@@ -219,7 +192,7 @@ if($benchcheck['id'] != '') {
 		elseif($nh_heroic_progress['nh_hc'] == '0') {
 			$nh_hc_color = 'coral';
 		}
-		$nh_hc = '<span style="color: ' .$nh_hc_color. ';">' .$nh_heroic_progress['nh_hc']. '</span>';
+		$nh_hc = '<span style="color: ' .$nh_hc_color. ';">' .$nh_heroic_progress['nh_hc']. ' |</span>';
 	
 		if($nh_mythic_progress['nh_m'] == '10') {
 			$nh_m_color = 'yellowgreen';
@@ -230,7 +203,7 @@ if($benchcheck['id'] != '') {
 		elseif($nh_mythic_progress['nh_m'] == '0') {
 			$nh_m_color = 'coral';
 		}
-		$nh_m = '<span style="color: ' .$nh_m_color. ';">' .$nh_mythic_progress['nh_m']. '</span>';
+		$nh_m = '<span style="color: ' .$nh_m_color. ';">' .$nh_mythic_progress['nh_m']. ' </span>';
 	
 		// COLORIZATION OF INDIVIDUAL TOMB OF SARGERAS PROGRESS
 		if($tos_heroic_progress['tos_hc'] == '9') {
@@ -242,7 +215,7 @@ if($benchcheck['id'] != '') {
 		elseif($tos_heroic_progress['tos_hc'] == '0') {
 			$tos_hc_color = 'coral';
 		}
-		$tos_hc = '<span style="color: ' .$tos_hc_color. ';">' .$tos_heroic_progress['tos_hc']. '</span>';
+		$tos_hc = '<span style="color: ' .$tos_hc_color. ';">' .$tos_heroic_progress['tos_hc']. ' |</span>';
 		
 		if($tos_mythic_progress['tos_m'] == '9') {
 			$tos_m_color = 'yellowgreen';
@@ -253,7 +226,7 @@ if($benchcheck['id'] != '') {
 		elseif($tos_mythic_progress['tos_m'] == '0') {
 			$tos_m_color = 'coral';
 		}
-		$tos_m = '<span style="color: ' .$tos_m_color. ';">' .$tos_mythic_progress['tos_m']. '</span>';
+		$tos_m = '<span style="color: ' .$tos_m_color. ';">' .$tos_mythic_progress['tos_m']. ' </span>';
 	
 		if(time('now')-$guild_table['updated'] <= '86400') {
 			$last_update = '<span style="color: yellowgreen;">' .date('d.m.y - H:i:s', $guild_table['updated']). '</span>';
@@ -278,11 +251,19 @@ if($benchcheck['id'] != '') {
 			$ap = '' .number_format($fetch_general_data['ap']/1000000000000). ' T';
 		}
 		
+		// UPDATED TIMER CONVERTER
+		if(time('now')-$guild_table['updated'] <= '86400') {
+			$last_update = '<span style="color: yellowgreen;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
+		}
+		elseif(time('now')-$guild_table['updated'] > '86400') {
+			$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
+		}
+		
 		echo '
 		<tr>
 			<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
-			<td>' .$last_update. '</td>
-			<td>' .date('d.m.y - H:i:s',$guild_table['logout']). '</td>
+			<td>' .$last_update. ' <img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" /><img src="img/update_gif.gif" alt="404" style="display: none; width: 21px;"/></td>
+			<td>' .round(((time('now')-$guild_table['logout'])/3600), 2). ' hrs ago</td>
 			<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 			<td>' .$spec['spec']. '</td>
 			<td><a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
@@ -292,48 +273,13 @@ if($benchcheck['id'] != '') {
 			<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 			<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
 			<td>' .$fetch_general_data['wq']. '</td>
-			<td>
-				<table>
-					<tbody>
-						<tr>
-							<td>' .$en_hc. '</td>
-							<td>' .$en_m. '</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-			<td>
-				<table>
-					<tbody>
-						<tr>
-							<td>' .$tov_hc. '</td>
-							<td>' .$tov_m. '</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-			<td>
-				<table>
-					<tbody>
-						<tr>
-							<td>' .$nh_hc. '</td>
-							<td>' .$nh_m. '</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-			<td>
-				<table>
-					<tbody>
-						<tr>
-							<td>' .$tos_hc. '</td>
-							<td>' .$tos_m. '</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-			<td><a href="?unbench=' .$id['id']. '"><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
+			<td>' .$guild_table['eq']. '</td>
+			<td>' .$en_hc. '  ' .$en_m. '</td>
+			<td>' .$tov_hc. ' ' .$tov_m. '</td>
+			<td>' .$nh_hc. ' ' .$nh_m. '</td>
+			<td>' .$tos_hc. ' ' .$tos_m. '</td>
 			<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
+			<td><a href="?unbench=' .$id['id']. '"><img src="img/unbench.png" alt="404" title="Unbench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
 			<td><a href="?kick=' .$id['id']. '"><img src="img/kick.png" alt="404" title="Kick ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
 		</tr>';
 	}

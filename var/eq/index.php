@@ -227,6 +227,23 @@ echo '<p style="text-align: left; color: black; padding-left: 25px; padding-righ
 
 echo '<br /><h2 style="text-align: center; color: orange;"><a name="examples">Examples</a></h2><br />';
 
+$m0 = 131*$eq_weights['m0'];
+$m2_5 = 114 * $eq_weights['m2_5'];
+$m5_10 = 268 * $eq_weights['m5_10'];
+$m10_15 = 189 *$eq_weights['m10_15'];
+$m15 = 40 * $eq_weights['m15p'];
+$en_hc = 71 * $eq_weights['en_hc'];
+$en_m = ( 34 * $eq_weights['en_m'] );
+$tov_hc = ( 30 * $eq_weights['tov_hc'] );
+$tov_m = ( 1 * $eq_weights['tov_m'] );
+$nh_hc = ( 51 * $eq_weights['nh_hc'] );
+$nh_m = ( 5 * $eq_weights['nh_m'] );
+$tos_hc = ( 0 * $eq_weights['tos_hc'] );
+$tos_m = ( 0 * $eq_weights['tos_m'] );
+$itemlevel = ( 906 - 850 ) * $eq_weights['itemlevel'];
+$ap = ( ( ( ( 130621556 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5 ) / 2 ) * 3 );
+
+$sum = 1786+$m0+$m2_5+$m5_10+$m10_15+$m15+$en_hc+$en_m+$tov_hc+$tov_m+$nh_hc+$nh_m+$tos_hc+$tos_m+$itemlevel+$ap;
 echo '<div style="display: table; margin: auto;">
 	<table style="margin: 0 auto; color: black; float: left;">
 	<thead>
@@ -235,74 +252,108 @@ echo '<div style="display: table; margin: auto;">
 	</thead>
 	<tbody>
 	<tr><td>World Quests</td><td>1786</td><td>1786</td></tr>
-	<tr><td>M0</td><td>131</td><td>' . ( 131 * $eq_weights['m0'] ) . '</td></tr>
-	<tr><td>M2-5</td><td>114</td><td>' . ( 114 * $eq_weights['m2_5'] ) . '</td></tr>
-	<tr><td>M5-10</td><td>268</td><td>' . ( 268 * $eq_weights['m5_10'] ) . '</td></tr>
-	<tr><td>M10-15</td><td>189</td><td>' . ( 189 *$eq_weights['m10_15'] ) . '</td></tr>
-	<tr><td>M15+</td><td>40</td><td>' . ( 40 * $eq_weights['m15p'] ) . '</td></tr>
-	<tr><td>EN HC Boss Kills</td><td>71</td><td>' . ( 71 * $eq_weights['en_hc'] ) . '</td></tr>
-	<tr><td>EN M Boss Kills</td><td>34</td><td>' . ( 34 * $eq_weights['en_m'] ) . '</td></tr>
-	<tr><td>ToV HC Boss Kills</td><td>30</td><td>' . ( 30 * $eq_weights['tov_hc'] ) . '</td></tr>
-	<tr><td>ToV M Boss Kills</td><td>1</td><td>' . ( 1 * $eq_weights['tov_m'] ) . '</td></tr>
-	<tr><td>NH HC Boss Kills</td><td>51</td><td>' . ( 51 * $eq_weights['nh_hc'] ) . '</td></tr>
-	<tr><td>NH M Boss Kills</td><td>5</td><td>' . ( 5 * $eq_weights['nh_m'] ) . '</td></tr>
-	<tr><td>ToS HC Boss Kills</td><td>0</td><td>' . ( 0 * $eq_weights['tos_hc'] ) . '</td></tr>
-	<tr><td>ToS M Boss Kills</td><td>0</td><td>' . ( 0 * $eq_weights['tos_m'] ) . '</td></tr>
-	<tr><td>Itemlevel</td><td>906</td><td>' . ( 906 - 850 ) * $eq_weights['itemlevel'] . '</td></tr>
-	<tr><td>AP</td><td>130621556 at AK 25 as Demon Hunter</td><td>' . ( ( ( ( 130621556 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5 ) / 2 ) * 3 ) . '</td></tr>
-	<tr><td></td><td><b>total</b></td><td><b>' .(( 131 * $eq_weights['m0'] )+ ( 114 * $eq_weights['m2_5'] ) + ( 268 * $eq_weights['m5_10'] ) + ( 189 * $eq_weights['m10_15'] ) + ( 40 * $eq_weights['m15p'] ) + ( 71 * $eq_weights['en_hc'] ) + ( 34 * $eq_weights['en_m'] ) + ( 30 * $eq_weights['tov_hc'] ) + ( 1 * $eq_weights['tov_m'] ) + ( 51 * $eq_weights['nh_hc'] ) + ( 5 * $eq_weights['nh_m'] ) + ( 0 * $eq_weights['tos_hc'] ) + ( 0 * $eq_weights['tos_m'] ) + ( 906 - 850 ) * $eq_weights['itemlevel'] + ( 130621556 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5). '</b></td></tr>
+	<tr><td>M0</td><td>131</td><td>' .$m0. '</td></tr>
+	<tr><td>M2-5</td><td>114</td><td>' .$m2_5. '</td></tr>
+	<tr><td>M5-10</td><td>268</td><td>' .$m5_10. '</td></tr>
+	<tr><td>M10-15</td><td>189</td><td>' .$m10_15. '</td></tr>
+	<tr><td>M15+</td><td>40</td><td>' .$m15. '</td></tr>
+	<tr><td>EN HC Boss Kills</td><td>71</td><td>' .$en_hc. '</td></tr>
+	<tr><td>EN M Boss Kills</td><td>34</td><td>' .$en_m. '</td></tr>
+	<tr><td>ToV HC Boss Kills</td><td>30</td><td>' .$tov_hc. '</td></tr>
+	<tr><td>ToV M Boss Kills</td><td>1</td><td>' .$tov_m. '</td></tr>
+	<tr><td>NH HC Boss Kills</td><td>51</td><td>' .$nh_hc. '</td></tr>
+	<tr><td>NH M Boss Kills</td><td>5</td><td>' .$nh_m. '</td></tr>
+	<tr><td>ToS HC Boss Kills</td><td>0</td><td>' .$tos_hc. '</td></tr>
+	<tr><td>ToS M Boss Kills</td><td>0</td><td>' .$tos_m. '</td></tr>
+	<tr><td>Itemlevel</td><td>906</td><td>' .$itemlevel. '</td></tr>
+	<tr><td>AP</td><td>130621556 at AK 25 as Demon Hunter</td><td>' .$ap. '</td></tr>
+	<tr><td></td><td><b>total</b></td><td><b>' .$sum. '</b></td></tr>
 	</tbody>
-	</table>
+	</table>';
+
+$m0 = 431*$eq_weights['m0'];
+$m2_5 = 98 * $eq_weights['m2_5'];
+$m5_10 = 371 * $eq_weights['m5_10'];
+$m10_15 = 304 *$eq_weights['m10_15'];
+$m15 = 115 * $eq_weights['m15p'];
+$en_hc = 127 * $eq_weights['en_hc'];
+$en_m = ( 63 * $eq_weights['en_m'] );
+$tov_hc = ( 19 * $eq_weights['tov_hc'] );
+$tov_m = ( 3 * $eq_weights['tov_m'] );
+$nh_hc = ( 58 * $eq_weights['nh_hc'] );
+$nh_m = ( 17 * $eq_weights['nh_m'] );
+$tos_hc = ( 0 * $eq_weights['tos_hc'] );
+$tos_m = ( 0 * $eq_weights['tos_m'] );
+$itemlevel = ( 903 - 850 ) * $eq_weights['itemlevel'];
+$ap = ( 196133799 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5;
+$sum = 1613+$m0+$m2_5+$m5_10+$m10_15+$m15+$en_hc+$en_m+$tov_hc+$tov_m+$nh_hc+$nh_m+$tos_hc+$tos_m+$itemlevel+$ap;
 	
-	<table style="margin: 0 auto; color: black; float: left; margin-left: 15px;">
+	echo '<table style="margin: 0 auto; color: black; float: left; margin-left: 15px;">
 	<thead>
 	<tr>
 	<th>effort</th><th>amount</th><th>points</th>
 	</thead>
 	<tbody>
-	<tr><td>World Quests</td><td>1588</td><td>1588</td></tr>
-	<tr><td>M0</td><td>431</td><td>' . ( 431 * $eq_weights['m0'] ) . '</td></tr>
-	<tr><td>M2-5</td><td>98</td><td>' . ( 98 * $eq_weights['m2_5'] ) . '</td></tr>
-	<tr><td>M5-10</td><td>371</td><td>' . ( 371 * $eq_weights['m5_10'] ) . '</td></tr>
-	<tr><td>M10-15</td><td>304</td><td>' . ( 304 * $eq_weights['m10_15'] ) . '</td></tr>
-	<tr><td>M15+</td><td>115</td><td>' . ( 115 * $eq_weights['m15p'] ) . '</td></tr>
-	<tr><td>EN HC Boss Kills</td><td>127</td><td>' . ( 127 * $eq_weights['en_hc'] ) . '</td></tr>
-	<tr><td>EN M Boss Kills</td><td>63</td><td>' . ( 63 * $eq_weights['en_m'] ) . '</td></tr>
-	<tr><td>ToV HC Boss Kills</td><td>19</td><td>' . ( 19 * $eq_weights['tov_hc'] ) . '</td></tr>
-	<tr><td>ToV M Boss Kills</td><td>3</td><td>' . ( 3 * $eq_weights['tov_m'] ) . '</td></tr>
-	<tr><td>NH HC Boss Kills</td><td>58</td><td>' . ( 58 * $eq_weights['nh_hc'] ) . '</td></tr>
-	<tr><td>NH M Boss Kills</td><td>17</td><td>' . ( 17 * $eq_weights['nh_m'] ) . '</td></tr>
-	<tr><td>ToS HC Boss Kills</td><td>0</td><td>' . ( 0 * $eq_weights['tos_hc'] ) . '</td></tr>
-	<tr><td>ToS M Boss Kills</td><td>0</td><td>' . ( 0 * $eq_weights['tos_m'] ) . '</td></tr>
-	<tr><td>Itemlevel</td><td>903</td><td>' . ( 903 - 850 ) * $eq_weights['itemlevel'] . '</td></tr>
-	<tr><td>AP</td><td>196133799 at AK 25 as Monk</td><td>' . ( 196133799 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5 . '</td></tr>
-	<tr><td></td><td><b>total</b></td><td><b>' .(( 431 * $eq_weights['m0'] )+ ( 98 * $eq_weights['m2_5'] ) + ( 371 * $eq_weights['m5_10'] ) + ( 304 * $eq_weights['m10_15'] ) + ( 115 * $eq_weights['m15p'] ) + ( 127 * $eq_weights['en_hc'] ) + ( 63 * $eq_weights['en_m'] ) + ( 19 * $eq_weights['tov_hc'] ) + ( 3 * $eq_weights['tov_m'] ) + ( 56 * $eq_weights['nh_hc'] ) + ( 17 * $eq_weights['nh_m'] ) + ( 0 * $eq_weights['tos_hc'] ) + ( 0 * $eq_weights['tos_m'] ) + ( 903 - 850 ) * $eq_weights['itemlevel'] + ( 196133799 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5). '</b></td></tr>
+	<tr><td>World Quests</td><td>1613</td><td>1613</td></tr>
+	<tr><td>M0</td><td>131</td><td>' .$m0. '</td></tr>
+	<tr><td>M2-5</td><td>114</td><td>' .$m2_5. '</td></tr>
+	<tr><td>M5-10</td><td>268</td><td>' .$m5_10. '</td></tr>
+	<tr><td>M10-15</td><td>189</td><td>' .$m10_15. '</td></tr>
+	<tr><td>M15+</td><td>40</td><td>' .$m15. '</td></tr>
+	<tr><td>EN HC Boss Kills</td><td>71</td><td>' .$en_hc. '</td></tr>
+	<tr><td>EN M Boss Kills</td><td>34</td><td>' .$en_m. '</td></tr>
+	<tr><td>ToV HC Boss Kills</td><td>30</td><td>' .$tov_hc. '</td></tr>
+	<tr><td>ToV M Boss Kills</td><td>1</td><td>' .$tov_m. '</td></tr>
+	<tr><td>NH HC Boss Kills</td><td>51</td><td>' .$nh_hc. '</td></tr>
+	<tr><td>NH M Boss Kills</td><td>5</td><td>' .$nh_m. '</td></tr>
+	<tr><td>ToS HC Boss Kills</td><td>0</td><td>' .$tos_hc. '</td></tr>
+	<tr><td>ToS M Boss Kills</td><td>0</td><td>' .$tos_m. '</td></tr>
+	<tr><td>Itemlevel</td><td>906</td><td>' .$itemlevel. '</td></tr>
+	<tr><td>AP</td><td>196133799 at AK 25 as Monk</td><td>' .$ap. '</td></tr>
+	<tr><td></td><td><b>total</b></td><td><b>' .$sum. '</b></td></tr>
 	</tbody>
-	</table>
+	</table>';
 	
-	<table style="margin: 0 auto; color: black; float: left; margin-left: 15px;">
+$m0 = 122*$eq_weights['m0'];
+$m2_5 = 116 * $eq_weights['m2_5'];
+$m5_10 = 181 * $eq_weights['m5_10'];
+$m10_15 = 61 *$eq_weights['m10_15'];
+$m15 = 17 * $eq_weights['m15p'];
+$en_hc = 116 * $eq_weights['en_hc'];
+$en_m = ( 32 * $eq_weights['en_m'] );
+$tov_hc = ( 12 * $eq_weights['tov_hc'] );
+$tov_m = ( 1 * $eq_weights['tov_m'] );
+$nh_hc = ( 56 * $eq_weights['nh_hc'] );
+$nh_m = ( 11 * $eq_weights['nh_m'] );
+$tos_hc = ( 0 * $eq_weights['tos_hc'] );
+$tos_m = ( 0 * $eq_weights['tos_m'] );
+$itemlevel = ( 903 - 850 ) * $eq_weights['itemlevel'];
+$ap = ( 86789102 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5;
+$sum = 722+$m0+$m2_5+$m5_10+$m10_15+$m15+$en_hc+$en_m+$tov_hc+$tov_m+$nh_hc+$nh_m+$tos_hc+$tos_m+$itemlevel+$ap;
+	
+	echo '<table style="margin: 0 auto; color: black; float: left; margin-left: 15px;">
 	<thead>
 	<tr>
 	<th>effort</th><th>amount</th><th>points</th>
 	</thead>
 	<tbody>
-	<tr><td>World Quests</td><td>703</td><td>703</td></tr>
-	<tr><td>M0</td><td>122</td><td>' . ( 122 * $eq_weights['m0'] ) . '</td></tr>
-	<tr><td>M2-5</td><td>116</td><td>' . ( 116 * $eq_weights['m2_5'] ) . '</td></tr>
-	<tr><td>M5-10</td><td>181</td><td>' . ( 181 * $eq_weights['m5_10'] ) . '</td></tr>
-	<tr><td>M10-15</td><td>61</td><td>' . ( 61 * $eq_weights['m10_15'] ) . '</td></tr>
-	<tr><td>M15+</td><td>17</td><td>' . ( 17 * $eq_weights['m15p'] ) . '</td></tr>
-	<tr><td>EN HC Boss Kills</td><td>116</td><td>' . ( 116 * $eq_weights['en_hc'] ) . '</td></tr>
-	<tr><td>EN M Boss Kills</td><td>32</td><td>' . ( 32 * $eq_weights['en_m'] ) . '</td></tr>
-	<tr><td>ToV HC Boss Kills</td><td>12</td><td>' . ( 12 * $eq_weights['tov_hc'] ) . '</td></tr>
-	<tr><td>ToV M Boss Kills</td><td>1</td><td>' . ( 1 * $eq_weights['tov_m'] ) . '</td></tr>
-	<tr><td>NH HC Boss Kills</td><td>56</td><td>' . ( 56 * $eq_weights['nh_hc'] ) . '</td></tr>
-	<tr><td>NH M Boss Kills</td><td>11</td><td>' . ( 11 * $eq_weights['nh_m'] ) . '</td></tr>
-	<tr><td>ToS HC Boss Kills</td><td>0</td><td>' . ( 0 * $eq_weights['tos_hc'] ) . '</td></tr>
-	<tr><td>ToS M Boss Kills</td><td>0</td><td>' . ( 0 * $eq_weights['tos_m'] ) . '</td></tr>
-	<tr><td>Itemlevel</td><td>901</td><td>' . ( 901 - 850 ) * $eq_weights['itemlevel'] . '</td></tr>
-	<tr><td>AP</td><td>86789102 at AK 25 as Shaman</td><td>' . ( 86789102 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5 . '</td></tr>
-	<tr><td></td><td><b>total</b></td><td><b>' .(( 122 * $eq_weights['m0'] )+ ( 116 * $eq_weights['m2_5'] ) + ( 181 * $eq_weights['m5_10'] ) + ( 61 * $eq_weights['m10_15'] ) + ( 17 * $eq_weights['m15p'] ) + ( 116 * $eq_weights['en_hc'] ) + ( 32 * $eq_weights['en_m'] ) + ( 12 * $eq_weights['tov_hc'] ) + ( 1 * $eq_weights['tov_m'] ) + ( 56 * $eq_weights['nh_hc'] ) + ( 11 * $eq_weights['nh_m'] ) + ( 0 * $eq_weights['tos_hc'] ) + ( 0 * $eq_weights['tos_m'] ) + ( 901 - 850 ) * $eq_weights['itemlevel'] + ( 86789102 / 2228766330 ) * ( 2228766330 / 300000 * 1431 / 150 ) / 2.5). '</b></td></tr>
+	<tr><td>World Quests</td><td>722</td><td>722</td></tr>
+	<tr><td>M0</td><td>131</td><td>' .$m0. '</td></tr>
+	<tr><td>M2-5</td><td>114</td><td>' .$m2_5. '</td></tr>
+	<tr><td>M5-10</td><td>268</td><td>' .$m5_10. '</td></tr>
+	<tr><td>M10-15</td><td>189</td><td>' .$m10_15. '</td></tr>
+	<tr><td>M15+</td><td>40</td><td>' .$m15. '</td></tr>
+	<tr><td>EN HC Boss Kills</td><td>71</td><td>' .$en_hc. '</td></tr>
+	<tr><td>EN M Boss Kills</td><td>34</td><td>' .$en_m. '</td></tr>
+	<tr><td>ToV HC Boss Kills</td><td>30</td><td>' .$tov_hc. '</td></tr>
+	<tr><td>ToV M Boss Kills</td><td>1</td><td>' .$tov_m. '</td></tr>
+	<tr><td>NH HC Boss Kills</td><td>51</td><td>' .$nh_hc. '</td></tr>
+	<tr><td>NH M Boss Kills</td><td>5</td><td>' .$nh_m. '</td></tr>
+	<tr><td>ToS HC Boss Kills</td><td>0</td><td>' .$tos_hc. '</td></tr>
+	<tr><td>ToS M Boss Kills</td><td>0</td><td>' .$tos_m. '</td></tr>
+	<tr><td>Itemlevel</td><td>903</td><td>' .$itemlevel. '</td></tr>
+	<tr><td>AP</td><td>86789102 at AK 25 as Shaman</td><td>' .$ap. '</td></tr>
+	<tr><td></td><td><b>total</b></td><td><b>' .$sum. '</b></td></tr>
 	</tbody>
 	</table>
 	</div>';

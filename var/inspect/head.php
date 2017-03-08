@@ -2,6 +2,19 @@
 
 $general_char_data = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
 
+if($general_char_data['wlogs_id'] != '0') {
+	$warcraftlogs_link = '<a href="https://www.warcraftlogs.com/rankings/character/' .$general_char_data['wlogs_id']. '/latest" title="WarcraftLogs profile link">
+			<span style="font-family: Avenir, Arial, sans-serif; color: rgb(30,180,135); text-shadow: 2px 2px 10px black;">WARCRAFT</span>
+			<span style="font-family: Avenir, Arial, sans-serif; color: rgb(230,230,230); text-shadow: 2px 2px 10px black;">LOGS</span>
+		</a>';
+}
+elseif($general_char_data['wlogs_id'] == '0') {
+	$warcraftlogs_link = '<a href="https://www.warcraftlogs.com/rankings/character/' .$general_char_data['wlogs_id']. '/latest" title="WarcraftLogs profile could not be found" style="pointer-events: none;">
+			<span style="font-family: Avenir, Arial, sans-serif; color: grey; text-shadow: 2px 2px 10px black;">WARCRAFT</span>
+			<span style="font-family: Avenir, Arial, sans-serif; color: grey; text-shadow: 2px 2px 10px black;">LOGS</span>
+		</a>';
+}
+
 switch ($general_char_data['role1']) {
 	case '0':
 		$role1 = 'Primary role (log role): <img src="img/dps.png" alt="404" title="Primary: Melee DPS" style="width: 16px; vertical-align: sub;" />';
@@ -39,7 +52,7 @@ if(time('now')-$general_char_data['updated'] <= '86400') {
 	$last_update = '<span style="color: yellowgreen;">' .date('d.m.y - H:i:s', $general_char_data['updated']). '</span>';
 }
 else {
-	$last_udpate = '<span style="color: coral;">' .date('d.m.y - H:i:s', $general_char_data['updated']). '</span>';
+	$last_update = '<span style="color: coral;">' .date('d.m.y - H:i:s', $general_char_data['updated']). '</span>';
 }
 		
 if($general_char_data['name'] == '') {
@@ -72,10 +85,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 	<div style="padding-right: 6px; text-align: right;">
 		<a href="" style="text-transform: uppercase; font-size: 20px; color: orange;" title="AGS External View">AGS External View</a> | 
 		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;" title="WoWProgress profile link">WoWProgress</a> | 
-		<a href="https://www.warcraftlogs.com/rankings/character/' .$general_char_data['wlogs_id']. '/latest" title="WarcraftLogs profile link">
-			<span style="font-family: Avenir, Arial, sans-serif; color: rgb(30,180,135); text-shadow: 2px 2px 10px black;">WARCRAFT</span>
-			<span style="font-family: Avenir, Arial, sans-serif; color: rgb(230,230,230); text-shadow: 2px 2px 10px black;">LOGS</span>
-		</a>
+		' .$warcraftlogs_link. '
 	</div>
 </div>
 
@@ -90,17 +100,17 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 		<select onchange="this.form.submit()" name="compare">
 		<option selected disabled>select</option>';
 		
-		echo '<optgroup label="Same class">';
-		
-		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
-		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
-		}		
-		
-		echo '</optgroup>
-		<optgroup label="Same spec">';
+		echo '<optgroup label="Same spec">';
 		
 		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' AND `spec` = '" .$general_char_data['spec']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		echo '</optgroup>
+		<optgroup label="Same class">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
 		while($compare_chars = mysqli_fetch_array($sql)) {
 			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
 		}

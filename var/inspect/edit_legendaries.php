@@ -67,7 +67,7 @@ if(!isset($_POST['add_legendaries']) && !isset($_GET['rmv'])) {
 	<form action="" method="POST">
 	<select multiple name="add_legendaries[]" style="width: auto; height: 30vh;">';	
 	
-	$legendaries = mysqli_query($stream, "SELECT * FROM `ovw_legendaries` WHERE `class` = '0' OR `class` = '" .$class['class']. "' ORDER BY `name` ASC");
+	$legendaries = mysqli_query($stream, "SELECT * FROM `ovw_legendaries` WHERE `class` = '0' OR `class` LIKE '%" .$class['class']. "%' ORDER BY `name` ASC");
 	$potential = array();
 	
 	while($potential_leg = mysqli_fetch_array($legendaries)) {

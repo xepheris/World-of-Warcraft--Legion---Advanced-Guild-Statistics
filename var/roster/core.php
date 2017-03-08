@@ -21,14 +21,56 @@ while($id_fetcher = mysqli_fetch_array($all_ids)) {
 	array_push($id_array, $id_fetcher['id']);
 }
 
+$itemlevel_array = array();
+$alvl_array = array();
+$wq_array = array();
+$ap_array = array();
+$itemlevel_off_array = array();
+$ak_array = array();
+$mythic_array = array();
+$en_hc_array = array();
+$en_m_array = array();
+$tov_hc_array = array();
+$tov_m_array = array();
+$nh_hc_array = array();
+$nh_m_array = array();
+$tos_hc_array = array();
+$tos_m_array = array();
+
 foreach($id_array as $id) {
 	$sql.= "
 	SELECT `ilvl_on`, `ilvl_off`, `alvl`, `ap`, `wq` FROM `" .$_SESSION['table']. "_" .$id. "_general` UNION ALL ";
+	
+	$avg = mysqli_fetch_array(mysqli_query($stream, "SELECT `ilvl_on`, `ilvl_off`, `ap`, `wq`, `ak`, `alvl` FROM `" .$_SESSION['table']. "_" .$id. "_general`"));
+	array_push($itemlevel_array, $avg['ilvl_on']);
+	array_push($itemlevel_off_array, $avg['ilvl_off']);
+	array_push($ap_array, $avg['ap']);
+	array_push($wq_array, $avg['wq']);
+	array_push($alvl_array, $avg['alvl']);
+	array_push($ak_array, $avg['ak']);
+	$avg_dungeon = mysqli_fetch_array(mysqli_query($stream, "SELECT SUM(`mythic`) AS `mythics` FROM `" .$_SESSION['table']. "_" .$id. "_dungeons`"));
+	array_push($mythic_array, $avg_dungeon['mythics']);
+	$avg_raid1_hc = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `en_hc` FROM `" .$_SESSION['table']. "_" .$id. "_raid_1` WHERE `heroic` > '0'"));
+	$avg_raid1_m = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `en_m` FROM `" .$_SESSION['table']. "_" .$id. "_raid_1` WHERE `mythic` > '0'"));
+	$avg_raid2_hc = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tov_hc` FROM `" .$_SESSION['table']. "_" .$id. "_raid_2` WHERE `heroic` > '0'"));
+	$avg_raid2_m = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tov_m` FROM `" .$_SESSION['table']. "_" .$id. "_raid_2` WHERE `mythic` > '0'"));
+	$avg_raid3_hc = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `nh_hc` FROM `" .$_SESSION['table']. "_" .$id. "_raid_3` WHERE `heroic` > '0'"));
+	$avg_raid3_m = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `nh_m` FROM `" .$_SESSION['table']. "_" .$id. "_raid_3` WHERE `mythic` > '0'"));
+	$avg_raid4_hc = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_hc` FROM `" .$_SESSION['table']. "_" .$id. "_raid_4` WHERE `heroic` > '0'"));
+	$avg_raid4_m = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_m` FROM `" .$_SESSION['table']. "_" .$id. "_raid_5` WHERE `mythic` > '0'"));
+	array_push($en_hc_array, $avg_raid1_hc['en_hc']);
+	array_push($en_m_array, $avg_raid1_m['en_m']);
+	array_push($tov_hc_array, $avg_raid2_hc['tov_hc']);
+	array_push($tov_m_array, $avg_raid2_m['tov_m']);
+	array_push($nh_hc_array, $avg_raid3_hc['nh_hc']);
+	array_push($nh_m_array, $avg_raid3_m['nh_m']);
+	array_push($tos_hc_array, $avg_raid4_hc['tos_hc']);
+	array_push($tos_m_array, $avg_raid4_m['tos_m']);
 }
 
 $sql = substr($sql, '0', '-11');
 
-$cap_array = array('`ilvl_on`', '`ilvl_off`', '`alvl`', '`ap`', '`wq`');
+$cap_array = array('`ilvl_on`', '`ilvl_off`', '`alvl`', '`ap`', '`wq`', '`eq`');
 
 foreach($cap_array as $cap) {
 	if($cap == '`ilvl_on`') {
@@ -36,42 +78,54 @@ foreach($cap_array as $cap) {
 		$query = $sql.$add;
 		$query = mysqli_fetch_array(mysqli_query($stream, $query));
 		$itemlevel_equipped_cap = $query['ilvl_on'];
-		
-		$itemlevel_equipped_avg = '';
 	}
-	
-	if($cap == '`ilvl_off`') {
+	elseif($cap == '`ilvl_off`') {
 		$add = " ORDER BY " .$cap. " DESC LIMIT 1";
 		$query = $sql.$add;
 		$query = mysqli_fetch_array(mysqli_query($stream, $query));
 		$itemlevel_bags_cap = $query['ilvl_off'];		
-		$itemlevel_bags_avg = '';
-	}
-	
-	if($cap == '`alvl`') {
+	}	
+	elseif($cap == '`alvl`') {
 		$add = " ORDER BY " .$cap. " DESC LIMIT 1";
 		$query = $sql.$add;
 		$query = mysqli_fetch_array(mysqli_query($stream, $query));
 		$alvl_cap = $query['alvl'];
-		$alvl_avg = '';
-	}
-	
-	if($cap == '`ap`') {
+	}	
+	elseif($cap == '`ap`') {
 		$add = " ORDER BY " .$cap. " DESC LIMIT 1";
 		$query = $sql.$add;
 		$query = mysqli_fetch_array(mysqli_query($stream, $query));
 		$ap_cap = $query['ap'];
-		$ap_avg = '';
-	}
-	
-	if($cap == '`wq`') {
+	}	
+	elseif($cap == '`wq`') {
 		$add = " ORDER BY " .$cap. " DESC LIMIT 1";
 		$query = $sql.$add;
 		$query = mysqli_fetch_array(mysqli_query($stream, $query));
 		$wq_cap = $query['wq'];
-		$wq_avg = '';
-	}	
+	}
 }
+
+$eq_avg = mysqli_fetch_array(mysqli_query($stream, "SELECT SUM(`eq`) AS `eq_sum` FROM `" .$table_name. "`"));
+$eq_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` AS `eq_cap` FROM `" .$table_name. "` ORDER BY `eq` DESC LIMIT 1"));
+
+// AP READABILITY CONVERTER
+	if(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) <= '3') {
+		$ap_arraysum = number_format(array_sum($ap_array)/$_SESSION['tracked']);
+	}
+	elseif(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) > '3' && strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) < '7') {
+		$ap_arraysum = '' .number_format(array_sum($ap_array)/$_SESSION['tracked']/1000). ' K';
+	}
+	elseif(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) > '6' && strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) < '10') {
+		$ap_arraysum = '' .number_format(array_sum($ap_array)/$_SESSION['tracked']/1000000). ' M';
+	}
+	elseif(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) > '10' && strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) < '14') {
+		$ap_arraysum = '' .number_format(array_sum($ap_array)/$_SESSION['tracked']/1000000000). ' B';
+	}
+	elseif(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) > '14' && strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) < '18') {
+		$ap_arraysum = '' .number_format(array_sum($ap_array)/$_SESSION['tracked']/1000000000000). ' T';
+	}
+
+$active_chars = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) as `active` FROM `" .$table_name. "` WHERE `status` = '0'"));
 
 echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
 ' .$error. '
@@ -92,68 +146,44 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; paddi
 	<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
 	<th>Mythics<br />(M+ Achv)</th>
 	<th>World Quests</th>
+	<th><a href="?eq" title="What is EQ?">EQ</th>
 	<th><span title="Emerald Nightmare">EN</span><br />
-		<table>
-			<tbody>
-				<tr>
-					<td>HC</td>
-					<td>M</td>
-				</tr>
-			</tbody>
-		</table>
+		HC M
 	</th>
 	<th><span title="Trial of Valor">ToV</span><br />
-		<table>
-			<tbody>
-				<tr>
-					<td>HC</td>
-					<td>M</td>
-				</tr>
-			</tbody>
-		</table>
+		HC M
 	</th>
 	<th><span title="The Nighthold">NH</span><br />
-		<table>
-			<tbody>
-				<tr>
-					<td>HC</td>
-					<td>M</td>
-				</tr>
-			</tbody>
-		</table>
+		HC M
 	</th>
 	<th><span title="Tomb of Sargeras">ToS</span><br />
-		<table>
-			<tbody>
-				<tr>
-					<td>HC</td>
-					<td>M</td>
-				</tr>
-			</tbody>
-		</table>
+		HC M
 	</th>
-	<th>Bench</th>
-	<th>Inspect</th>
+	<th></th>
+	<th></th>
 </tr>
 </thead>
 <tbody>
-<tr>
-	<td>' .$_SESSION['tracked']. ' characters</td>
+<tr style="border-bottom: 1px solid white;">
+	<td>' .$active_chars['active']. ' characters</td>
 	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
-	<td>Itemlevel</td>
-	<td>Leg</td>
-	<td>AP</td>
-	<td>AL (AK)</td>
-	<td>Mythics</td>
-	<td>WQ</td>
-	<td>EN</td>
-	<td>TOV</td>
-	<td>NH</td>
-	<td>TOS</td>
+	<td>' .round(array_sum($itemlevel_array)/$active_chars['active'], 2). ' (' .round(array_sum($itemlevel_off_array)/$active_chars['active'], 2). ')</td>
+	<td></td>
+	<td>' .$ap_arraysum. '</td>
+	<td>' .round(array_sum($alvl_array)/$active_chars['active'], 2). ' (' .round(array_sum($ak_array)/$active_chars['active'], 2). ')</td>
+	<td>' .round(array_sum($mythic_array)/$active_chars['active'], 0). '</td>
+	<td>' .round(array_sum($wq_array)/$active_chars['active'], 0). '</td>
+	<td>' .round($eq_avg['eq_sum']/$active_chars['active'], 2). '</td>
+	<td>' .round(array_sum($en_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($en_m_array)/$active_chars['active'], 1). '</td>
+	<td>' .round(array_sum($tov_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tov_m_array)/$active_chars['active'], 1). '</td>
+	<td>' .round(array_sum($nh_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($nh_m_array)/$active_chars['active'], 1). '</td>
+	<td>' .round(array_sum($tos_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tos_m_array)/$active_chars['active'], 1). '</td>
+	<td></td>
+	<td></td>
 </tr>';
 
 // BUILD ROSTER TABLE
@@ -269,7 +299,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif($en_heroic_progress['en_hc'] == '0') {
 		$en_hc_color = 'coral';
 	}
-	$en_hc = '<span style="color: ' .$en_hc_color. ';">' .$en_heroic_progress['en_hc']. '</span>';
+	$en_hc = '<span style="color: ' .$en_hc_color. ';">' .$en_heroic_progress['en_hc']. ' |</span>';
 	
 	if($en_mythic_progress['en_m'] == '7') {
 		$en_m_color = 'yellowgreen';
@@ -292,7 +322,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif($tov_heroic_progress['tov_hc'] == '0') {
 		$tov_hc_color = 'coral';
 	}
-	$tov_hc = '<span style="color: ' .$tov_hc_color. ';">' .$tov_heroic_progress['tov_hc']. '</span>';
+	$tov_hc = '<span style="color: ' .$tov_hc_color. ';">' .$tov_heroic_progress['tov_hc']. ' |</span>';
 			
 	if($tov_mythic_progress['tov_m'] == '3') {
 		$tov_m_color = 'yellowgreen';
@@ -315,7 +345,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif($nh_heroic_progress['nh_hc'] == '0') {
 		$nh_hc_color = 'coral';
 	}
-	$nh_hc = '<span style="color: ' .$nh_hc_color. ';">' .$nh_heroic_progress['nh_hc']. '</span>';
+	$nh_hc = '<span style="color: ' .$nh_hc_color. ';">' .$nh_heroic_progress['nh_hc']. ' |</span>';
 	
 	if($nh_mythic_progress['nh_m'] == '10') {
 		$nh_m_color = 'yellowgreen';
@@ -338,7 +368,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif($tos_heroic_progress['tos_hc'] == '0') {
 		$tos_hc_color = 'coral';
 	}
-	$tos_hc = '<span style="color: ' .$tos_hc_color. ';">' .$tos_heroic_progress['tos_hc']. '</span>';
+	$tos_hc = '<span style="color: ' .$tos_hc_color. ';">' .$tos_heroic_progress['tos_hc']. ' |</span>';
 	
 	if($tos_mythic_progress['tos_m'] == '9') {
 		$tos_m_color = 'yellowgreen';
@@ -356,8 +386,8 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	if(time('now')-$guild_table['updated'] <= '86400') {
 		$last_update = '<span style="color: yellowgreen;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
 	}
-	else {
-		$last_udpate = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
+	elseif(time('now')-$guild_table['updated'] > '86400') {
+		$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
 	}
 	
 	// AP READABILITY CONVERTER
@@ -390,7 +420,12 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	if($fetch_general_data['ap'] == $ap_cap) {
 		$ap = '<span style="color: yellowgreen;">' .$ap. '</span>';
 	}
-	
+	if($guild_table['eq'] == $eq_cap['eq_cap']) {
+		$eq = '<span style="color: yellowgreen;">' .$guild_table['eq']. '</span>';
+	}
+	elseif($fetch_general_data['eq'] != $eq_cap['eq_cap']) {
+		$eq = $guild_table['eq'];
+	}
 	// ACTUAL TABLE ROW CONTENT
 	echo '
 	<tr>
@@ -401,51 +436,16 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td>' .$spec['spec']. '</td>
 		<td><a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 		<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>
-		<td>' .$legendaries['amount']. '</td>
+		<td><a href="?edit_legendaries=' .$id['id']. '">' .$legendaries['amount']. '</a></td>
 		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 		<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
 		<td>' .$fetch_general_data['wq']. '</td>
-		<td>
-			<table>
-				<tbody>
-					<tr>
-						<td>' .$en_hc. '</td>
-						<td>' .$en_m. '</td>
-					</tr>
-				</tbody>
-			</table>
-		</td>
-		<td>
-			<table>
-				<tbody>
-					<tr>
-						<td>' .$tov_hc. '</td>
-						<td>' .$tov_m. '</td>
-					</tr>
-				</tbody>
-			</table>
-		</td>
-		<td>
-			<table>
-				<tbody>
-					<tr>
-						<td>' .$nh_hc. '</td>
-						<td>' .$nh_m. '</td>
-					</tr>
-				</tbody>
-			</table>
-		</td>
-		<td>
-			<table>
-				<tbody>
-					<tr>
-						<td>' .$tos_hc. '</td>
-						<td>' .$tos_m. '</td>
-					</tr>
-				</tbody>
-			</table>
-		</td>
+		<td>' .$eq. '</td>
+		<td>' .$en_hc. '  ' .$en_m. '</td>
+		<td>' .$tov_hc. ' ' .$tov_m. '</td>
+		<td>' .$nh_hc. ' ' .$nh_m. '</td>
+		<td>' .$tos_hc. ' ' .$tos_m. '</td>
 		<td><a href="?bench=' .$id['id']. '"><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
 		<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
 	</tr>';
