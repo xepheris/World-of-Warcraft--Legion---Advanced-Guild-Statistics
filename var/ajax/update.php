@@ -48,6 +48,10 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 					
 					if($logout > $old['logout']) {
 						
+						// PREPARE PAST VALUES
+						$char_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `name` = '" .$character. "'"));
+						$past_values = mysqli_fetch_array(mysqli_query($stream, "SELECT `ilvl_on`, `ilvl_off`, `ap`, `wq`, `m2`, `m5`, `m10`, `m15` FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_general`"));
+											
 						// ALL ITEMS
 						$items = array('head', 'neck', 'shoulder', 'back', 'chest', 'wrist', 'hands', 'waist', 'legs', 'feet', 'finger1', 'finger2', 'trinket1', 'trinket2');
 						$legendary = array();
@@ -420,7 +424,7 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						// GENERAL INFORMATION
 						$update_guild_table = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `logout` = '" .$logout. "', `updated` = '" .time('now'). "', `talents` = '" .$talent_calc_var. "' WHERE `name` = '" .$character. "'");
 						
-						$general_table = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_general` SET
+						$general_table = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_general` SET
 						`ilvl_on` = '" .$ilvlaverage. "',
 						`ilvl_off` = '" .$ilvlaveragebags. "',
 						`alvl` = '" .$artifact_level. "',
@@ -445,7 +449,7 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						
 						foreach($items as $id => $item) {
 							
-							$insert = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_equip` SET
+							$insert = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_equip` SET
 							`itemid` = '" .${'' .$item. '_id'}. "',
 							`itemlevel` = '" .${'' .$item. '_ilvl'}. "',
 							`bonus` = '" .${'' .$item. '_bonus'}. "',
@@ -457,15 +461,15 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 					
 						// LEGENDARIES INSERTION
 						foreach($legendary as $item) {
-							$insert = mysqli_query($stream, "INSERT INTO `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_legendaries` (`item_id`) VALUES('" .$item. "')");
+							$insert = mysqli_query($stream, "INSERT INTO `" .$_SESSION['table']. "_" .$char_id['id']. "_legendaries` (`item_id`) VALUES('" .$item. "')");
 						}
 					
 						// WEAPONS INSERTION
 						if($mhrelic1 != '') {
 							
-							$old_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` LIMIT 1"));
+							$old_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_weapons` LIMIT 1"));
 							
-							$update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` SET
+							$update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_weapons` SET
 							`item_id` = '" .$weapon['weapon_id']. "',
 							`itemlevel` = '" .$mhilvl. "',
 							`bonus` = '" .$mh_bonus. "',
@@ -480,9 +484,9 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						}
 						elseif($ohrelic1 != '') {
 							
-							$old_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` LIMIT 1"));
+							$old_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_weapons` LIMIT 1"));
 							
-							$update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_weapons` SET
+							$update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_weapons` SET
 							`item_id` = '" .$weapon['weapon_id']. "',
 							`itemlevel` = '" .$ohilvl. "',
 							`bonus` = '" .$oh_bonus. "',
@@ -498,55 +502,55 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 					
 						// RAID INSERTION
 					
-						$raid_1_update_1 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_1. "', `normal` = '" .$en_normal_1. "', `heroic` = '" .$en_heroic_1. "', `mythic` = '" .$en_mythic_1. "' WHERE `id` = '1'");
-						$raid_1_update_2 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_2. "', `normal` = '" .$en_normal_2. "', `heroic` = '" .$en_heroic_2. "', `mythic` = '" .$en_mythic_2. "' WHERE `id` = '2'");
-						$raid_1_update_3 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_3. "', `normal` = '" .$en_normal_3. "', `heroic` = '" .$en_heroic_3. "', `mythic` = '" .$en_mythic_3. "' WHERE `id` = '3'");
-						$raid_1_update_4 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_4. "', `normal` = '" .$en_normal_4. "', `heroic` = '" .$en_heroic_4. "', `mythic` = '" .$en_mythic_4. "' WHERE `id` = '4'");
-						$raid_1_update_5 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_5. "', `normal` = '" .$en_normal_5. "', `heroic` = '" .$en_heroic_5. "', `mythic` = '" .$en_mythic_5. "' WHERE `id` = '5'");
-						$raid_1_update_6 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_6. "', `normal` = '" .$en_normal_6. "', `heroic` = '" .$en_heroic_6. "', `mythic` = '" .$en_mythic_6. "' WHERE `id` = '6'");
-						$raid_1_update_7 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_7. "', `normal` = '" .$en_normal_7. "', `heroic` = '" .$en_heroic_7. "', `mythic` = '" .$en_mythic_7. "' WHERE `id` = '7'");
+						$raid_1_update_1 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_1. "', `normal` = '" .$en_normal_1. "', `heroic` = '" .$en_heroic_1. "', `mythic` = '" .$en_mythic_1. "' WHERE `id` = '1'");
+						$raid_1_update_2 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_2. "', `normal` = '" .$en_normal_2. "', `heroic` = '" .$en_heroic_2. "', `mythic` = '" .$en_mythic_2. "' WHERE `id` = '2'");
+						$raid_1_update_3 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_3. "', `normal` = '" .$en_normal_3. "', `heroic` = '" .$en_heroic_3. "', `mythic` = '" .$en_mythic_3. "' WHERE `id` = '3'");
+						$raid_1_update_4 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_4. "', `normal` = '" .$en_normal_4. "', `heroic` = '" .$en_heroic_4. "', `mythic` = '" .$en_mythic_4. "' WHERE `id` = '4'");
+						$raid_1_update_5 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_5. "', `normal` = '" .$en_normal_5. "', `heroic` = '" .$en_heroic_5. "', `mythic` = '" .$en_mythic_5. "' WHERE `id` = '5'");
+						$raid_1_update_6 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_6. "', `normal` = '" .$en_normal_6. "', `heroic` = '" .$en_heroic_6. "', `mythic` = '" .$en_mythic_6. "' WHERE `id` = '6'");
+						$raid_1_update_7 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_1` SET `lfr` = '" .$en_lfr_7. "', `normal` = '" .$en_normal_7. "', `heroic` = '" .$en_heroic_7. "', `mythic` = '" .$en_mythic_7. "' WHERE `id` = '7'");
 					
-						$raid_2_update_1 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_2` SET `lfr` = '" .$tov_lfr_1. "', `normal` = '" .$tov_normal_1. "', `heroic` = '" .$tov_heroic_1. "', `mythic` = '" .$tov_mythic_1. "' WHERE `id` = '1'");
-						$raid_2_update_2 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_2` SET `lfr` = '" .$tov_lfr_2. "', `normal` = '" .$tov_normal_2. "', `heroic` = '" .$tov_heroic_2. "', `mythic` = '" .$tov_mythic_2. "' WHERE `id` = '2'");
-						$raid_2_update_3 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_2` SET `lfr` = '" .$tov_lfr_3. "', `normal` = '" .$tov_normal_3. "', `heroic` = '" .$tov_heroic_3. "', `mythic` = '" .$tov_mythic_3. "' WHERE `id` = '3'");
+						$raid_2_update_1 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_2` SET `lfr` = '" .$tov_lfr_1. "', `normal` = '" .$tov_normal_1. "', `heroic` = '" .$tov_heroic_1. "', `mythic` = '" .$tov_mythic_1. "' WHERE `id` = '1'");
+						$raid_2_update_2 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_2` SET `lfr` = '" .$tov_lfr_2. "', `normal` = '" .$tov_normal_2. "', `heroic` = '" .$tov_heroic_2. "', `mythic` = '" .$tov_mythic_2. "' WHERE `id` = '2'");
+						$raid_2_update_3 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_2` SET `lfr` = '" .$tov_lfr_3. "', `normal` = '" .$tov_normal_3. "', `heroic` = '" .$tov_heroic_3. "', `mythic` = '" .$tov_mythic_3. "' WHERE `id` = '3'");
 					
-						$raid_3_update_1 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_1. "', `normal` = '" .$nh_normal_1. "', `heroic` = '" .$nh_heroic_1. "', `mythic` = '" .$nh_mythic_1. "' WHERE `id` = '1'");
-						$raid_3_update_2 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_2. "', `normal` = '" .$nh_normal_2. "', `heroic` = '" .$nh_heroic_2. "', `mythic` = '" .$nh_mythic_2. "' WHERE `id` = '2'");
-						$raid_3_update_3 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_3. "', `normal` = '" .$nh_normal_3. "', `heroic` = '" .$nh_heroic_3. "', `mythic` = '" .$nh_mythic_3. "' WHERE `id` = '3'");
-						$raid_3_update_4 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_4. "', `normal` = '" .$nh_normal_4. "', `heroic` = '" .$nh_heroic_4. "', `mythic` = '" .$nh_mythic_4. "' WHERE `id` = '4'");
-						$raid_3_update_5 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_5. "', `normal` = '" .$nh_normal_5. "', `heroic` = '" .$nh_heroic_5. "', `mythic` = '" .$nh_mythic_5. "' WHERE `id` = '5'");
-						$raid_3_update_6 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_6. "', `normal` = '" .$nh_normal_6. "', `heroic` = '" .$nh_heroic_6. "', `mythic` = '" .$nh_mythic_6. "' WHERE `id` = '6'");
-						$raid_3_update_7 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_7. "', `normal` = '" .$nh_normal_7. "', `heroic` = '" .$nh_heroic_7. "', `mythic` = '" .$nh_mythic_7. "' WHERE `id` = '7'");
-						$raid_3_update_8 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_8. "', `normal` = '" .$nh_normal_8. "', `heroic` = '" .$nh_heroic_8. "', `mythic` = '" .$nh_mythic_8. "' WHERE `id` = '8'");
-						$raid_3_update_9 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_9. "', `normal` = '" .$nh_normal_9. "', `heroic` = '" .$nh_heroic_9. "', `mythic` = '" .$nh_mythic_9. "' WHERE `id` = '9'");
-						$raid_3_update_10 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_10. "', `normal` = '" .$nh_normal_10. "', `heroic` = '" .$nh_heroic_10. "', `mythic` = '" .$nh_mythic_10. "' WHERE `id` = '10'");
+						$raid_3_update_1 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_1. "', `normal` = '" .$nh_normal_1. "', `heroic` = '" .$nh_heroic_1. "', `mythic` = '" .$nh_mythic_1. "' WHERE `id` = '1'");
+						$raid_3_update_2 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_2. "', `normal` = '" .$nh_normal_2. "', `heroic` = '" .$nh_heroic_2. "', `mythic` = '" .$nh_mythic_2. "' WHERE `id` = '2'");
+						$raid_3_update_3 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_3. "', `normal` = '" .$nh_normal_3. "', `heroic` = '" .$nh_heroic_3. "', `mythic` = '" .$nh_mythic_3. "' WHERE `id` = '3'");
+						$raid_3_update_4 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_4. "', `normal` = '" .$nh_normal_4. "', `heroic` = '" .$nh_heroic_4. "', `mythic` = '" .$nh_mythic_4. "' WHERE `id` = '4'");
+						$raid_3_update_5 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_5. "', `normal` = '" .$nh_normal_5. "', `heroic` = '" .$nh_heroic_5. "', `mythic` = '" .$nh_mythic_5. "' WHERE `id` = '5'");
+						$raid_3_update_6 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_6. "', `normal` = '" .$nh_normal_6. "', `heroic` = '" .$nh_heroic_6. "', `mythic` = '" .$nh_mythic_6. "' WHERE `id` = '6'");
+						$raid_3_update_7 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_7. "', `normal` = '" .$nh_normal_7. "', `heroic` = '" .$nh_heroic_7. "', `mythic` = '" .$nh_mythic_7. "' WHERE `id` = '7'");
+						$raid_3_update_8 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_8. "', `normal` = '" .$nh_normal_8. "', `heroic` = '" .$nh_heroic_8. "', `mythic` = '" .$nh_mythic_8. "' WHERE `id` = '8'");
+						$raid_3_update_9 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_9. "', `normal` = '" .$nh_normal_9. "', `heroic` = '" .$nh_heroic_9. "', `mythic` = '" .$nh_mythic_9. "' WHERE `id` = '9'");
+						$raid_3_update_10 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_3` SET `lfr` = '" .$nh_lfr_10. "', `normal` = '" .$nh_normal_10. "', `heroic` = '" .$nh_heroic_10. "', `mythic` = '" .$nh_mythic_10. "' WHERE `id` = '10'");
 
-						#$raid_4_update_1 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_1. "', `normal` = '" .$tos_normal_1. "', `heroic` = '" .$tos_heroic_1. "', `mythic` = '" .$tos_mythic_1. "' WHERE `id` = '1'");
-						#$raid_4_update_2 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_2. "', `normal` = '" .$tos_normal_2. "', `heroic` = '" .$tos_heroic_2. "', `mythic` = '" .$tos_mythic_2. "' WHERE `id` = '2'");
-						#$raid_4_update_3 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_3. "', `normal` = '" .$tos_normal_3. "', `heroic` = '" .$tos_heroic_3. "', `mythic` = '" .$tos_mythic_3. "' WHERE `id` = '3'");
-						#$raid_4_update_4 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_4. "', `normal` = '" .$tos_normal_4. "', `heroic` = '" .$tos_heroic_4. "', `mythic` = '" .$tos_mythic_4. "' WHERE `id` = '4'");
-						#$raid_4_update_5 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_5. "', `normal` = '" .$tos_normal_5. "', `heroic` = '" .$tos_heroic_5. "', `mythic` = '" .$tos_mythic_5. "' WHERE `id` = '5'");
-						#$raid_4_update_6 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_6. "', `normal` = '" .$tos_normal_6. "', `heroic` = '" .$tos_heroic_6. "', `mythic` = '" .$tos_mythic_6. "' WHERE `id` = '6'");
-						#$raid_4_update_7 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_7. "', `normal` = '" .$tos_normal_7. "', `heroic` = '" .$tos_heroic_7. "', `mythic` = '" .$tos_mythic_7. "' WHERE `id` = '7'");
-						#$raid_4_update_8 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_8. "', `normal` = '" .$tos_normal_8. "', `heroic` = '" .$tos_heroic_8. "', `mythic` = '" .$tos_mythic_8. "' WHERE `id` = '8'");
-						#$raid_4_update_9 = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_9. "', `normal` = '" .$tos_normal_9. "', `heroic` = '" .$tos_heroic_9. "', `mythic` = '" .$tos_mythic_9. "' WHERE `id` = '9'");
+						#$raid_4_update_1 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_1. "', `normal` = '" .$tos_normal_1. "', `heroic` = '" .$tos_heroic_1. "', `mythic` = '" .$tos_mythic_1. "' WHERE `id` = '1'");
+						#$raid_4_update_2 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_2. "', `normal` = '" .$tos_normal_2. "', `heroic` = '" .$tos_heroic_2. "', `mythic` = '" .$tos_mythic_2. "' WHERE `id` = '2'");
+						#$raid_4_update_3 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_3. "', `normal` = '" .$tos_normal_3. "', `heroic` = '" .$tos_heroic_3. "', `mythic` = '" .$tos_mythic_3. "' WHERE `id` = '3'");
+						#$raid_4_update_4 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_4. "', `normal` = '" .$tos_normal_4. "', `heroic` = '" .$tos_heroic_4. "', `mythic` = '" .$tos_mythic_4. "' WHERE `id` = '4'");
+						#$raid_4_update_5 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_5. "', `normal` = '" .$tos_normal_5. "', `heroic` = '" .$tos_heroic_5. "', `mythic` = '" .$tos_mythic_5. "' WHERE `id` = '5'");
+						#$raid_4_update_6 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_6. "', `normal` = '" .$tos_normal_6. "', `heroic` = '" .$tos_heroic_6. "', `mythic` = '" .$tos_mythic_6. "' WHERE `id` = '6'");
+						#$raid_4_update_7 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_7. "', `normal` = '" .$tos_normal_7. "', `heroic` = '" .$tos_heroic_7. "', `mythic` = '" .$tos_mythic_7. "' WHERE `id` = '7'");
+						#$raid_4_update_8 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_8. "', `normal` = '" .$tos_normal_8. "', `heroic` = '" .$tos_heroic_8. "', `mythic` = '" .$tos_mythic_8. "' WHERE `id` = '8'");
+						#$raid_4_update_9 = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_4` SET `lfr` = '" .$tos_lfr_9. "', `normal` = '" .$tos_normal_9. "', `heroic` = '" .$tos_heroic_9. "', `mythic` = '" .$tos_mythic_9. "' WHERE `id` = '9'");
 					
 					
 						// DUNGEON INSERTION
 						
-						$dungeon_1_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$brh_normal. "', `heroic` = '" .$brh_heroic. "', `mythic` = '" .$brh_mythic. "' WHERE `id` = '1')");
-						#$dungeon_2_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$cen_normal. "', `heroic` = '" .$cen_heroic. "', `mythic` = '" .$cen_mythic. "' WHERE `id` = '2')");
-						$dungeon_3_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `mythic` = '" .$cos_mythic. "' WHERE `id` = '3')");
-						$dungeon_4_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$dht_normal. "', `heroic` = '" .$dht_heroic. "', `mythic` = '" .$dht_mythic. "' WHERE `id` = '4')");
-						$dungeon_5_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$eoa_normal. "', `heroic` = '" .$eoa_heroic. "', `mythic` = '" .$eoa_mythic. "' WHERE `id` = '5')");
-						$dungeon_6_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$hov_normal. "', `heroic` = '" .$hov_heroic. "', `mythic` = '" .$hov_mythic. "' WHERE `id` = '6')");
-						#$dungeon_7_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `mythic` = '" .$lkz_mythic. "' WHERE `id` = '7')");
-						$dungeon_8_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$mos_normal. "', `heroic` = '" .$mos_heroic. "', `mythic` = '" .$mos_mythic. "' WHERE `id` = '8')");
-						$dungeon_9_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$nl_normal. "', `heroic` = '" .$nl_heroic. "', `mythic` = '" .$nl_mythic. "' WHERE `id` = '9')");
-						$dungeon_10_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `mythic` = '" .$arc_mythic. "' WHERE `id` = '10')");
-						$dungeon_11_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$vh_normal. "', `heroic` = '" .$vh_heroic. "', `mythic` = '" .$vh_mythic. "' WHERE `id` = '11')");
-						#$dungeon_12_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `mythic` = '" .$ukz_mythic. "' WHERE `id` = '12')");
-						$dungeon_13_update = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` SET `normal` = '" .$votw_normal. "', `heroic` = '" .$votw_heroic. "', `mythic` = '" .$votw_mythic. "' WHERE `id` = '13')");				
+						$dungeon_1_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$brh_normal. "', `heroic` = '" .$brh_heroic. "', `mythic` = '" .$brh_mythic. "' WHERE `id` = '1')");
+						#$dungeon_2_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$cen_normal. "', `heroic` = '" .$cen_heroic. "', `mythic` = '" .$cen_mythic. "' WHERE `id` = '2')");
+						$dungeon_3_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `mythic` = '" .$cos_mythic. "' WHERE `id` = '3')");
+						$dungeon_4_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$dht_normal. "', `heroic` = '" .$dht_heroic. "', `mythic` = '" .$dht_mythic. "' WHERE `id` = '4')");
+						$dungeon_5_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$eoa_normal. "', `heroic` = '" .$eoa_heroic. "', `mythic` = '" .$eoa_mythic. "' WHERE `id` = '5')");
+						$dungeon_6_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$hov_normal. "', `heroic` = '" .$hov_heroic. "', `mythic` = '" .$hov_mythic. "' WHERE `id` = '6')");
+						#$dungeon_7_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `mythic` = '" .$lkz_mythic. "' WHERE `id` = '7')");
+						$dungeon_8_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$mos_normal. "', `heroic` = '" .$mos_heroic. "', `mythic` = '" .$mos_mythic. "' WHERE `id` = '8')");
+						$dungeon_9_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$nl_normal. "', `heroic` = '" .$nl_heroic. "', `mythic` = '" .$nl_mythic. "' WHERE `id` = '9')");
+						$dungeon_10_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `mythic` = '" .$arc_mythic. "' WHERE `id` = '10')");
+						$dungeon_11_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$vh_normal. "', `heroic` = '" .$vh_heroic. "', `mythic` = '" .$vh_mythic. "' WHERE `id` = '11')");
+						#$dungeon_12_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `mythic` = '" .$ukz_mythic. "' WHERE `id` = '12')");
+						$dungeon_13_update = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_dungeons` SET `normal` = '" .$votw_normal. "', `heroic` = '" .$votw_heroic. "', `mythic` = '" .$votw_mythic. "' WHERE `id` = '13')");				
 					
 						// EQ CALCULATION
 						
@@ -632,11 +636,30 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 										elseif($encounter['difficulty'] == '5') {
 											$dif = 'mythic';
 										}
-									
-										$query = mysqli_query($stream, "UPDATE `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_raid_" .$internal_table_var. "` SET `" .$dif. "_parse` = '" .round($encounter['specs']['0']['data']['0']['percent'], 0). "', `" .$dif. "_log` = '" .$encounter['specs']['0']['data']['0']['report_code']. "' WHERE `name` = '" .addslashes($encounter['name']). "'");
+
+										$query = mysqli_query($stream, "UPDATE `" .$_SESSION['table']. "_" .$char_id['id']. "_raid_" .$internal_table_var. "` SET `" .$dif. "_parse` = '" .round($encounter['specs']['0']['data']['0']['percent'], 0). "', `" .$dif. "_log` = '" .$encounter['specs']['0']['data']['0']['report_code']. "' WHERE `name` = '" .addslashes($encounter['name']). "'");
 									}
 								}
 							}
+						}
+						
+						// CREATE PAST TABLE
+						$past_table = mysqli_query($stream, "CREATE TABLE IF NOT EXISTS `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`id` int(11) NOT NULL AUTO_INCREMENT, `timestamp` int(10) NOT NULL, `ilvl_on` mediumint(4) NOT NULL, `ilvl_bags` mediumint(4) NOT NULL, `ap` bigint(16) NOT NULL, `wq` mediumint(5) NOT NULL, `m2` smallint(4) NOT NULL, `m5` smallint(4) NOT NULL, `m10` smallint(4) NOT NULL, `m15` smallint(4) NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1 ;");
+						
+						// PREVENT DATA INSERTION WHEN PLAYER LOGGED ON AND OFF AGAIN AND DIDN'T DO ANYTHING (HELLO LEGION APP)
+						$previous_update = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past` ORDER BY `timestamp` DESC LIMIT 1"));
+						
+						if(
+							$previous_update['ilvl_on'] < $ilvlaverage ||
+							$previous_update['ilvl_off'] < $ilvlaveragebags ||
+							$previous_update['ap'] < $artifact_power ||
+							$previous_update['m2'] < $mythic_plus2 ||
+							$previous_update['m5'] < $mythic_plus5 ||
+							$previous_update['m10'] < $mythic_plus10 ||
+							$previous_update['m15'] < $mythic_plus15 ||
+							$previous_update['wq'] < $world_quests) {
+							
+							$insert = mysqli_query($stream, "INSERT INTO `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`timestamp`, `ilvl_on`, `ilvl_bags`, `ap`, `wq`, `m2`, `m5`, `m10`, `m15`) VALUES ('" .$old['logout']. "', '" .$past_values['ilvl_on']. "', '" .$past_values['ilvl_off']. "', '" .$past_values['ap']. "', '" .$past_values['wq']. "', '" .$past_values['m2']. "' , '" .$past_values['m5']. "', '" .$past_values['m10']. "', '" .$past_values['m10']. "')");							
 						}
 						
 						echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">Character successfully updated! Will reload page in 5 seconds.</span>';

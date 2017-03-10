@@ -1,7 +1,7 @@
 <?php
 
 echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 15px; text-align: center; float: left; background-color: darkslategrey; box-shadow: 0px 10px 5px 10px rgba(0,0,0,0.5);  -moz-box-shadow: 0px 10px 5px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 5px 10px rgba(0,0,0,0.5);">
-	<span style="color: orange; font-size: 26px;">Advanced Guild Statistics</span>
+	<a href="http://artifactpower.info/dev/"><span style="color: orange; font-size: 26px;">Advanced Guild Statistics</span></a>
 	<br />
 	<br />';
 
@@ -31,6 +31,7 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 
 		echo '<span style="font-size: 18px; color: white;"><a href="">Update</a> |
 		<a href="?import">Import</a> |
 		<a href="?compare">Compare</a> |
+		<a href="?weekly">Weekly Statistics</a> |
 		<a href="?share">Share</a> |
 		<a href="?settings">Settings</a> |
 		<a href="?contact">Contact</a> |
