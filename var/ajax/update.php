@@ -659,7 +659,7 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 							$previous_update['m15'] < $mythic_plus15 ||
 							$previous_update['wq'] < $world_quests) {
 							
-							$insert = mysqli_query($stream, "INSERT INTO `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`timestamp`, `ilvl_on`, `ilvl_bags`, `ap`, `wq`, `m2`, `m5`, `m10`, `m15`) VALUES ('" .$old['logout']. "', '" .$past_values['ilvl_on']. "', '" .$past_values['ilvl_off']. "', '" .$past_values['ap']. "', '" .$past_values['wq']. "', '" .$past_values['m2']. "' , '" .$past_values['m5']. "', '" .$past_values['m10']. "', '" .$past_values['m10']. "')");							
+							$insert = mysqli_query($stream, "INSERT INTO `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`timestamp`, `ilvl_on`, `ilvl_bags`, `ap`, `wq`, `m2`, `m5`, `m10`, `m15`) VALUES ('" .$old['logout']. "', '" .$past_values['ilvl_on']. "', '" .$past_values['ilvl_off']. "', '" .$past_values['ap']. "', '" .$past_values['wq']. "', '" .$past_values['m2']. "' , '" .$past_values['m5']. "', '" .$past_values['m10']. "', '" .$past_values['m15']. "')");							
 						}
 						
 						echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">Character successfully updated! Will reload page in 5 seconds.</span>';
