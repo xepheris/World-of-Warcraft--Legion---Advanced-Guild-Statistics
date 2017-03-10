@@ -304,7 +304,7 @@ elseif(isset($_GET['edit_legendaries']) && is_numeric($_GET['edit_legendaries'])
 	include('inspect/edit_legendaries.php');
 }
 
-// EQ explanation
+// EQ EXPLANATION
 
 elseif(isset($_GET['eq'])) {
 	
@@ -312,6 +312,24 @@ elseif(isset($_GET['eq'])) {
 	
 	include('eq/index.php');	
 	
+}
+
+// WEEKLY STATISTICS
+
+elseif(isset($_GET['weekly'])) {
+	
+	include('stream.php');
+	
+	include('weekly/.php');
+	
+}
+
+// COMPARE
+
+elseif(isset($_GET['compare'])) {
+	
+	include('stream.php');
+		
 }
 
 // INSPECT

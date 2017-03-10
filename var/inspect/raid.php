@@ -101,7 +101,8 @@ for($i = '1'; $i <= '7'; $i++) {
 		$m_log = '<a href="https://www.warcraftlogs.com/reports/' .$kills['mythic_log']. '" style="color: ' .$color. ';" title="log link">(' .$kills['mythic_parse']. '%)</a>';
 	}
 	
-	echo '<td>
+	echo '
+	<td>
 		<span title="' .$kills['lfr']. ' LFR ' .$lfr_log. ' ' .$kills['normal']. ' N ' .$n_log. '">
 			<span style="color: ' .$color_hc. ';">' .$kills['heroic']. ' HC</span> ' .$hc_log. '
 			<span style="color: ' .$color_m. ';">' .$kills['mythic']. ' M</span> ' .$m_log. '
@@ -210,7 +211,8 @@ for($i = '1'; $i <= '3'; $i++) {
 		$m_log = '<a href="https://www.warcraftlogs.com/reports/' .$kills['mythic_log']. '" style="color: ' .$color. ';" title="log link">(' .$kills['mythic_parse']. '%)</a>';
 	}
 	
-	echo '<td>
+	echo '
+	<td>
 		<span title="' .$kills['lfr']. ' LFR ' .$lfr_log. ' ' .$kills['normal']. ' N ' .$n_log. '">
 			<span style="color: ' .$color_hc. ';">' .$kills['heroic']. ' HC</span> ' .$hc_log. '
 			<span style="color: ' .$color_m. ';">' .$kills['mythic']. ' M</span> ' .$m_log. '
@@ -319,7 +321,8 @@ for($i = '1'; $i <= '10'; $i++) {
 		$m_log = '<a href="https://www.warcraftlogs.com/reports/' .$kills['mythic_log']. '" style="color: ' .$color. ';" title="log link">(' .$kills['mythic_parse']. '%)</a>';
 	}
 		
-	echo '<td>
+	echo '
+	<td>
 		<span title="' .$kills['lfr']. ' LFR ' .$lfr_log. ' ' .$kills['normal']. ' N ' .$n_log. '">
 			<span style="color: ' .$color_hc. ';">' .$kills['heroic']. ' HC</span> ' .$hc_log. '
 			<span style="color: ' .$color_m. ';">' .$kills['mythic']. ' M</span> ' .$m_log. '
@@ -427,7 +430,8 @@ for($i = '1'; $i <= '9'; $i++) {
 		$m_log = '<a href="https://www.warcraftlogs.com/reports/' .$kills['mythic_log']. '" style="color: ' .$color. ';" title="log link">(' .$kills['mythic_parse']. '%)</a>';
 	}
 		
-	echo '<td>
+	echo '
+	<td>
 		<span title="' .$kills['lfr']. ' LFR ' .$lfr_log. ' ' .$kills['normal']. ' N ' .$n_log. '">
 			<span style="color: ' .$color_hc. ';">' .$kills['heroic']. ' HC</span> ' .$hc_log. '
 			<span style="color: ' .$color_m. ';">' .$kills['mythic']. ' M</span> ' .$m_log. '

@@ -97,7 +97,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 		Last update: ' .$last_update. ' <img src="img/update.png" alt="404" title="Update ' .$general_char_data['name']. '" style="width: 16px;" id="' .$_GET['inspect']. '" onclick="update(this.id);" /><br />
 		Last known logout: ' .date('d.m.y - H:i:s', $general_char_data['logout']). '<br />
 		Compare with... <form action="" method="get" style="display: inline;">
-		<select onchange="this.form.submit()" name="compare">
+		<select name="compare1" required>
 		<option selected disabled>select</option>';
 		
 		echo '<optgroup label="Same spec">';
@@ -125,6 +125,95 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 		
 		echo '</optgroup>
 		</select>
+		
+		
+		<select name="compare2">
+		<option selected disabled>select</option>';
+		
+		echo '<optgroup label="Same spec">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' AND `spec` = '" .$general_char_data['spec']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		echo '</optgroup>
+		<optgroup label="Same class">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		echo '</optgroup>
+		<optgroup label="Everyone else">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` != '" .$general_char_data['class']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}	
+		
+		echo '</optgroup>
+		</select>
+		
+		<select name="compare3">
+		<option selected disabled>select</option>';
+		
+		echo '<optgroup label="Same spec">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' AND `spec` = '" .$general_char_data['spec']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		echo '</optgroup>
+		<optgroup label="Same class">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		echo '</optgroup>
+		<optgroup label="Everyone else">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` != '" .$general_char_data['class']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}	
+		
+		echo '</optgroup>
+		</select>
+		
+		<select name="compare4">
+		<option selected disabled>select</option>';
+		
+		echo '<optgroup label="Same spec">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' AND `spec` = '" .$general_char_data['spec']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		echo '</optgroup>
+		<optgroup label="Same class">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}
+		
+		echo '</optgroup>
+		<optgroup label="Everyone else">';
+		
+		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` != '" .$general_char_data['class']. "' ORDER BY `name` ASC");
+		while($compare_chars = mysqli_fetch_array($sql)) {
+			echo '<option value="' .$_GET['inspect']. 'and' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
+		}	
+		
+		echo '</optgroup>
+		</select>
+		<button type="submit">Compare</button>
 		</form>
 		</span>
 	</div>
