@@ -384,11 +384,7 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		// KNOWN LEGENDARIES
 		
 		include('inspect/legendaries.php');
-		
-		// WARCRAFTLOGS
-		
-		include('inspect/wlogs.php');
-		
+				
 		// RAIDPROGRESS
 		
 		include('inspect/raid.php');
