@@ -131,6 +131,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 </div>';
 
 $general_table = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
+$fetch_eq = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
 
 // ALVL THRESHOLDS
 if($general_table['alvl'] == '54') {
@@ -156,6 +157,7 @@ elseif($general_table['ak'] < '12') {
 
 echo '<div style="width: 50%; height: auto; text-align: right; float: left; color: orange; font-size: 16px; padding-top: 10px;">
 	<div style="padding-right: 6px;">
+		<span style="font-size: 20px;">' .$fetch_eq['eq']. ' <a href="?eq" title="What is EQ?">Effort Quota</a></span><br />
 		' .number_format($general_table['ap']). ' AP collected | Artifact Level ' .$alvl. ' | Artifact Knowledge ' .$ak. '<br />
 		' .$general_table['wq']. ' World Quests completed
 	</div>
