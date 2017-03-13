@@ -235,7 +235,7 @@ foreach($_GET as $user_id) {
 		]);
 	
 		var options = {
-			width: 380,
+			width: 370,
 			height: 137,
 			legend: { position: "top", maxLines: 3 },
 			bar: { groupWidth: "30%" },
@@ -248,7 +248,7 @@ foreach($_GET as $user_id) {
 	}
 	</script>
 	
-	<div id="g' .$user_id. '" style="width: 380px; height: 137px; margin: 0 auto;"></div>
+	<div id="g' .$user_id. '" style="width: 370px; height: 137px; margin: 0 auto;"></div>
 	<br />
 	<span style="color: orange; font-size: 20px;">Reputation</span>
 	<table style="margin: 0 auto; text-align: center; margin-top: 15px; width: 90%;">
