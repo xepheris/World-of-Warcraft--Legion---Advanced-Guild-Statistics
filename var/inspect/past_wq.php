@@ -26,7 +26,9 @@ if($check > '1') {
 				}
 			}
 
-			echo '
+			$data = mysqli_fetch_array(mysqli_query($stream, "SELECT `wq` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
+	
+			echo '["today", ' .$data['wq']. '],
 			]);
 
 			var options = {

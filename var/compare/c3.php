@@ -56,8 +56,8 @@ foreach($_GET as $user_id) {
 		<a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$general_char_data['talents']. '" title="WoW Talent Calculator link">' .$spec['spec']. '</a>
 		<span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span>
 		<br />
-		<a href="" style="text-transform: uppercase; color: orange;" title="AGS External View">AGS External View</a> | 
-		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;" title="WoWProgress profile link">WoWProgress</a> | 
+		<a href="" style="text-transform: uppercase; color: orange;" title="AGS External View">AGS External View</a><br />
+		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;" title="WoWProgress profile link">WoWProgress</a><br />
 		' .$warcraftlogs_link. '
 		<br />
 		Last update: ' .$last_update. ' <img src="img/update.png" alt="404" title="Update ' .$general_char_data['name']. '" style="width: 16px;" id="' .$user_id. '" onclick="update(this.id);" /><br />

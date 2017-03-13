@@ -186,34 +186,6 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 		echo '</optgroup>
 		</select>
 		
-		<select name="compare4">
-		<option selected disabled>select</option>';
-		
-		echo '<optgroup label="Same spec">';
-		
-		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' AND `spec` = '" .$general_char_data['spec']. "' ORDER BY `name` ASC");
-		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
-		}
-		
-		echo '</optgroup>
-		<optgroup label="Same class">';
-		
-		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` = '" .$general_char_data['class']. "' ORDER BY `name` ASC");
-		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
-		}
-		
-		echo '</optgroup>
-		<optgroup label="Everyone else">';
-		
-		$sql = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `id` != '" .$_GET['inspect']. "' AND `class` != '" .$general_char_data['class']. "' ORDER BY `name` ASC");
-		while($compare_chars = mysqli_fetch_array($sql)) {
-			echo '<option value="' .$compare_chars['id']. '">' .$compare_chars['name']. '</option>';
-		}	
-		
-		echo '</optgroup>
-		</select>
 		<button type="submit">Compare</button>
 		</form>
 		</span>
@@ -245,11 +217,20 @@ elseif($general_table['ak'] < '12') {
 	$ak = '<span style="color: coral;">' .$general_table['ak']. '</span>';
 }
 
+// CHECK FOR PREVIOUS VALUES
+$past_check = mysqli_fetch_array(mysqli_query($stream, "SELECT `ap`, `wq` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` ORDER BY `timestamp` DESC LIMIT 1"));
+if($past_check['ap'] != '' && $general_table['ap'] != $past_cehck['ap']) {
+	$past_ap = '<span style="color: yellowgreen;" title="last update: ' .number_format($past_check['ap']). '">(+' .round(($general_table['ap']/$past_check['ap'])-1, 3). '%)</span>';
+}
+if($past_check['wq'] != '' && $general_table['wq'] != $past_check['wq']) {
+	$past_wq = '<span style="color: yellowgreen;" title="last update: ' .$past_check['wq']. '">(+' .($general_table['wq']-$past_check['wq']). ')</span>';
+}
+
 echo '<div style="width: 50%; height: auto; text-align: right; float: left; color: orange; font-size: 16px; padding-top: 10px;">
 	<div style="padding-right: 6px;">
 		<span style="font-size: 20px;">' .$fetch_eq['eq']. ' <a href="?eq" title="What is EQ?">Effort Quota</a></span><br />
-		' .number_format($general_table['ap']). ' AP collected | Artifact Level ' .$alvl. ' | Artifact Knowledge ' .$ak. '<br />
-		' .$general_table['wq']. ' World Quests completed
+		' .number_format($general_table['ap']). ' ' .$past_ap. ' AP collected | Artifact Level ' .$alvl. ' | Artifact Knowledge ' .$ak. '<br />
+		' .$general_table['wq']. ' ' .$past_wq. ' World Quests completed
 	</div>
 </div>
 </div>

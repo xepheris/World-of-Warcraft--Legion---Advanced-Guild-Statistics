@@ -27,8 +27,10 @@ if($check > '1') {
 					echo '["' .date('d M', $max). '", ' .$indiv_day['ap']. '],';
 				}
 			}
-
-			echo '
+	
+			$data = mysqli_fetch_array(mysqli_query($stream, "SELECT `ap` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
+	
+			echo '["today", ' .$data['ap']. '],
 			]);
 
         	var options = {

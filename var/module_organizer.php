@@ -401,7 +401,7 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 		// PAST ITEMLEVEL GRAPH
 		
 		include('inspect/past_ilvl.php');
-		
+				
 	}
 	
 	echo '</div>';

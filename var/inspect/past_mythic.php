@@ -29,7 +29,13 @@ if($check > '1') {
 				}
 			}
 
-			echo '
+			$data = mysqli_fetch_array(mysqli_query($stream, "SELECT `m2`, `m5`, `m10`, `m15` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
+	
+			$m2_to_m5 = $data['m2']-$data['m5'];
+			$m5_to_m10 = $data['m5']-$data['m10'];
+			$m10_to_m15 = $data['m10']-$data['m15'];
+	
+			echo '["today", ' .$m2_to_m5. ', ' .$m5_to_m10. ', ' .$m10_to_m15. ', ' .$data['m15']. '],
 			]);
 
 			var options = {
