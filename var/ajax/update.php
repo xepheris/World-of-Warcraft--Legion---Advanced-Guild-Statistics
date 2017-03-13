@@ -651,7 +651,7 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						
 						if(
 							$previous_update['ilvl_on'] < $ilvlaverage ||
-							$previous_update['ilvl_off'] < $ilvlaveragebags ||
+							$previous_update['ilvl_bags'] < $ilvlaveragebags ||
 							$previous_update['ap'] < $artifact_power ||
 							$previous_update['m2'] < $mythic_plus2 ||
 							$previous_update['m5'] < $mythic_plus5 ||

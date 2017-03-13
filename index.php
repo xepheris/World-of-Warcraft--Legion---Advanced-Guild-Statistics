@@ -54,6 +54,7 @@ if(isset($_POST['gname']) && isset($_POST['region']) && isset($_POST['realm']) &
 
 // LOGIN PROCESSING
 if(isset($_POST['guild']) && isset($_POST['pw'])) {
+	
 	include('var/stream.php');
 	
 	$check = mysqli_fetch_array(mysqli_query($stream, "SELECT `password` FROM `ovw_guilds` WHERE `id` = '" .$_POST['guild']. "'"));

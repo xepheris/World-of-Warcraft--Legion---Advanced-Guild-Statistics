@@ -332,10 +332,7 @@ elseif(isset($_GET['source']) && is_numeric($_GET['source']) && isset($_GET['com
 	
 	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 	
-	if(isset($_GET['compare4']) && is_numeric($_GET['compare4']) && isset($_GET['compare3']) && is_numeric($_GET['compare3']) && isset($_GET['compare2']) && is_numeric($_GET['compare2'])) {
-		include('compare/c4.php');
-	}
-	elseif(!isset($_GET['compare4']) && isset($_GET['compare3']) && is_numeric($_GET['compare3']) && isset($_GET['compare2']) && is_numeric($_GET['compare2'])) {
+	if(!isset($_GET['compare4']) && isset($_GET['compare3']) && is_numeric($_GET['compare3']) && isset($_GET['compare2']) && is_numeric($_GET['compare2'])) {
 		include('compare/c3.php');
 	}
 	elseif(!isset($_GET['compare4']) && !isset($_GET['compare3']) && isset($_GET['compare2']) && is_numeric($_GET['compare2'])) {
@@ -412,7 +409,7 @@ elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
 
 // ROSTER OVERVIEW
 else {	
-	
+		
 	echo '<div style="width: 80%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 
 	// AUTO REDIRECT
@@ -435,6 +432,7 @@ else {
 	var sidebar = document.getElementById("sidebar");
 	sidebar.style.height = roster+bench-15+"px";
 	</script>';
+	
 }
 
 
