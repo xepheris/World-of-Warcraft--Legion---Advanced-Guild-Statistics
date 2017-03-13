@@ -197,13 +197,9 @@ elseif(isset($_GET['update'])) {
 	}
 }
 
-// WEEKLY INFORMATION
-elseif(isset($_GET['weekly'])) {
-	die();
-}
 // COMPARE
 elseif(isset($_GET['compare'])) {
-	die();
+
 }
 // CONTACT FORM
 elseif(isset($_GET['contact'])) {
@@ -318,9 +314,13 @@ elseif(isset($_GET['eq'])) {
 
 elseif(isset($_GET['weekly'])) {
 	
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	
 	include('stream.php');
 	
-	include('weekly/.php');
+	include('weekly/weekly.php');
+	
+	echo '</div>';
 	
 }
 
