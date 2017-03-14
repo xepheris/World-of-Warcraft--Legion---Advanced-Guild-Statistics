@@ -26,7 +26,7 @@ echo '<div style="width: 20%; height: auto; padding-top: 15px; padding-bottom: 1
 					
 				while($guild = mysqli_fetch_array($guilds)) {	
 					$realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `name` FROM `ovw_realms` WHERE `id` = '" .$guild['realm']. "'"));
-								
+												
 					echo '<option value="' .$guild['id']. '">' .$guild['guild_name']. ' (' .$guild['region']. '-' .$realm_name['name']. ')</option>';
 				}
 			}
@@ -48,7 +48,7 @@ echo '<div style="width: 20%; height: auto; padding-top: 15px; padding-bottom: 1
 				while($guild = mysqli_fetch_array($guilds)) {
 					$realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `name` FROM `ovw_realms` WHERE `id` = '" .$guild['realm']. "'"));
 								
-					echo '<option value="' .$guild['id']. '">' .$guild['guild_name']. ' (' .$guild['region']. '-' .$guild['realm']. ')</option>';
+					echo '<option value="' .$guild['id']. '">' .$guild['guild_name']. ' (' .$guild['region']. '-' .$realm_name['name']. ')</option>';
 				}
 			}
 						

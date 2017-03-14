@@ -71,6 +71,8 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 
 
 // REGULAR CONTENT
 
+$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `name` = '" .$_SESSION['realm']. "'"));
+
 echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);" class="inspect">
 ' .$error. '
 
@@ -84,7 +86,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 
 	<div style="padding-right: 6px; text-align: right;">
 		<a href="" style="text-transform: uppercase; font-size: 20px; color: orange;" title="AGS External View">AGS External View</a> | 
-		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;" title="WoWProgress profile link">WoWProgress</a> | 
+		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$actual_realm_name['short']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;" title="WoWProgress profile link">WoWProgress</a> | 
 		' .$warcraftlogs_link. '
 	</div>
 </div>

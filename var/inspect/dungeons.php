@@ -74,7 +74,7 @@ if($m10_to_15 < '0') {
 		var options = {
 			width: 740,
 			height: 137,
-			legend: { position: "top", maxLines: 3 },
+			legend: "none",
 			bar: { groupWidth: "30%" },
 			backgroundColor: "#84724E",
 			isStacked: "percent",

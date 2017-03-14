@@ -42,7 +42,7 @@ if($check >= '1') {
 				},
 				curveType: "function",
 				backgroundColor: "#84724E",
-				legend: { position: "bottom" }
+				legend: "none"
 			};
 
 			var chart = new google.visualization.LineChart(document.getElementById("ilvl_chart"));

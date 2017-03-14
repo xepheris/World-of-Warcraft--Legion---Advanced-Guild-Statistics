@@ -39,7 +39,7 @@ if($data != '') {
 				$class = $members['character']['class'];
 				$realm = $members['character']['realm'];
 				
-				$realm = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `ovw_realms` WHERE `region` = '" .$_SESSION['region']. "' AND `name` = '" .$realm. "'"));
+				$realm = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `ovw_realms` WHERE `region` = '" .$_SESSION['region']. "' AND `short` = '" .$actual_realm_name['short']. "'"));
 				
 				$realm = $realm['id'];
 				

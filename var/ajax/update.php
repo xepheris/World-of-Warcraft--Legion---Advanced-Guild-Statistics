@@ -24,7 +24,7 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 		$key = mysqli_fetch_array(mysqli_query($stream, "SELECT `wow_key` FROM `ovw_api` WHERE `id` = '1'"));
 		
 		$url = 'https://' .$_SESSION['region']. '.api.battle.net/wow/character/' .$actual_realm_name['short']. '/' .$character. '?fields=guild,items,statistics,achievements,talents&locale=en_GB&apikey=' .$key['wow_key']. '';
-				
+
 		// ENABLE SSL
 		$arrContextOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, ),);
 		
