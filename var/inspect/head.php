@@ -219,7 +219,7 @@ elseif($general_table['ak'] < '12') {
 
 // CHECK FOR PREVIOUS VALUES
 $past_check = mysqli_fetch_array(mysqli_query($stream, "SELECT `ap`, `wq` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` ORDER BY `timestamp` DESC LIMIT 1"));
-if($past_check['ap'] != '' && $general_table['ap'] != $past_cehck['ap']) {
+if($past_check['ap'] != '' && $general_table['ap'] != $past_check['ap']) {
 	$past_ap = '<span style="color: yellowgreen;" title="last update: ' .number_format($past_check['ap']). '">(+' .round(($general_table['ap']/$past_check['ap'])-1, 3). '%)</span>';
 }
 if($past_check['wq'] != '' && $general_table['wq'] != $past_check['wq']) {

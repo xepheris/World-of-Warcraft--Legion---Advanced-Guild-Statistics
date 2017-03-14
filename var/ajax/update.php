@@ -647,6 +647,12 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						$past_table = mysqli_query($stream, "CREATE TABLE IF NOT EXISTS `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`id` int(11) NOT NULL AUTO_INCREMENT, `timestamp` int(10) NOT NULL, `ilvl_on` mediumint(4) NOT NULL, `ilvl_bags` mediumint(4) NOT NULL, `ap` bigint(16) NOT NULL, `wq` mediumint(5) NOT NULL, `m2` smallint(4) NOT NULL, `m5` smallint(4) NOT NULL, `m10` smallint(4) NOT NULL, `m15` smallint(4) NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1 ;");
 						
 						// PREVENT DATA INSERTION WHEN PLAYER LOGGED ON AND OFF AGAIN AND DIDN'T DO ANYTHING (HELLO LEGION APP)
+						
+						$rows = mysqli_num_rows(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past`"));
+						if($rows > '62') {
+							$delete = mysqli_query($stream, "DELETE * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past` ORDER BY `timestamp` DESC LIMIT 62,18446744073709551615");
+						}
+						
 						$previous_update = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past` ORDER BY `timestamp` DESC LIMIT 1"));
 						
 						if(

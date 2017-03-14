@@ -5,7 +5,7 @@ echo '
 
 $check = mysqli_num_rows(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past`"));
 
-if($check > '1') {
+if($check >= '1') {
 	
 	echo '
 	<script type="text/javascript">

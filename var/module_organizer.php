@@ -197,13 +197,9 @@ elseif(isset($_GET['update'])) {
 	}
 }
 
-// COMPARE
-elseif(isset($_GET['compare'])) {
-
-}
 // CONTACT FORM
 elseif(isset($_GET['contact'])) {
-	die();
+
 }
 
 // BENCH
@@ -310,21 +306,19 @@ elseif(isset($_GET['eq'])) {
 	
 }
 
-// WEEKLY STATISTICS
+// COMPARE
 
-elseif(isset($_GET['weekly'])) {
-	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+elseif(isset($_GET['compare'])) {
 	
 	include('stream.php');
 	
-	include('weekly/weekly.php');
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	
+	include('compare/index.php');
 	
 	echo '</div>';
 	
 }
-
-// COMPARE
 
 elseif(isset($_GET['source']) && is_numeric($_GET['source']) && isset($_GET['compare1']) && is_numeric($_GET['compare1'])) {
 	
@@ -347,64 +341,76 @@ elseif(isset($_GET['source']) && is_numeric($_GET['source']) && isset($_GET['com
 
 // INSPECT
 
-elseif(isset($_GET['inspect']) && is_numeric($_GET['inspect'])) {
+elseif(isset($_GET['inspect'])) {
 	
-	echo '
-	<script type="text/javascript" src="js/update.js"></script>';
-	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
-	
-	if($_SESSION['tracked'] == '0') {
-		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
-	}
-	elseif($_SESSION['tracked'] != '0') {
-			
-		// INSPECT SINGLE CHARACTER
+	if($_GET['inspect'] == '') {
+		echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+		
 		include('stream.php');
 		
-		// INSPECT HEAD
+		include('inspect/index.php');
 		
-		include('inspect/head.php');
+		echo '</div>';
+	}	
+	elseif(is_numeric($_GET['inspect'])) {
 		
-		// EQUIPMENT
-		
-		include('inspect/equip.php');		
-				
-		// DUNGEON PROGRESS
-		
-		include('inspect/dungeons.php');
-		
-		// REPUTATION
-		
-		include('inspect/reputation.php');
-		
-		// KNOWN LEGENDARIES
-		
-		include('inspect/legendaries.php');
-				
-		// RAIDPROGRESS
-		
-		include('inspect/raid.php');
-		
-		// PAST AP GRAPH
-		
-		include('inspect/past_ap.php');
-		
-		// PAST MYTHIC GRAPH
-		
-		include('inspect/past_mythic.php');
-		
-		// PAST WQ GRAPH
-		
-		include('inspect/past_wq.php');
-		
-		// PAST ITEMLEVEL GRAPH
-		
-		include('inspect/past_ilvl.php');
-				
-	}
+		echo '
+		<script type="text/javascript" src="js/update.js"></script>';
 	
-	echo '</div>';
+		echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	
+		if($_SESSION['tracked'] == '0') {
+			echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
+		}
+		elseif($_SESSION['tracked'] != '0') {
+			
+			// INSPECT SINGLE CHARACTER
+			include('stream.php');
+		
+			// HEADER
+		
+			include('inspect/head.php');
+		
+			// EQUIPMENT
+		
+			include('inspect/equip.php');		
+				
+			// DUNGEON PROGRESS
+		
+			include('inspect/dungeons.php');
+		
+			// REPUTATION
+		
+			include('inspect/reputation.php');
+		
+			// KNOWN LEGENDARIES
+		
+			include('inspect/legendaries.php');
+				
+			// RAIDPROGRESS
+		
+			include('inspect/raid.php');
+		
+			// PAST AP GRAPH
+		
+			include('inspect/past_ap.php');
+		
+			// PAST MYTHIC GRAPH
+		
+			include('inspect/past_mythic.php');
+		
+			// PAST WQ GRAPH
+		
+			include('inspect/past_wq.php');
+		
+			// PAST ITEMLEVEL GRAPH
+		
+			include('inspect/past_ilvl.php');
+				
+		}
+	
+		echo '</div>';
+	}
 }
 
 // ROSTER OVERVIEW

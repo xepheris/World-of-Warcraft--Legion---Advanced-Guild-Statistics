@@ -30,10 +30,9 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 
 	elseif(isset($_SESSION['guild'])) {
 		echo '<span style="font-size: 18px; color: white;"><a href="">Update</a> |
 		<a href="?import">Import</a> |
+		<a href="?inspect">Inspect</a> |
 		<a href="?compare">Compare</a> |
-		<a href="?weekly">Weekly Statistics</a> |
 		<a href="?share">Share</a> |
-		<a href="?settings">Settings</a> |
 		<a href="?contact">Contact</a> |
 		<a href="?logout">Logout</a>
 		</span>';
