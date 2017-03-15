@@ -3,7 +3,7 @@
 echo '
 <div style="width: 47.5%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;" class="inspect">';
 
-if($check >= '1') {
+if($check > '1') {
 	
 	echo '
 	<script type="text/javascript">
@@ -19,16 +19,14 @@ if($check >= '1') {
 				$min = time('now')-($i-1)*86400;
 				$max = time('now')-$i*86400;
 		
-				$data = mysqli_query($stream, "SELECT `wq` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` WHERE `timestamp` >= '" .$max. "' AND `timestamp` < '" .$min. "'");
+				$data = mysqli_query($stream, "SELECT `wq` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` WHERE `timestamp` >= '" .$max. "' AND `timestamp` < '" .$min. "' ORDER BY `id` ASC");
 		
 				while($indiv_day = mysqli_fetch_array($data)) {
 					echo '["' .date('d M', $max). '", ' .$indiv_day['wq']. '],';
 				}
 			}
 
-			$data = mysqli_fetch_array(mysqli_query($stream, "SELECT `wq` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
-	
-			echo '["today", ' .$data['wq']. '],
+			echo '
 			]);
 
 			var options = {

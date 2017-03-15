@@ -140,8 +140,8 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; paddi
 	<th>Roles</th>
 	<th>Spec</th>
 	<th>Talents</th>
-	<th>Itemlevel</th>
-	<th>Legendaries</th>
+	<th title="Legendaries">L</th>
+	<th>Ilvl</th>	
 	<th><span title="Artifact Power">AP</span></th>
 	<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
 	<th>Mythics<br />(M+ Achv)</th>
@@ -165,23 +165,23 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; paddi
 </thead>
 <tbody>
 <tr style="border-bottom: 1px solid white;">
-	<td>' .$active_chars['active']. ' characters</td>
+	<td><i>' .$active_chars['active']. ' characters</i></td>
 	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
-	<td>' .round(array_sum($itemlevel_array)/$active_chars['active'], 2). ' (' .round(array_sum($itemlevel_off_array)/$active_chars['active'], 2). ')</td>
 	<td></td>
-	<td>' .$ap_arraysum. '</td>
-	<td>' .round(array_sum($alvl_array)/$active_chars['active'], 2). ' (' .round(array_sum($ak_array)/$active_chars['active'], 2). ')</td>
-	<td>' .round(array_sum($mythic_array)/$active_chars['active'], 0). '</td>
-	<td>' .round(array_sum($wq_array)/$active_chars['active'], 0). '</td>
-	<td>' .round($eq_avg['eq_sum']/$active_chars['active'], 2). '</td>
-	<td>' .round(array_sum($en_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($en_m_array)/$active_chars['active'], 1). '</td>
-	<td>' .round(array_sum($tov_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tov_m_array)/$active_chars['active'], 1). '</td>
-	<td>' .round(array_sum($nh_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($nh_m_array)/$active_chars['active'], 1). '</td>
-	<td>' .round(array_sum($tos_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tos_m_array)/$active_chars['active'], 1). '</td>
+	<td><i>' .round(array_sum($itemlevel_array)/$active_chars['active'], 2). ' (' .round(array_sum($itemlevel_off_array)/$active_chars['active'], 2). ')</i></td>
+	<td><i>' .$ap_arraysum. ' (' .round(((array_sum($ap_array)/$_SESSION['tracked']/195932334)*100), 2). '%)</td>
+	<td><i>' .round(array_sum($alvl_array)/$active_chars['active'], 2). ' (' .round(array_sum($ak_array)/$active_chars['active'], 2). ')</i></td>
+	<td><i>' .round(array_sum($mythic_array)/$active_chars['active'], 0). '</i></td>
+	<td><i>' .round(array_sum($wq_array)/$active_chars['active'], 0). '</i></td>
+	<td><i>' .round($eq_avg['eq_sum']/$active_chars['active'], 2). '</i></td>
+	<td><i>' .round(array_sum($en_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($en_m_array)/$active_chars['active'], 1). '</i></td>
+	<td><i>' .round(array_sum($tov_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tov_m_array)/$active_chars['active'], 1). '</i></td>
+	<td><i>' .round(array_sum($nh_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($nh_m_array)/$active_chars['active'], 1). '</i></td>
+	<td><i>' .round(array_sum($tos_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tos_m_array)/$active_chars['active'], 1). '</i></td>
 	<td></td>
 	<td></td>
 </tr>';
@@ -426,6 +426,16 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif($fetch_general_data['eq'] != $eq_cap['eq_cap']) {
 		$eq = $guild_table['eq'];
 	}
+	
+	if($guild_table['class'] == '11') {
+		$ap_progress = '' .(round($fetch_general_data['ap']/261243112, 4)*100). '%';
+	}
+	elseif($guild_table['class'] == '12') {
+		$ap_progress = '' .(round($fetch_general_data['ap']/130621556, 4)*100). '%';
+	}
+	elseif($guild_table['class'] != '11' && $guild_table['class'] != '12') {
+		$ap_progress = '' .(round($fetch_general_data['ap']/195932334, 4)*100). '%';
+	}
 	// ACTUAL TABLE ROW CONTENT
 	echo '
 	<tr>
@@ -434,10 +444,10 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td>' .round(((time('now')-$guild_table['logout'])/3600), 2). ' hrs ago</td>
 		<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 		<td>' .$spec['spec']. '</td>
-		<td><a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
-		<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>
+		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 		<td><a href="?edit_legendaries=' .$id['id']. '">' .$legendaries['amount']. '</a></td>
-		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span></td>
+		<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>		
+		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. ' (' .$ap_progress. ')</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 		<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
 		<td>' .$fetch_general_data['wq']. '</td>

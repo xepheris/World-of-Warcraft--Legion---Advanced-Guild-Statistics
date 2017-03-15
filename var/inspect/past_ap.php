@@ -5,7 +5,7 @@ echo '
 
 $check = mysqli_num_rows(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past`"));
 
-if($check >= '1') {
+if($check > '1') {
 	
 	echo '
 	<script type="text/javascript">
@@ -21,16 +21,14 @@ if($check >= '1') {
 				$min = time('now')-($i-1)*86400;
 				$max = time('now')-$i*86400;
 		
-				$data = mysqli_query($stream, "SELECT `ap` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` WHERE `timestamp` >= '" .$max. "' AND `timestamp` < '" .$min. "'");
+				$data = mysqli_query($stream, "SELECT `ap` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` WHERE `timestamp` >= '" .$max. "' AND `timestamp` < '" .$min. "' ORDER BY `id` ASC");
 		
 				while($indiv_day = mysqli_fetch_array($data)) {
 					echo '["' .date('d M', $max). '", ' .$indiv_day['ap']. '],';
 				}
 			}
-	
-			$data = mysqli_fetch_array(mysqli_query($stream, "SELECT `ap` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
-	
-			echo '["today", ' .$data['ap']. '],
+		
+			echo '
 			]);
 
         	var options = {

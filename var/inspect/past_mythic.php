@@ -3,7 +3,7 @@
 echo '
 <div style="width: 47.5%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-left: 5%;" class="inspect">';
 
-if($check >= '1') {
+if($check > '1') {
 	
 	echo '
 	<script type="text/javascript">
@@ -19,7 +19,7 @@ if($check >= '1') {
 				$min = time('now')-($i-1)*86400;
 				$max = time('now')-$i*86400;
 		
-				$data = mysqli_query($stream, "SELECT `m2`, `m5`, `m10`, `m15` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` WHERE `timestamp` >= '" .$max. "' AND `timestamp` < '" .$min. "'");
+				$data = mysqli_query($stream, "SELECT `m2`, `m5`, `m10`, `m15` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` WHERE `timestamp` >= '" .$max. "' AND `timestamp` < '" .$min. "' ORDER BY `id` ASC");
 		
 				while($indiv_day = mysqli_fetch_array($data)) {
 					$m2_to_m5 = $indiv_day['m2']-$indiv_day['m5'];
@@ -28,14 +28,8 @@ if($check >= '1') {
 					echo '["' .date('d M', $max). '", ' .$m2_to_m5. ', ' .$m5_to_m10. ', ' .$m10_to_m15. ', ' .$indiv_day['m15']. '],';
 				}
 			}
-
-			$data = mysqli_fetch_array(mysqli_query($stream, "SELECT `m2`, `m5`, `m10`, `m15` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_general`"));
 	
-			$m2_to_m5 = $data['m2']-$data['m5'];
-			$m5_to_m10 = $data['m5']-$data['m10'];
-			$m10_to_m15 = $data['m10']-$data['m15'];
-	
-			echo '["today", ' .$m2_to_m5. ', ' .$m5_to_m10. ', ' .$m10_to_m15. ', ' .$data['m15']. '],
+			echo '
 			]);
 
 			var options = {
