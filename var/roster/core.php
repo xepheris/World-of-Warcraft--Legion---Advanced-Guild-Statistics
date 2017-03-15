@@ -1,5 +1,4 @@
 <script type="text/javascript">
-
 function global_update() {
 	
 	var text = document.getElementsByClassName("global_update");
@@ -19,8 +18,8 @@ function global_update() {
 		
 		for (var i = 0; i < row_' .$id. '.length; i++) {
 			row_' .$id. '[0].style.transition = "opacity 1s ease-in-out";
-			row_' .$id. '[0].style.opacity = "0.4";
-			row_' .$id. '[0].style.filter = "alpha(opacity=40)";
+			row_' .$id. '[0].style.opacity = "0.2";
+			row_' .$id. '[0].style.filter = "alpha(opacity=20)";
 			
 			var still_' .$id. ' = document.getElementsByClassName("still"+' .$id. ');
 			still_' .$id. '[0].style.display = "none";
@@ -42,7 +41,7 @@ function global_update() {
 					character: +' .$id. '
 					},
 				success: function (data) {
-					$(name_' .$id. ').html("<span class=\"white\">Updated! Refreshing when all are done.</span>");
+					$(name_' .$id. ').html("<span class=\"white\">Updated! Refresh page when all are done.</span>");
 					row_' .$id. '[0].style.transition = "opacity 1s ease-in-out";
 					row_' .$id. '[0].style.opacity = "1";
 					row_' .$id. '[0].style.filter = "alpha(opacity=100)";
@@ -50,11 +49,9 @@ function global_update() {
 			});
 		}';
 	}
-	?>
-}
-</script>
-
-<?php
+	echo '
+	}
+</script>';
 
 if($_SESSION['tracked'] >= '20') {
 	$overflow = '';
@@ -177,7 +174,7 @@ $eq_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` AS `eq_cap` FROM
 
 $active_chars = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) as `active` FROM `" .$table_name. "` WHERE `status` = '0'"));
 
-echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); min-width: 1500px;">
+echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); min-width: 1500px;">
 ' .$error. '
 <span style="color: orange; text-align: center; font-size: 20px;">Current Roster</span>
 <div style="overflow-y: scroll; max-height: 912px; ' .$overflow. '">

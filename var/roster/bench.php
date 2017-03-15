@@ -1,7 +1,7 @@
 <?php
 
 echo '
-<div id="bench" style="width: 100%; min-height: 30%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; min-width: 1500px;">
+<div id="bench" style="width: 100%; min-height: 30%; padding-top: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; min-width: 1500px;">
 <span style="color: orange; text-align: center; font-size: 18px;">Bench</span>';
 		
 $benchcheck = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `status` = '1' ORDER BY `name` ASC"));

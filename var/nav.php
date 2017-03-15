@@ -42,7 +42,7 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		elseif(!isset($_GET['import']) && !isset($_GET['inspect']) && !isset($_GET['compare']) && !isset($_GET['source']) && !isset($_GET['contact']) && !isset($_GET['change_name']) && !isset($_GET['change_role']) && !isset($_GET['edit_legendaries'])) {
 			$roster = '
 			[ <a href="http://artifactpower.info/dev/" style="text-decoration: underline;">Roster</a>';
-			$update = '<br /><br />[ <a class="global_update" onclick="global_update();">update all characters<a> ]';
+			$update = '<br /><br />[ <a class="global_update" onclick="global_update();">update all characters</a> ]';
 		}
 		
 		echo $roster;
