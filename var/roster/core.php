@@ -1,7 +1,58 @@
 <script type="text/javascript">
-	function update() {
+
+function global_update() {
+	
+	var text = document.getElementsByClassName("global_update");
+	
+	$(text).html('updating all current entries - please be patient!');
+	$(text).css('color', 'orange');
+	
+	
+	<?php
+	$fetch_ids = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` ORDER BY `name` ASC");
+	
+	while($id = mysqli_fetch_array($fetch_ids)) {
 		
-	};
+		$id = $id['id'];
+		
+		echo '
+		var row = document.getElementsByClassName(' .$id. ');
+		
+		for (var i = 0; i < row.length; i++) {
+			row[0].style.transition = "opacity 1s ease-in-out";
+			row[0].style.opacity = "0.4";
+			row[0].style.filter = "alpha(opacity=40)";
+			
+			var still = document.getElementsByClassName("still");
+			still[0].style.display = "none";
+			
+			var all_active_sublinks = row[i].getElementsByTagName("a");
+			for (var k = 0; k < all_active_sublinks.length; k++) {
+				all_active_sublinks[k].style.pointerEvents = "none";
+			}
+			
+			var name = document.getElementsByClassName("name"+' .$id. ');
+			
+			$(name).html("<span style="color: white;">Updating...</span>");
+			
+			$.ajax({
+				type: "GET",
+				dataType: "html",
+				url: "var/ajax/update.php",
+					data: {
+					character: +' .$id. '
+					},
+				success: function (data) {
+					$(name).html("<span style="color: white; font-size: 12px;">Updated! Please refresh the page.</span>");
+					row[0].style.transition = "opacity 1s ease-in-out";
+					row[0].style.opacity = "1";
+					row[0].style.filter = "alpha(opacity=100)";
+				}
+			});
+		}';
+	}
+	?>
+}
 </script>
 
 <?php
@@ -105,8 +156,8 @@ foreach($cap_array as $cap) {
 	}
 }
 
-$eq_avg = mysqli_fetch_array(mysqli_query($stream, "SELECT SUM(`eq`) AS `eq_sum` FROM `" .$table_name. "`"));
-$eq_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` AS `eq_cap` FROM `" .$table_name. "` ORDER BY `eq` DESC LIMIT 1"));
+$eq_avg = mysqli_fetch_array(mysqli_query($stream, "SELECT SUM(`eq`) AS `eq_sum` FROM `" .$table_name. "` WHERE `status` = '0'"));
+$eq_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` AS `eq_cap` FROM `" .$table_name. "` WHERE `status` = '0' ORDER BY `eq` DESC LIMIT 1"));
 
 // AP READABILITY CONVERTER
 	if(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) <= '3') {
@@ -127,21 +178,22 @@ $eq_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` AS `eq_cap` FROM
 
 $active_chars = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) as `active` FROM `" .$table_name. "` WHERE `status` = '0'"));
 
-echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">
+echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); min-width: 1500px;">
 ' .$error. '
 <span style="color: orange; text-align: center; font-size: 20px;">Current Roster</span>
 <div style="overflow-y: scroll; max-height: 912px; ' .$overflow. '">
-<table style="margin: 0 auto; margin-top: 15px;">
+<table style="margin: 0 auto; margin-top: 15px; width: 100%; min-width: 1500px;">
 <thead>
 <tr>
 	<th></th>
-	<th>Last update</th>
-	<th>Last logout</th>
+	<th>Updated</th>
+	<th></th>
+	<th>Logout</th>
 	<th>Roles</th>
 	<th>Spec</th>
 	<th>Talents</th>
-	<th title="Legendaries">L</th>
-	<th>Ilvl</th>	
+	<th>Legendaries</th>
+	<th>Itemlevel</th>	
 	<th><span title="Artifact Power">AP</span></th>
 	<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
 	<th>Mythics<br />(M+ Achv)</th>
@@ -166,6 +218,7 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; paddi
 <tbody>
 <tr style="border-bottom: 1px solid white;">
 	<td><i>' .$active_chars['active']. ' characters</i></td>
+	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -428,19 +481,45 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	}
 	
 	if($guild_table['class'] == '11') {
-		$ap_progress = '' .(round($fetch_general_data['ap']/261243112, 4)*100). '%';
+			
+		if($fetch_general_data['ak'] <= '25') {
+			$threshold = '261243112';
+		}
+		elseif($fetch_general_data['ak'] > '25') {
+			$threshold = '8915065320';
+		}
+		
+		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
 	}
 	elseif($guild_table['class'] == '12') {
-		$ap_progress = '' .(round($fetch_general_data['ap']/130621556, 4)*100). '%';
+		
+		if($fetch_general_data['ak'] <= '25') {
+			$threshold = '261243112';
+		}
+		elseif($fetch_general_data['ak'] > '25') {
+			$threshold = '522486224';
+		}
+		
+		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
 	}
 	elseif($guild_table['class'] != '11' && $guild_table['class'] != '12') {
-		$ap_progress = '' .(round($fetch_general_data['ap']/195932334, 4)*100). '%';
-	}
+		
+		if($fetch_general_data['ak'] <= '25') {
+			$threshold = '261243112';
+		}
+		elseif($fetch_general_data['ak'] > '25') {
+			$threshold = '783729336';
+		}
+		
+		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
+	}	
+	
 	// ACTUAL TABLE ROW CONTENT
 	echo '
-	<tr>
-		<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
-		<td>' .$last_update. ' <img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" /><img src="img/update_gif.gif" alt="404" style="display: none; width: 21px;"/></td>
+	<tr class="' .$id['id']. '">
+		<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
+		<td>' .$last_update. '</td>
+		<td><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" /></td>
 		<td>' .round(((time('now')-$guild_table['logout'])/3600), 2). ' hrs ago</td>
 		<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 		<td>' .$spec['spec']. '</td>
@@ -449,7 +528,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>		
 		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. ' (' .$ap_progress. ')</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
-		<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
+		<td style="min-width: 80px;">' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
 		<td>' .$fetch_general_data['wq']. '</td>
 		<td>' .$eq. '</td>
 		<td>' .$en_hc. '  ' .$en_m. '</td>

@@ -1,23 +1,24 @@
 <?php
 
 echo '
-<div id="bench" style="width: 100%; min-height: 30%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">
+<div id="bench" style="width: 100%; min-height: 30%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; min-width: 1500px;">
 <span style="color: orange; text-align: center; font-size: 18px;">Bench</span>';
 		
 $benchcheck = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `status` = '1' ORDER BY `name` ASC"));
 if($benchcheck['id'] != '') {
 		
-	echo '<table style="margin: 0 auto; margin-top: 15px;">
+	echo '<table style="margin: 0 auto; margin-top: 15px; width: 100%; min-width: 1500px;">
 	<thead>
 	<tr>
 		<th></th>
 		<th>Last update</th>
+		<th></th>
 		<th>Last logout</th>
 		<th>Roles</th>
 		<th>Spec</th>
 		<th>Talents</th>
-		<th>Itemlevel</th>
 		<th>Legendaries</th>
+		<th>Itemlevel</th>		
 		<th><span title="Artifact Power">AP</span></th>
 		<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
 		<th>Mythics<br />(M+ Achv)</th>
@@ -259,24 +260,59 @@ if($benchcheck['id'] != '') {
 			$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
 		}
 		
+		if($guild_table['class'] == '11') {
+			
+			if($fetch_general_data['ak'] <= '25') {
+				$threshold = '261243112';
+			}
+			elseif($fetch_general_data['ak'] > '25') {
+				$threshold = '8915065320';
+			}
+			
+			$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
+		}
+		elseif($guild_table['class'] == '12') {
+			
+			if($fetch_general_data['ak'] <= '25') {
+				$threshold = '130621556';
+			}
+			elseif($fetch_general_data['ak'] > '25') {
+				$threshold = '522486224';
+			}
+			
+			$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
+		}
+		elseif($guild_table['class'] != '11' && $guild_table['class'] != '12') {
+			
+			if($fetch_general_data['ak'] <= '25') {
+				$threshold = '195932334';
+			}
+			elseif($fetch_general_data['ak'] > '25') {
+				$threshold = '783729336';
+			}
+			
+			$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
+		}		
+		
 		echo '
-		<tr>
-			<td style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
-			<td>' .$last_update. ' <img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" /><img src="img/update_gif.gif" alt="404" style="display: none; width: 21px;"/></td>
+		<tr class="' .$id['id']. '">
+			<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
+			<td>' .$last_update. '</td>
+			<td><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" /></td>
 			<td>' .round(((time('now')-$guild_table['logout'])/3600), 2). ' hrs ago</td>
 			<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 			<td>' .$spec['spec']. '</td>
-			<td><a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
-			<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>
-			<td>' .$legendaries['amount']. '</td>
-			<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span></td>
+			<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
+			<td><a href="?edit_legendaries=' .$id['id']. '">' .$legendaries['amount']. '</a></td>
+			<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>			
+			<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. ' (' .$ap_progress. ')</span></td>
 			<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 			<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
 			<td>' .$fetch_general_data['wq']. '</td>
 			<td>' .$guild_table['eq']. '</td>
 			<td>' .$en_hc. '  ' .$en_m. '</td>
 			<td>' .$tov_hc. ' ' .$tov_m. '</td>
-			<td>' .$nh_hc. ' ' .$nh_m. '</td>
+			<td >' .$nh_hc. ' ' .$nh_m. '</td>
 			<td>' .$tos_hc. ' ' .$tos_m. '</td>
 			<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
 			<td><a href="?unbench=' .$id['id']. '"><img src="img/unbench.png" alt="404" title="Unbench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>

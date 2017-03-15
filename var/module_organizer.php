@@ -1,13 +1,13 @@
 <?php
 
-echo '<div style="width: 5%; height: auto; padding-bottom: 15px; float: left;"></div>';
+#echo '<div style="width: 5%; height: auto; padding-bottom: 15px; float: left;"></div>';
 
 $table_name = '' .$_SESSION['table']. '_' .$_SESSION['guild']. '_' .$_SESSION['region']. '_' .$_SESSION['realm']. '';
 		
 // IMPORT
 if(isset($_GET['import'])) {
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">';
+	echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">';
 	
 	include('stream.php');
 	
@@ -181,7 +181,7 @@ if(isset($_GET['import'])) {
 // LOGOUT
 elseif(isset($_GET['logout'])) {
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">
+	echo '<div style="width: 90%;  margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">
 	<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-bottom: 15px; opacity: 1.0 !important;">
 	<span style="color: yellowgreen; font-size: 20px; text-align: center; margin-top: 15px;">logging out...</span>';
 	unset($_SESSION);
@@ -210,7 +210,7 @@ elseif(isset($_GET['contact'])) {
 // BENCH
 elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
+	echo '<div style="width: 90%; height: auto; margin-left: 5%; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
 	
 	echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">benching...</span>';
 		
@@ -232,7 +232,7 @@ elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
 // UNBENCH
 elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-left: 5%;">';
 		
 	echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">unbenching...</span>';
 		
@@ -254,7 +254,7 @@ elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
 // KICK
 elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">';
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-left: 5%;">';
 		
 	echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">removing...</span>';
 		
@@ -317,7 +317,7 @@ elseif(isset($_GET['compare'])) {
 	
 	include('stream.php');
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; margin-left: 5%; padding-top: 15px; float: left; text-align: center;">';
 	
 	include('compare/index.php');
 	
@@ -329,7 +329,7 @@ elseif(isset($_GET['source']) && is_numeric($_GET['source']) && isset($_GET['com
 	
 	include('stream.php');
 	
-	echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 	
 	if(!isset($_GET['compare4']) && isset($_GET['compare3']) && is_numeric($_GET['compare3']) && isset($_GET['compare2']) && is_numeric($_GET['compare2'])) {
 		include('compare/c3.php');
@@ -349,7 +349,7 @@ elseif(isset($_GET['source']) && is_numeric($_GET['source']) && isset($_GET['com
 elseif(isset($_GET['inspect'])) {
 	
 	if($_GET['inspect'] == '') {
-		echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+		echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 		
 		include('stream.php');
 		
@@ -360,9 +360,9 @@ elseif(isset($_GET['inspect'])) {
 	elseif(is_numeric($_GET['inspect'])) {
 		
 		echo '
-		<script type="text/javascript" src="js/update.js"></script>';
+		<script type="text/javascript" src="js/inspect_update.js"></script>';
 	
-		echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+		echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 	
 		if($_SESSION['tracked'] == '0') {
 			echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
@@ -419,9 +419,11 @@ elseif(isset($_GET['inspect'])) {
 }
 
 // ROSTER OVERVIEW
-else {	
-		
-	echo '<div style="width: 80%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+else {
+	
+	echo '
+	<script type="text/javascript" src="js/roster_update.js"></script>
+	<div style="width: 80%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 
 	// AUTO REDIRECT
 	if($_SESSION['tracked'] == '0') {

@@ -93,21 +93,21 @@ echo '<!DOCTYPE html>
 	<meta name="keywords" lang="en" content="" />
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<link rel="stylesheet" href="css/style.css" />
-	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript">
-		function realms(str) {
-			var r = $("#region").val();
-			$.get("var/ajax/realms.php?region="+r, function(data) {
-				$("#realms").html(data);
-				});	
-			}
-	</script>';
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>';
 
 	if(isset($_SESSION['guild'])) {
-		echo '<title>' .$_SESSION['guild']. ' - AGS</title>';
+		echo '<title>AGS - ' .$_SESSION['guild']. '</title>';
 	}
 	elseif(!isset($_SESSION['guild'])) {
-		echo '<title>Advanced Guild Statistics</title>';
+		echo '<title>Advanced Guild Statistics</title>
+		<script type="text/javascript">
+			function realms(str) {
+				var r = $("#region").val();
+				$.get("var/ajax/realms.php?region="+r, function(data) {
+					$("#realms").html(data);
+				});	
+			}
+		</script>';
 	}
 
 	echo '

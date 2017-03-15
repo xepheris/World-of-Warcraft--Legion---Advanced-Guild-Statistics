@@ -2,6 +2,7 @@ function update(str) {
 	var inspect_container = document.getElementsByClassName("inspect");
 
 	for (var i = 0; i < inspect_container.length; i++) {
+		inspect_container[i].style.transition = "opacity 1s ease-in-out";
 		inspect_container[i].style.opacity = "0.4";
 		inspect_container[i].style.filter = "alpha(opacity=40)";
 
@@ -17,8 +18,10 @@ function update(str) {
 	}
 
 	var patience_container = document.getElementById("patience");
-	patience_container.style.display = "block";
+	patience_container.style.transition = "opacity 1s ease-in-out";
 	patience_container.style.opacity = "1.0";
+	patience_container.style.filter = "alpha(opacity=100)";
+	patience_container.style.display = "block";
 
 	var wowhead_container = document.getElementsByClassName("wowhead-tooltip");
 	for (var i = 0; i < wowhead_container.length; i++) {
