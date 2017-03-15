@@ -83,6 +83,7 @@ $nh_hc_array = array();
 $nh_m_array = array();
 $tos_hc_array = array();
 $tos_m_array = array();
+$mythic_array = array();
 
 foreach($id_array as $id) {
 	$sql.= "
@@ -112,7 +113,9 @@ foreach($id_array as $id) {
 	array_push($nh_hc_array, $avg_raid3_hc['nh_hc']);
 	array_push($nh_m_array, $avg_raid3_m['nh_m']);
 	array_push($tos_hc_array, $avg_raid4_hc['tos_hc']);
-	array_push($tos_m_array, $avg_raid4_m['tos_m']);
+	array_push($tos_m_array, $avg_raid4_m['tos_m']);	
+	$mythic_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT SUM(`mythic`) AS `mythic` FROM `" .$_SESSION['table']. "_" .$id. "_dungeons"));
+	array_push($mythic_array, $mythic_cap['mythic']);
 }
 
 $sql = substr($sql, '0', '-11');
@@ -151,6 +154,8 @@ foreach($cap_array as $cap) {
 		$wq_cap = $query['wq'];
 	}
 }
+	
+rsort($mythic_array);
 
 $eq_avg = mysqli_fetch_array(mysqli_query($stream, "SELECT SUM(`eq`) AS `eq_sum` FROM `" .$table_name. "` WHERE `status` = '0'"));
 $eq_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` AS `eq_cap` FROM `" .$table_name. "` WHERE `status` = '0' ORDER BY `eq` DESC LIMIT 1"));
@@ -508,7 +513,14 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		}
 		
 		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
-	}	
+	}
+	
+	if($fetch_dungeon_data['mythic'] == $mythic_array['0']) {
+		$mythics = '<span style="color: yellowgreen;">' .$fetch_dungeon_data['mythic']. '</span>';
+	}
+	elseif($fetch_dungeon_data['mythic'] != $mythic_array['0']) {
+		$mythics = $fetch_dungeon_data['mythic'];
+	}
 	
 	// ACTUAL TABLE ROW CONTENT
 	echo '
@@ -524,7 +536,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>		
 		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. ' (' .$ap_progress. ')</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
-		<td style="min-width: 80px;">' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
+		<td style="min-width: 80px;">' .$mythics. ' (' .$m_achievement. ')</td>
 		<td>' .$fetch_general_data['wq']. '</td>
 		<td>' .$eq. '</td>
 		<td>' .$en_hc. '  ' .$en_m. '</td>

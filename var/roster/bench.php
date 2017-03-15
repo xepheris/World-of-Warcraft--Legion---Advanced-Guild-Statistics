@@ -324,7 +324,7 @@ if($benchcheck['id'] != '') {
 	</table>';	
 }
 elseif($benchcheck['id'] == '') {
-	echo '<br /><span style="text-align: center; color: yellowgreen;">Currently empty.</span>';
+	echo '<br /><span style="text-align: center; color: yellowgreen;">Currently empty.</span><p></p>';
 }
 echo '
 </div>
