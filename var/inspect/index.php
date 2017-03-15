@@ -10,12 +10,11 @@ while($class = mysqli_fetch_array($class_fetcher)) {
 	
 	$guild_class_fetcher = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `class` = '" .$class['id']. "' ORDER BY `name` ASC");
 	while($class_player = mysqli_fetch_array($guild_class_fetcher)) {
-		echo '<a style="text-transform: uppercase;" href="?inspect=' .$class_player['id']. '">' .$class_player['name']. '</a>   ';
+		echo '<a style="text-transform: uppercase;" href="?inspect=' .$class_player['id']. '">[ ' .$class_player['name']. ' ]</a>   ';
 	}
 	
 	echo '</div>';
 }
-
 
 echo '
 </div>';

@@ -7,7 +7,6 @@ function global_update() {
 	$(text).html('updating all current entries - please be patient!');
 	$(text).css('color', 'orange');
 	
-	
 	<?php
 	$fetch_ids = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` ORDER BY `name` ASC");
 	
@@ -16,24 +15,24 @@ function global_update() {
 		$id = $id['id'];
 		
 		echo '
-		var row = document.getElementsByClassName(' .$id. ');
+		var row_' .$id. ' = document.getElementsByClassName(' .$id. ');
 		
-		for (var i = 0; i < row.length; i++) {
-			row[0].style.transition = "opacity 1s ease-in-out";
-			row[0].style.opacity = "0.4";
-			row[0].style.filter = "alpha(opacity=40)";
+		for (var i = 0; i < row_' .$id. '.length; i++) {
+			row_' .$id. '[0].style.transition = "opacity 1s ease-in-out";
+			row_' .$id. '[0].style.opacity = "0.4";
+			row_' .$id. '[0].style.filter = "alpha(opacity=40)";
 			
-			var still = document.getElementsByClassName("still");
-			still[0].style.display = "none";
+			var still_' .$id. ' = document.getElementsByClassName("still"+' .$id. ');
+			still_' .$id. '[0].style.display = "none";
 			
-			var all_active_sublinks = row[i].getElementsByTagName("a");
+			var all_active_sublinks = row_' .$id. '[i].getElementsByTagName("a");
 			for (var k = 0; k < all_active_sublinks.length; k++) {
 				all_active_sublinks[k].style.pointerEvents = "none";
 			}
 			
-			var name = document.getElementsByClassName("name"+' .$id. ');
+			var name_' .$id. ' = document.getElementsByClassName("name"+' .$id. ');
 			
-			$(name).html("<span style="color: white;">Updating...</span>");
+			$(name_' .$id. ').html("<span class=\"white\">Updating...</span>");
 			
 			$.ajax({
 				type: "GET",
@@ -43,10 +42,10 @@ function global_update() {
 					character: +' .$id. '
 					},
 				success: function (data) {
-					$(name).html("<span style="color: white; font-size: 12px;">Updated! Please refresh the page.</span>");
-					row[0].style.transition = "opacity 1s ease-in-out";
-					row[0].style.opacity = "1";
-					row[0].style.filter = "alpha(opacity=100)";
+					$(name_' .$id. ').html("<span class=\"white\">Updated! Refreshing when all are done.</span>");
+					row_' .$id. '[0].style.transition = "opacity 1s ease-in-out";
+					row_' .$id. '[0].style.opacity = "1";
+					row_' .$id. '[0].style.filter = "alpha(opacity=100)";
 				}
 			});
 		}';
@@ -517,7 +516,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	// ACTUAL TABLE ROW CONTENT
 	echo '
 	<tr class="' .$id['id']. '">
-		<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
+		<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a style="min-width: 90px;" href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
 		<td>' .$last_update. '</td>
 		<td><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" /></td>
 		<td>' .round(((time('now')-$guild_table['logout'])/3600), 2). ' hrs ago</td>

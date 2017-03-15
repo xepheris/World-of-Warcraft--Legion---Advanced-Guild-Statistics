@@ -82,3 +82,9 @@ ul {
 	color: orange;
 	transition-duration: 500ms;
 }
+
+.white {
+	color: white;
+	font-size: 12px;
+	opacity: 1;
+}

@@ -436,10 +436,10 @@ else {
 		
 		include('roster/core.php');
 	}
-	
-	echo '</div>';
-	
-	echo '<script type="text/javascript">
+		
+	echo '
+	</div>
+	<script type="text/javascript">
 	var roster = document.getElementById("roster").offsetHeight;
 	var bench = document.getElementById("bench").offsetHeight;
 	var sidebar = document.getElementById("sidebar");
