@@ -88,3 +88,10 @@ ul {
 	font-size: 12px;
 	opacity: 1;
 }
+
+@media screen and ( max-width: 1734px ) {
+    #sidebar {
+        float: left;
+		height: auto;
+    }
+}

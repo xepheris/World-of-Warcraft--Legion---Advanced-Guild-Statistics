@@ -2,8 +2,7 @@
 
 
 echo '<span style="font-size: 20px; color: orange;">Contact</span>
-<br />
-<br />
+<p style="font-size: 16px; color: orange;">if you wish a reply, please manually write a email to <u>ags_feedback@gmail.com</u>.</p>
 <form method="post" action="">
 <input type="text" value="' .$_SESSION['guild']. '" name="guild" hidden required />
 <input type="text" value="' .$_SESSION['region']. '" name="region" hidden required />

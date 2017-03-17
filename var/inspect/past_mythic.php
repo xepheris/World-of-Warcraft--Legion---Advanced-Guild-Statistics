@@ -35,7 +35,7 @@ if($check > '1') {
 			var options = {
 				width: 740,
 				height: 250,
-				title: "Mythic+ Dungeon completions (last 4 weeks)",
+				title: "Mythic+ Dungeon completions (last 30 updates)",
 				titleTextStyle: {
 					color: "orange",
 					fontSize: "20",

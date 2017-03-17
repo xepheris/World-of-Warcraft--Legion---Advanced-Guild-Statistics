@@ -1,6 +1,6 @@
 <?php
 
-echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">';
+echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-left: 5%;">';
 
 echo '<h1 style="text-align: center; color: orange;">Effort Quota - unifying everything</h1><br />
 
@@ -295,20 +295,20 @@ $sum = 1613+$m0+$m2_5+$m5_10+$m10_15+$m15+$en_hc+$en_m+$tov_hc+$tov_m+$nh_hc+$nh
 	</thead>
 	<tbody>
 	<tr><td>World Quests</td><td>1613</td><td>1613</td></tr>
-	<tr><td>M0</td><td>131</td><td>' .$m0. '</td></tr>
-	<tr><td>M2-5</td><td>114</td><td>' .$m2_5. '</td></tr>
-	<tr><td>M5-10</td><td>268</td><td>' .$m5_10. '</td></tr>
-	<tr><td>M10-15</td><td>189</td><td>' .$m10_15. '</td></tr>
-	<tr><td>M15+</td><td>40</td><td>' .$m15. '</td></tr>
-	<tr><td>EN HC Boss Kills</td><td>71</td><td>' .$en_hc. '</td></tr>
-	<tr><td>EN M Boss Kills</td><td>34</td><td>' .$en_m. '</td></tr>
-	<tr><td>ToV HC Boss Kills</td><td>30</td><td>' .$tov_hc. '</td></tr>
-	<tr><td>ToV M Boss Kills</td><td>1</td><td>' .$tov_m. '</td></tr>
-	<tr><td>NH HC Boss Kills</td><td>51</td><td>' .$nh_hc. '</td></tr>
-	<tr><td>NH M Boss Kills</td><td>5</td><td>' .$nh_m. '</td></tr>
+	<tr><td>M0</td><td>431</td><td>' .$m0. '</td></tr>
+	<tr><td>M2-5</td><td>98</td><td>' .$m2_5. '</td></tr>
+	<tr><td>M5-10</td><td>371</td><td>' .$m5_10. '</td></tr>
+	<tr><td>M10-15</td><td>304</td><td>' .$m10_15. '</td></tr>
+	<tr><td>M15+</td><td>115</td><td>' .$m15. '</td></tr>
+	<tr><td>EN HC Boss Kills</td><td>127</td><td>' .$en_hc. '</td></tr>
+	<tr><td>EN M Boss Kills</td><td>63</td><td>' .$en_m. '</td></tr>
+	<tr><td>ToV HC Boss Kills</td><td>19</td><td>' .$tov_hc. '</td></tr>
+	<tr><td>ToV M Boss Kills</td><td>3</td><td>' .$tov_m. '</td></tr>
+	<tr><td>NH HC Boss Kills</td><td>58</td><td>' .$nh_hc. '</td></tr>
+	<tr><td>NH M Boss Kills</td><td>17</td><td>' .$nh_m. '</td></tr>
 	<tr><td>ToS HC Boss Kills</td><td>0</td><td>' .$tos_hc. '</td></tr>
 	<tr><td>ToS M Boss Kills</td><td>0</td><td>' .$tos_m. '</td></tr>
-	<tr><td>Itemlevel</td><td>906</td><td>' .$itemlevel. '</td></tr>
+	<tr><td>Itemlevel</td><td>903</td><td>' .$itemlevel. '</td></tr>
 	<tr><td>AP</td><td>196133799 at AK 25 as Monk</td><td>' .$ap. '</td></tr>
 	<tr><td></td><td><b>total</b></td><td><b>' .$sum. '</b></td></tr>
 	</tbody>
@@ -338,17 +338,17 @@ $sum = 722+$m0+$m2_5+$m5_10+$m10_15+$m15+$en_hc+$en_m+$tov_hc+$tov_m+$nh_hc+$nh_
 	</thead>
 	<tbody>
 	<tr><td>World Quests</td><td>722</td><td>722</td></tr>
-	<tr><td>M0</td><td>131</td><td>' .$m0. '</td></tr>
-	<tr><td>M2-5</td><td>114</td><td>' .$m2_5. '</td></tr>
-	<tr><td>M5-10</td><td>268</td><td>' .$m5_10. '</td></tr>
-	<tr><td>M10-15</td><td>189</td><td>' .$m10_15. '</td></tr>
-	<tr><td>M15+</td><td>40</td><td>' .$m15. '</td></tr>
-	<tr><td>EN HC Boss Kills</td><td>71</td><td>' .$en_hc. '</td></tr>
-	<tr><td>EN M Boss Kills</td><td>34</td><td>' .$en_m. '</td></tr>
-	<tr><td>ToV HC Boss Kills</td><td>30</td><td>' .$tov_hc. '</td></tr>
+	<tr><td>M0</td><td>122</td><td>' .$m0. '</td></tr>
+	<tr><td>M2-5</td><td>116</td><td>' .$m2_5. '</td></tr>
+	<tr><td>M5-10</td><td>181</td><td>' .$m5_10. '</td></tr>
+	<tr><td>M10-15</td><td>61</td><td>' .$m10_15. '</td></tr>
+	<tr><td>M15+</td><td>17</td><td>' .$m15. '</td></tr>
+	<tr><td>EN HC Boss Kills</td><td>116</td><td>' .$en_hc. '</td></tr>
+	<tr><td>EN M Boss Kills</td><td>32</td><td>' .$en_m. '</td></tr>
+	<tr><td>ToV HC Boss Kills</td><td>12</td><td>' .$tov_hc. '</td></tr>
 	<tr><td>ToV M Boss Kills</td><td>1</td><td>' .$tov_m. '</td></tr>
-	<tr><td>NH HC Boss Kills</td><td>51</td><td>' .$nh_hc. '</td></tr>
-	<tr><td>NH M Boss Kills</td><td>5</td><td>' .$nh_m. '</td></tr>
+	<tr><td>NH HC Boss Kills</td><td>56</td><td>' .$nh_hc. '</td></tr>
+	<tr><td>NH M Boss Kills</td><td>11</td><td>' .$nh_m. '</td></tr>
 	<tr><td>ToS HC Boss Kills</td><td>0</td><td>' .$tos_hc. '</td></tr>
 	<tr><td>ToS M Boss Kills</td><td>0</td><td>' .$tos_m. '</td></tr>
 	<tr><td>Itemlevel</td><td>903</td><td>' .$itemlevel. '</td></tr>

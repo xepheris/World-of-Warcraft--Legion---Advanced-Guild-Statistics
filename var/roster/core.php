@@ -11,40 +11,38 @@ function global_update() {
 	
 	while($id = mysqli_fetch_array($fetch_ids)) {
 		
-		$id = $id['id'];
-		
 		echo '
-		var row_' .$id. ' = document.getElementsByClassName(' .$id. ');
+		var row_' .$id['id']. ' = document.getElementsByClassName(' .$id['id']. ');
 		
-		for (var i = 0; i < row_' .$id. '.length; i++) {
-			row_' .$id. '[0].style.transition = "opacity 1s ease-in-out";
-			row_' .$id. '[0].style.opacity = "0.2";
-			row_' .$id. '[0].style.filter = "alpha(opacity=20)";
+		for (var i = 0; i < row_' .$id['id']. '.length; i++) {
+			row_' .$id['id']. '[0].style.transition = "opacity 1s ease-in-out";
+			row_' .$id['id']. '[0].style.opacity = "0.2";
+			row_' .$id['id']. '[0].style.filter = "alpha(opacity=20)";
 			
-			var still_' .$id. ' = document.getElementsByClassName("still"+' .$id. ');
-			still_' .$id. '[0].style.display = "none";
+			var still_' .$id['id']. ' = document.getElementsByClassName("still"+' .$id['id']. ');
+			still_' .$id['id']. '[0].style.display = "none";
 			
-			var all_active_sublinks = row_' .$id. '[i].getElementsByTagName("a");
+			var all_active_sublinks = row_' .$id['id']. '[i].getElementsByTagName("a");
 			for (var k = 0; k < all_active_sublinks.length; k++) {
 				all_active_sublinks[k].style.pointerEvents = "none";
 			}
 			
-			var name_' .$id. ' = document.getElementsByClassName("name"+' .$id. ');
+			var name_' .$id['id']. ' = document.getElementsByClassName("name"+' .$id['id']. ');
 			
-			$(name_' .$id. ').html("<span class=\"white\">Updating...</span>");
+			$(name_' .$id['id']. ').html("<span class=\"white\">Updating...</span>");
 			
 			$.ajax({
 				type: "GET",
 				dataType: "html",
 				url: "var/ajax/update.php",
 					data: {
-					character: +' .$id. '
+					character: +' .$id['id']. '
 					},
 				success: function (data) {
-					$(name_' .$id. ').html("<span class=\"white\">Updated! Refresh page when all are done.</span>");
-					row_' .$id. '[0].style.transition = "opacity 1s ease-in-out";
-					row_' .$id. '[0].style.opacity = "1";
-					row_' .$id. '[0].style.filter = "alpha(opacity=100)";
+					$(name_' .$id['id']. ').html("<span class=\"white\">Updated! Refresh when all are done.</span>");
+					row_' .$id['id']. '[0].style.transition = "opacity 1s ease-in-out";
+					row_' .$id['id']. '[0].style.opacity = "1";
+					row_' .$id['id']. '[0].style.filter = "alpha(opacity=100)";
 				}
 			});
 		}';
@@ -154,7 +152,7 @@ foreach($cap_array as $cap) {
 		$wq_cap = $query['wq'];
 	}
 }
-	
+
 rsort($mythic_array);
 
 $eq_avg = mysqli_fetch_array(mysqli_query($stream, "SELECT SUM(`eq`) AS `eq_sum` FROM `" .$table_name. "` WHERE `status` = '0'"));
@@ -227,11 +225,11 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float
 	<td></td>
 	<td></td>
 	<td><i>' .round(array_sum($itemlevel_array)/$active_chars['active'], 2). ' (' .round(array_sum($itemlevel_off_array)/$active_chars['active'], 2). ')</i></td>
-	<td><i>' .$ap_arraysum. ' (' .round(((array_sum($ap_array)/$_SESSION['tracked']/195932334)*100), 2). '%)</td>
+	<td><i title="7.1 must have: ' .round((((array_sum($ap_array)/$active_chars['active'])/65310778)*100), 2). '% | 7.2 must have: ' .round((((array_sum($ap_array)/$active_chars['active'])/2228766330)*100), 2). '%">' .$ap_arraysum. '</i></td>
 	<td><i>' .round(array_sum($alvl_array)/$active_chars['active'], 2). ' (' .round(array_sum($ak_array)/$active_chars['active'], 2). ')</i></td>
 	<td><i>' .round(array_sum($mythic_array)/$active_chars['active'], 0). '</i></td>
 	<td><i>' .round(array_sum($wq_array)/$active_chars['active'], 0). '</i></td>
-	<td><i>' .round($eq_avg['eq_sum']/$active_chars['active'], 2). '</i></td>
+	<td><i>' .round($eq_avg['eq_sum']/$active_chars['active'], 0). '</i></td>
 	<td><i>' .round(array_sum($en_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($en_m_array)/$active_chars['active'], 1). '</i></td>
 	<td><i>' .round(array_sum($tov_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tov_m_array)/$active_chars['active'], 1). '</i></td>
 	<td><i>' .round(array_sum($nh_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($nh_m_array)/$active_chars['active'], 1). '</i></td>
@@ -268,29 +266,60 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	$tos_heroic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_hc` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_4` WHERE `heroic` > '0'"));
 	$tos_mythic_progress = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) AS `tos_m` FROM `" .$_SESSION['table']. "_" .$id['id']. "_raid_4` WHERE `mythic` > '0'"));
 		
-	// ARTIFACT LEVEL THRESHOLD CONVERTER
-	if($fetch_general_data['alvl'] <= '27') {
-		$alvl_color = 'coral';
+	// ARTIFACT LEVEL COLORIZATION DEPENDING ON ARTIFACT KNOWLEDGE
+	// PRE 7.2
+	if($fetch_general_data['ak'] <= '25') {
+		if($fetch_general_data['alvl'] <= '35') {
+			$alvl_color = 'coral';
+		}
+		elseif($fetch_general_data['alvl'] > '35' && $fetch_general_data['alvl'] < '54') {
+			$alvl_color = 'orange';
+		}
+		elseif($fetch_general_data['alvl'] == '54') {
+			$alvl_color = 'yellowgreen';
+		}			
 	}
-	elseif($fetch_general_data['alvl'] > '27' && $fetch_general_data['alvl'] < '54') {
-		$alvl_color = 'orange';
-	}
-	elseif($fetch_general_data['alvl'] == '54') {
-		$alvl_color = 'yellowgreen';
+	// POST 7.2
+	elseif($fetch_general_data['ak'] > '25') {
+		if($fetch_general_data['alvl'] <= '35') {
+			$alvl_color = 'coral';
+		}
+		elseif($fetch_general_data['alvl'] > '35' && $fetch_general_data['alvl'] < '52') {
+			$alvl_color = 'orange';
+		}
+		elseif($fetch_general_data['alvl'] == '52') {
+			$alvl_color = 'yellowgreen';
+		}
 	}
 	
 	$artifact_level = '<span style="color: ' .$alvl_color. ';">' .$fetch_general_data['alvl']. '</span>';
-			
-	// ARTIFACT KNOWLEDGE THRESHOLD CONVERTER
-	if($fetch_general_data['ak'] <= '12') {
-		$ak_color = 'coral';
+		
+	// ARTIFACT KNOWLEDGE LEVEL PROGRESS DEPENDING ON VALUE
+	// PRE 7.2
+	if($fetch_general_data['ak'] <= '25') {
+		if($fetch_general_data['ak'] <= '12') {
+			$ak_color = 'coral';
+		}
+		elseif($fetch_general_data['ak'] > '12' && $fetch_general_data['ak'] < '25') {
+			$ak_color = 'orange';
+		}
+		elseif($fetch_general_data['ak'] == '25') {
+			$ak_color = 'yellowgreen';
+		}
 	}
-	elseif($fetch_general_data['ak'] > '12' && $fetch_general_data['ak'] < '25') {
-		$ak_color = 'orange';
+	// POST 7.2
+	elseif($fetch_general_data['ak'] > '25') {
+		if($fetch_general_data['ak'] <= '26') {
+			$ak_color = 'coral';
+		}
+		elseif($fetch_general_data['ak'] > '26' && $fetch_general_data['ak'] < '50') {
+			$ak_color = 'orange';
+		}
+		elseif($fetch_general_data['ak'] == '50') {
+			$ak_color = 'yellowgreen';
+		}
 	}
-	elseif($fetch_general_data['ak'] == '25') {
-		$ak_color = 'yellowgreen';
-	}
+	
 	$artifact_knowledge = '<span style="color: ' .$ak_color. ';">' .$fetch_general_data['ak']. '</span>';
 			
 	// MYTHIC PLUS ACHIEVEMENT THRESHOLD CONVERTER
@@ -306,7 +335,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif($fetch_general_data['m_achv'] == '15') {
 		$mplus_color = 'yellowgreen';
 	}
-	$m_achievement = '<span style="color: ' .$mplus_color. ';">' .$fetch_general_data['m_achv']. '</span>';
+	$m_achievement = '<span style="color: ' .$mplus_color. ';">(' .$fetch_general_data['m_achv']. ')</span>';
 
 	// ROLE1 CONVERTER VISUAL
 	switch ($guild_table['role1']) {
@@ -441,9 +470,22 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$last_update = '<span style="color: yellowgreen;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
 	}
 	elseif(time('now')-$guild_table['updated'] > '86400') {
-		$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
+		$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/86400), 2). ' day(s) ago</span>';
 	}
 	
+	// LOGGED OUT TIMER CONVERTER
+	if(time('now')-$guild_table['logout'] <= '86400') {
+		$last_logout = '' .round(((time('now')-$guild_table['logout'])/3600), 2). ' hrs ago';
+	}
+	elseif(time('now')-$guild_table['logout'] > '86400') {
+		if($guild_table['logout'] >= '86400' && $guild_table['logout'] < '172800') {
+			$last_logout = '' .round(((time('now')-$guild_table['logout'])/86400), 2). ' day ago';
+		}
+		elseif($guild_table['logout'] >= '172800') {
+			$last_logout = '' .round(((time('now')-$guild_table['logout'])/86400), 2). ' days ago';
+		}
+	}
+
 	// AP READABILITY CONVERTER
 	if(strlen($fetch_general_data['ap']) <= '3') {
 		$ap = number_format($fetch_general_data['ap']);
@@ -451,22 +493,25 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif(strlen($fetch_general_data['ap']) > '3' && strlen($fetch_general_data['ap']) < '7') {
 		$ap = '' .number_format($fetch_general_data['ap']/1000). ' K';
 	}
-	elseif(strlen($fetch_general_data['ap']) > '6' && strlen($fetch_general_data['ap']) < '10') {
+	elseif(strlen($fetch_general_data['ap']) >= '7' && strlen($fetch_general_data['ap']) < '10') {
 		$ap = '' .number_format($fetch_general_data['ap']/1000000). ' M';
 	}
-	elseif(strlen($fetch_general_data['ap']) > '10' && strlen($fetch_general_data['ap']) < '14') {
+	elseif(strlen($fetch_general_data['ap']) >= '10' && strlen($fetch_general_data['ap']) < '14') {
 		$ap = '' .number_format($fetch_general_data['ap']/1000000000). ' B';
 	}
-	elseif(strlen($fetch_general_data['ap']) > '14' && strlen($fetch_general_data['ap']) < '18') {
+	elseif(strlen($fetch_general_data['ap']) >= '14' && strlen($fetch_general_data['ap']) < '18') {
 		$ap = '' .number_format($fetch_general_data['ap']/1000000000000). ' T';
 	}
-	
+
 	// TOPLIST CHECK
 	if($fetch_general_data['ilvl_on'] == $itemlevel_equipped_cap) {
 		$fetch_general_data['ilvl_on'] = '<span style="color: yellowgreen;">' .$fetch_general_data['ilvl_on']. '</span>';
 	}
 	if($fetch_general_data['ilvl_off'] == $itemlevel_bags_cap) {
-		$fetch_general_data['ilvl_off'] = '<span style="color: yellowgreen;">' .$fetch_general_data['ilvl_off']. '</span>';
+		$fetch_general_data['ilvl_off'] = '<span style="color: yellowgreen;">(' .$fetch_general_data['ilvl_off']. ')</span>';
+	}
+	elseif($fetch_general_data['ilvl_off'] != $itemlevel_bags_cap) {
+		$fetch_general_data['ilvl_off'] = '(' .$fetch_general_data['ilvl_off']. ')';
 	}
 	if($fetch_general_data['wq'] == $wq_cap) {
 		$fetch_general_data['wq'] = '<span style="color: yellowgreen;">' .$fetch_general_data['wq']. '</span>';
@@ -481,6 +526,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$eq = $guild_table['eq'];
 	}
 	
+	// MUST-HAVE-AP THRESHOLD CONVERTER
 	if($guild_table['class'] == '11') {
 			
 		if($fetch_general_data['ak'] <= '25') {
@@ -495,7 +541,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif($guild_table['class'] == '12') {
 		
 		if($fetch_general_data['ak'] <= '25') {
-			$threshold = '261243112';
+			$threshold = '130621556';
 		}
 		elseif($fetch_general_data['ak'] > '25') {
 			$threshold = '522486224';
@@ -506,7 +552,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	elseif($guild_table['class'] != '11' && $guild_table['class'] != '12') {
 		
 		if($fetch_general_data['ak'] <= '25') {
-			$threshold = '261243112';
+			$threshold = '195932334';
 		}
 		elseif($fetch_general_data['ak'] > '25') {
 			$threshold = '783729336';
@@ -528,15 +574,15 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a style="min-width: 90px;" href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
 		<td>' .$last_update. '</td>
 		<td><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" /></td>
-		<td>' .round(((time('now')-$guild_table['logout'])/3600), 2). ' hrs ago</td>
+		<td>' .$last_logout. '</td>
 		<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 		<td>' .$spec['spec']. '</td>
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 		<td><a href="?edit_legendaries=' .$id['id']. '">' .$legendaries['amount']. '</a></td>
-		<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>		
+		<td>' .$fetch_general_data['ilvl_on']. ' ' .$fetch_general_data['ilvl_off']. '</td>		
 		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. ' (' .$ap_progress. ')</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
-		<td style="min-width: 80px;">' .$mythics. ' (' .$m_achievement. ')</td>
+		<td style="min-width: 80px;">' .$mythics. ' ' .$m_achievement. '</td>
 		<td>' .$fetch_general_data['wq']. '</td>
 		<td>' .$eq. '</td>
 		<td>' .$en_hc. '  ' .$en_m. '</td>

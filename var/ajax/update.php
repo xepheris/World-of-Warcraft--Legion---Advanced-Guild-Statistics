@@ -443,6 +443,31 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						`rep_highmountain` = '" .$rep_highmountain. "',
 						`rep_dreamweaver` = '" .$rep_valsharah. "'
 						WHERE `id` = '1'");
+						
+						// CREATE PAST TABLE
+						$past_table = mysqli_query($stream, "CREATE TABLE IF NOT EXISTS `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`id` int(11) NOT NULL AUTO_INCREMENT, `timestamp` int(10) NOT NULL, `ilvl_on` mediumint(4) NOT NULL, `ilvl_bags` mediumint(4) NOT NULL, `ap` bigint(16) NOT NULL, `wq` mediumint(5) NOT NULL, `m2` smallint(4) NOT NULL, `m5` smallint(4) NOT NULL, `m10` smallint(4) NOT NULL, `m15` smallint(4) NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1 ;");
+						
+						// MAX 30 ENTRIES						
+						$rows = mysqli_num_rows(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past`"));
+						if($rows > '30') {
+							$delete = mysqli_query($stream, "DELETE * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past` ORDER BY `id` DESC LIMIT 30,18446744073709551615");
+						}
+						
+						// PREVENT DATA INSERTION WHEN PLAYER LOGGED ON AND OFF AGAIN AND DIDN'T DO ANYTHING (HELLO LEGION APP)
+						$previous_update = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past` ORDER BY `id` DESC LIMIT 1"));
+						
+						if(
+							$previous_update['ilvl_on'] < $ilvlaverage ||
+							$previous_update['ilvl_bags'] < $ilvlaveragebags ||
+							$previous_update['ap'] < $artifact_power ||
+							$previous_update['m2'] < $mythic_plus2 ||
+							$previous_update['m5'] < $mythic_plus5 ||
+							$previous_update['m10'] < $mythic_plus10 ||
+							$previous_update['m15'] < $mythic_plus15 ||
+							$previous_update['wq'] < $world_quests) {
+							
+							$insert = mysqli_query($stream, "INSERT INTO `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`timestamp`, `ilvl_on`, `ilvl_bags`, `ap`, `wq`, `m2`, `m5`, `m10`, `m15`) VALUES ('" .$old['logout']. "', '" .$past_values['ilvl_on']. "', '" .$past_values['ilvl_off']. "', '" .$past_values['ap']. "', '" .$past_values['wq']. "', '" .$past_values['m2']. "' , '" .$past_values['m5']. "', '" .$past_values['m10']. "', '" .$past_values['m15']. "')");							
+						}
 										
 						// EQUIP INSERTION
 						$items = array('1' => 'head', '2' => 'neck', '3' => 'shoulder', '4' => 'back', '5' => 'chest', '6' => 'wrist', '7' => 'hands', '8' => 'waist', '9' => 'legs', '10' => 'feet', '11' => 'finger1', '12' => 'finger2', '13' => 'trinket1', '14' => 'trinket2');
@@ -642,32 +667,7 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 								}
 							}
 						}
-						
-						// CREATE PAST TABLE
-						$past_table = mysqli_query($stream, "CREATE TABLE IF NOT EXISTS `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`id` int(11) NOT NULL AUTO_INCREMENT, `timestamp` int(10) NOT NULL, `ilvl_on` mediumint(4) NOT NULL, `ilvl_bags` mediumint(4) NOT NULL, `ap` bigint(16) NOT NULL, `wq` mediumint(5) NOT NULL, `m2` smallint(4) NOT NULL, `m5` smallint(4) NOT NULL, `m10` smallint(4) NOT NULL, `m15` smallint(4) NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1 ;");
-						
-						// PREVENT DATA INSERTION WHEN PLAYER LOGGED ON AND OFF AGAIN AND DIDN'T DO ANYTHING (HELLO LEGION APP)
-						
-						$rows = mysqli_num_rows(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past`"));
-						if($rows > '62') {
-							$delete = mysqli_query($stream, "DELETE * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past` ORDER BY `timestamp` DESC LIMIT 62,18446744073709551615");
-						}
-						
-						$previous_update = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$_SESSION['table']. "_" .$char_id['id']. "_past` ORDER BY `timestamp` DESC LIMIT 1"));
-						
-						if(
-							$previous_update['ilvl_on'] < $ilvlaverage ||
-							$previous_update['ilvl_bags'] < $ilvlaveragebags ||
-							$previous_update['ap'] < $artifact_power ||
-							$previous_update['m2'] < $mythic_plus2 ||
-							$previous_update['m5'] < $mythic_plus5 ||
-							$previous_update['m10'] < $mythic_plus10 ||
-							$previous_update['m15'] < $mythic_plus15 ||
-							$previous_update['wq'] < $world_quests) {
-							
-							$insert = mysqli_query($stream, "INSERT INTO `" .$_SESSION['table']. "_" .$char_id['id']. "_past` (`timestamp`, `ilvl_on`, `ilvl_bags`, `ap`, `wq`, `m2`, `m5`, `m10`, `m15`) VALUES ('" .$old['logout']. "', '" .$past_values['ilvl_on']. "', '" .$past_values['ilvl_off']. "', '" .$past_values['ap']. "', '" .$past_values['wq']. "', '" .$past_values['m2']. "' , '" .$past_values['m5']. "', '" .$past_values['m10']. "', '" .$past_values['m15']. "')");							
-						}
-						
+												
 						echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">Character successfully updated! Will reload page in 5 seconds.</span>';
 
 					}

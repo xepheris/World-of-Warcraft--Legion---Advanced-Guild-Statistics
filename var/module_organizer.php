@@ -12,7 +12,6 @@ if(isset($_GET['import'])) {
 	include('stream.php');
 	
 	if($_SESSION['llogin'] == '0') {
-		echo '<span style="color: orange; font-size: 18px;">Welcome! This appears to be your first visit. Please add characters before proceeding:</span><br />';
 		$refresh_login = mysqli_query($stream, "UPDATE `ovw_guilds` SET `last_login` = '" .time('now'). "' WHERE `id` = '" .$_SESSION['table']. "'");
 	}	
 		

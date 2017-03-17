@@ -94,15 +94,27 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		}
 		
 		echo $import;
+		
+		// EQ SWAP
+		if(isset($_GET['eq'])) {
+			$eq = '
+			[ <a href="?eq" style="text-decoration: underline;">What is EQ?</a>';
+		}
+		elseif(!isset($_GET['eq'])) {
+			$eq = '
+			[ <a href="?eq">What is EQ?</a>';
+		}
+		
+		echo $eq;
 				
 		// CONTACT SWAP
 		if(isset($_GET['contact'])) {
 			$contact = '
-			[ <a href="?contact" style="text-decoration: underline;">Contact</a>';
+			<a href="?contact" style="text-decoration: underline;">Contact</a>';
 		}
 		elseif(!isset($_GET['contact'])) {
 			$contact = '
-			[ <a href="?contact">Contact</a>';
+			<a href="?contact">Contact</a>';
 		}
 		
 		echo $contact;
