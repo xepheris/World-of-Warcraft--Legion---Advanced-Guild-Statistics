@@ -235,7 +235,7 @@ foreach($_GET as $user_id) {
 		]);
 	
 		var options = {
-			width: 370,
+			width: 300,
 			height: 137,
 			legend: { position: "top", maxLines: 3 },
 			bar: { groupWidth: "30%" },
