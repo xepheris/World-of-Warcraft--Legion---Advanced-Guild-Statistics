@@ -1,7 +1,5 @@
 <?php
 
-#echo '<div style="width: 5%; height: auto; padding-bottom: 15px; float: left;"></div>';
-
 $table_name = '' .$_SESSION['table']. '_' .$_SESSION['guild']. '_' .$_SESSION['region']. '_' .$_SESSION['realm']. '';
 	
 
@@ -209,7 +207,5 @@ else {
 	</script>';
 	
 }
-
-
 
 ?>
