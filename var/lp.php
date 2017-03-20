@@ -1,12 +1,31 @@
+<link rel="stylesheet" href="css/flickity.min.css">
+<style type="text/css">
+	.flickity-page-dots {
+		display: none;
+	}
+	.flickity-prev-next-button {
+		display: none;
+	}
+</style>
 <?php
 
 include('var/stream.php');
 						
 echo '<div style="width: 20%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left;">
 </div>
-<div style="width: 60%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">
+<div style="width: 60%; height: auto; padding-bottom: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">
 	<div style="width: 100%; height: auto; float: left;">
-		<img src="img/wip.jpg" alt="404 title="404" style="border-bottom: 1px solid darkslategray;"/>
+		<div class="main-carousel">
+			<div class="carousel-cell">
+				<img src="img/c1.png" alt="404" title="roster overview" />
+			</div>
+			<div class="carousel-cell">
+				<img src="img/c2.png" alt="404" title="inspect selection" />
+			</div>
+			<div class="carousel-cell">
+				<img src="img/c3.png" alt="404" title="compare function" />
+			</div>
+		</div>	
 	</div>
 	<div style="width: 50%; height: auto; float: left;">
 		<span style="color: orange; font-size: 22px;">Login</span>
@@ -91,7 +110,21 @@ echo '<div style="width: 20%; height: auto; padding-top: 15px; padding-bottom: 1
 		<button type="submit">Register</button>
 		</form>
 	</div>
-	<p style="text-align: center; color: orange;">best viewed on 1980x1080 or higher on a desktop browser</p>
+	<p style="text-align: center; color: orange;">best viewed on 1920x1080 or higher on a desktop browser</p>
 </div>';
 
 ?>
+
+<script src="js/flickity.pkgd.min.js"></script>
+<script type="text/javascript">
+	var elem = document.querySelector('.main-carousel');
+	var flkty = new Flickity( elem, {
+		cellAlign: 'left',
+		contain: true
+	});
+	
+	var flkty = new Flickity( '.main-carousel', {
+		autoPlay: 4500
+	});
+	flkty.playPlayer()
+</script>

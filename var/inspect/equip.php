@@ -30,7 +30,7 @@ foreach($slots as $id => $slot) {
 					
 	// GEM CHECK
 	if((strpos($item_info['bonus'], '1808') !== FALSE) && ($item_info['gem'] == '0')) {
-		$gem = '<img src="img/mg.png" title="missing gem" alt="missing gem" />';
+		$gem = '<a style="background: transparent url(img/mg.png) no-repeat scroll left center;"><span style="margin-left: 18px; color: coral;">missing gem</span></a>';
 	}
 	elseif($item_info['gem'] != '0') {
 		$gem = '<a href="http://wowhead.com/?item=' .$item_info['gem']. '">' .$item_info['gem']. '</a>';
@@ -39,7 +39,7 @@ foreach($slots as $id => $slot) {
 	$enchantable = array('2', '3', '4', '11', '12');
 			
 	if(in_array($id, $enchantable) && $item_info['enchant'] == '0') {
-		$enchant = '<img src="img/me.png" title="missing enchant" alt="missing gem" />';
+		$enchant = '<a style="background: transparent url(img/me.png) no-repeat scroll left center;"><span style="margin-left: 18px; color: coral;">missing enchant</span></a>';
 	}
 	elseif($item_info['enchant'] != '0') {
 		$conversion = mysqli_fetch_array(mysqli_query($stream, "SELECT `wowhead_id` FROM `ovw_enchants` WHERE `enchant_id` = '" .$item_info['enchant']. "'"));

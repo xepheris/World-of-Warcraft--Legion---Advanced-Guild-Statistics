@@ -9,7 +9,6 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		<br />
 		<span class="nav">
 		<a href="">Login & Register</a> |
-		<a href="?gallery">Demo</a> |
 		<span style="color: white;" onclick="' .$contact. '">Contact</span> |
 		<div class="dd">
 			Links
