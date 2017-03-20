@@ -46,6 +46,9 @@ echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15p
 		You will recieve a confirmation as soon as the import is finished.
 		<br />
 		<br />
+		<span style="color: coral;">Important: do NOT close this window or navigate to somewhere else during import process!</span>
+		<br />
+		<br />
 		<div id="loading"><img src="img/load.gif" alt="404" onload="general_import()" /></div>
 		<div id="loading2" onload="live_update()"></div>
 		<div id="finished"></div>

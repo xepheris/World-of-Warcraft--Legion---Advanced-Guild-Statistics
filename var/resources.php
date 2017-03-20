@@ -3,9 +3,7 @@
 echo '
 <div style="width: 60%; height: auto; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-left: 20%;">	
 	<div style="width: 100%; height: auto; float: left;">
-	<p style="color: orange; font-size: 18px;">
-	<u>Advanced Guild Statistics</u> uses components and ideas of others.<br /><br />
-	</p>
+	<p style="color: orange; font-size: 18px;"><u>Advanced Guild Statistics</u> uses components and ideas of others.</p>
 	<table style="width: 100%;">
 		<tbody>
 			<tr>
@@ -21,7 +19,19 @@ echo '
 				<td><a href="https://newswire.theunderminejournal.com/phpMyAdmin/" title="Undermine Journal DB">The Undermine Journal Realmlist</a></td>
 			</tr>
 			<tr>
-				<td><a href="http://wow.vanlankveld.me/">Role system & historical addition of Legendaries from http://wow.vanlankveld.me/</a></td>
+				<td><a href="http://wow.vanlankveld.me/" title="vanlankveld Legion spreadsheet">vanlankveld Role system & historical addition of Legendaries</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.warcraftlogs.com/" title="Warcraftlogs">Warcraftlogs.com API</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://dev.battle.net/" title="Battle.net API Hub">Battle.net API</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://fonts.google.com/specimen/Roboto" title="Roboto @ Google Fonts">Roboto font</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://code.jquery.com/jquery/" title="jQuery Download">jQuery 1.8.3</a></td>
 			</tr>
 			<tr>
 				<td>time of Funnypun, Jixzy and Tharilzun @ Blackmoore_EU (thanks)</td>

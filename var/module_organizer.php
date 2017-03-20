@@ -1,9 +1,6 @@
 <?php
 
 $table_name = '' .$_SESSION['table']. '_' .$_SESSION['guild']. '_' .$_SESSION['region']. '_' .$_SESSION['realm']. '';
-	
-
-include('stream.php');
 
 // IMPORT
 if(isset($_GET['import'])) {
