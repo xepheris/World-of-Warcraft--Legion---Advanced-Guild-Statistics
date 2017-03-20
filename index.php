@@ -55,10 +55,10 @@ echo '<!DOCTYPE html>
 		include('var/nav.php');
 
 		if(!isset($_SESSION['guild'])) {
-			if(isset($_GET['demo'])) {
-			
+			if(isset($_GET['resources'])) {
+				include('var/resources.php');
 			}
-		elseif(!isset($_GET['demo'])) {
+		elseif(!isset($_GET['resources'])) {
 			
 			include('var/lp.php');
 		}

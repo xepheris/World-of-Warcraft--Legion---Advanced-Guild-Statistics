@@ -11,23 +11,108 @@
 
 include('var/stream.php');
 						
-echo '<div style="width: 20%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left;">
-</div>
-<div style="width: 60%; height: auto; padding-bottom: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;">
+echo '
+<div style="width: 60%; height: auto; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-left: 20%;">	
 	<div style="width: 100%; height: auto; float: left;">
-		<div class="main-carousel">
-			<div class="carousel-cell">
-				<img src="img/c1.png" alt="404" title="roster overview" />
-			</div>
-			<div class="carousel-cell">
-				<img src="img/c2.png" alt="404" title="inspect selection" />
-			</div>
-			<div class="carousel-cell">
-				<img src="img/c3.png" alt="404" title="compare function" />
-			</div>
-		</div>	
+	<p style="color: orange; font-size: 18px;">
+	<u>Advanced Guild Statistics</u> combines all necessary utilities a raid leader or loot council needs to make roster or loot decisions.<br /><br />Minimalistically pre-processed data helps guilds to min-max raid performance.
+	</p>
+	<table style="width: 100%;">
+		<thead>
+			<th>Features</th>
+			<th>new version</th>
+			<th>former version</th>
+			<th>other pages/spreadsheets</th>
+		</thead>
+		<tbody>
+			<tr>
+				<td>direct Armory Import based on Guild rank</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+			</tr>
+			<tr>
+				<td>4 supported regions (US, EU, TW, KR)</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: orange;">partially</td>
+				<td style="color: orange;">partially</td>
+			</tr>
+			<tr>
+				<td>incredibly easy update function</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: orange;">partially</td>
+				<td style="color: orange;">partially</td>
+			</tr>
+			<tr>
+				<td>Admin and Guest mode</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+			</tr>
+			<tr>
+				<td>Bench system</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+				<td style="color: coral;">no</td>
+			</tr>
+			<tr>
+				<td>Role system</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+				<td style="color: orange;">partially</td>
+			</tr>
+			<tr>
+				<td>individual character inspection (Equip, Dungeons, Raids and much more)</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: orange;">partially</td>
+				<td style="color: orange;">partially</td>
+			</tr>
+			<tr>
+				<td>in-depth tracking of Artifact Power, M+, etc</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: orange;">partially</td>
+				<td style="color: orange;">partially</td>
+			</tr>
+			<tr>
+				<td>Legendary tracking</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+				<td style="color: orange;">partially</td>
+			</tr>
+			<tr>
+				<td>includes Warcraftlog parses if existing</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+				<td style="color: coral;">no</td>
+			</tr>
+			<tr>
+				<td>compare up to 4 characters</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+				<td style="color: coral;">no</td>
+			</tr>
+			<tr>
+				<td>unifying internal metric "Effort Quota"</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+				<td style="color: coral;">no</td>
+			</tr>
+			<tr>
+				<td>visually night compatible</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+			</tr>
+			<tr style="border-bottom: 1px solid white;">
+				<td>open source</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: orange;">partially</td>
+			</tr>
+		</tbody>
+	</table>
 	</div>
-	<div style="width: 50%; height: auto; float: left;">
+	<div style="width: 50%; height: auto; float: left; padding-top: 15px; min-height: 165px; border-bottom: 1px solid white;">
 		<span style="color: orange; font-size: 22px;">Login</span>
 		<br />
 		' .$login_wrong_pw. '
@@ -83,7 +168,7 @@ echo '<div style="width: 20%; height: auto; padding-top: 15px; padding-bottom: 1
 		<button type="submit">Enter</button>
 		</form>
 	</div>
-	<div style="width: 50%; height: auto; float: left;">
+	<div style="width: 50%; height: auto; float: left; padding-top: 15px; min-height: 165px; border-bottom: 1px solid white;">
 		<span style="color: orange; font-size: 22px">Register</span>
 		<br />
 		' .$duplicate_guild. '
@@ -110,7 +195,26 @@ echo '<div style="width: 20%; height: auto; padding-top: 15px; padding-bottom: 1
 		<button type="submit">Register</button>
 		</form>
 	</div>
-	<p style="text-align: center; color: orange;">best viewed on 1920x1080 or higher on a desktop browser</p>
+	
+	<div style="width: 100%; height: auto; float: left;">
+		<div class="main-carousel">
+			<div class="carousel-cell">
+				<img src="img/c1.png" alt="404" title="roster overview" />
+			</div>
+			<div class="carousel-cell">
+				<img src="img/c2.png" alt="404" title="inspect selection" />
+			</div>
+			<div class="carousel-cell">
+				<img src="img/c3.png" alt="404" title="compare function" />
+			</div>
+			<div class="carousel-cell">
+				<img src="img/c4.png" alt="404" title="compare function" />
+			</div>
+			<div class="carousel-cell">
+				<img src="img/c5.png" alt="404" title="compare function" />
+			</div>
+		</div>	
+	</div>
 </div>';
 
 ?>
@@ -124,7 +228,8 @@ echo '<div style="width: 20%; height: auto; padding-top: 15px; padding-bottom: 1
 	});
 	
 	var flkty = new Flickity( '.main-carousel', {
-		autoPlay: 4500
+		autoPlay: 4500,
+		adaptiveHeight: true
 	});
 	flkty.playPlayer()
 </script>

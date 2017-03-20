@@ -8,7 +8,8 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		<br />
 		<br />
 		<span class="nav">
-		<a href="">Login & Register</a> |
+		<a href="http://artifactpower.info/dev">Login & Register</a> |
+		<a href="?resources">Resources & Inspirations</a> |
 		<span style="color: white;" onclick="' .$contact. '">Contact</span> |
 		<div class="dd">
 			Links
