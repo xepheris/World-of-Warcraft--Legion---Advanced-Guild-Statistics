@@ -2,7 +2,7 @@
 
 session_start();
 
-$contact = "return confirm('If you wish to contact me, either use the contact form when logged in or write me a mail to: xepheris.dh.tank@gmail.com')";
+$contact = "return confirm('If you wish to contact me, either use the contact form when logged in or write me a mail to: xepheris.dh.tank [AT] gmail [DOT] com')";
 
 include('var/stream.php');
 

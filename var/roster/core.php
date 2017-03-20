@@ -1,3 +1,22 @@
+<style type="text/css">
+	.selected {
+		border: 3px solid orange;
+	}
+</style>
+
+
+<script type="text/javascript">
+function select(str) {
+	var row = document.getElementsByClassName(str);
+	
+	if($(row).hasClass('selected')) {
+	   $(row).removeClass('selected');
+	}
+	else {
+		$(row).addClass('selected');
+	}
+}
+</script>
 <script type="text/javascript">
 function global_update() {
 	
@@ -570,7 +589,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	
 	// ACTUAL TABLE ROW CONTENT
 	echo '
-	<tr class="' .$id['id']. '">
+	<tr class="' .$id['id']. '" onclick="select(this.className);">
 		<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a style="min-width: 90px;" href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
 		<td>' .$last_update. '</td>
 		<td><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" /></td>
@@ -580,7 +599,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 		<td><a href="?edit_legendaries=' .$id['id']. '">' .$legendaries['amount']. '</a></td>
 		<td>' .$fetch_general_data['ilvl_on']. ' ' .$fetch_general_data['ilvl_off']. '</td>		
-		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. ' (' .$ap_progress. ')</span></td>
+		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span> <span title="percentage of possible max. AP for this class">(' .$ap_progress. ')</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 		<td style="min-width: 80px;">' .$mythics. ' ' .$m_achievement. '</td>
 		<td>' .$fetch_general_data['wq']. '</td>
