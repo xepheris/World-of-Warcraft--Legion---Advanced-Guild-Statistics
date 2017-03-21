@@ -319,7 +319,7 @@ foreach($_GET as $user_id) {
 	</tbody>
 	</table>
 	<br />
-	<span style="color: orange; font-size: 20px;">Raidprogress & highest parse for difficulty</span>
+	<span style="color: orange; font-size: 20px;">Raidprogress</span>
 	<br />
 	<span style="color: black; font-size: 10px;">heroic & mythic - hover over numbers to see other difficulties<br />
 	parse is directly from within the log, not the profile & rounded to 2 digits<br />

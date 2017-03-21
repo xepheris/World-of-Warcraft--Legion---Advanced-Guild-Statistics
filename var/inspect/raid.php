@@ -1,7 +1,7 @@
 <?php
 
 echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px;" class="inspect">
-<span style="color: orange; font-size: 20px;">Raidprogress & highest parse for difficulty if character could be found on Warcraftlogs</span>
+<span style="color: orange; font-size: 20px;">Raidprogress</span>
 <br />
 <span style="color: black; font-size: 10px;">heroic & mythic - hover over numbers to see other difficulties<br />
 parse is directly from within the log, not the profile & rounded to 2 digits<br />

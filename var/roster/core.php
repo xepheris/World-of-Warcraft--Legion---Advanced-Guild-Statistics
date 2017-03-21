@@ -70,13 +70,6 @@ function global_update() {
 	}
 </script>';
 
-if($_SESSION['tracked'] >= '20') {
-	$overflow = '';
-}
-else {
-	$overflow = 'overflow: hidden;';
-}
-
 // FETCH GLOBAL TOP ENTRIES
 $all_ids = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `status` = '0' ORDER BY `name` ASC");
 $id_array = array();
@@ -196,10 +189,10 @@ $eq_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` AS `eq_cap` FROM
 
 $active_chars = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) as `active` FROM `" .$table_name. "` WHERE `status` = '0'"));
 
-echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); min-width: 1500px;">
+echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); min-width: 1563px;">
 ' .$error. '
 <span style="color: orange; text-align: center; font-size: 20px;">Current Roster</span>
-<div style="overflow-y: scroll; max-height: 912px; ' .$overflow. '">
+<div>
 <table style="margin: 0 auto; margin-top: 15px; width: 100%; min-width: 1500px;">
 <thead>
 <tr>
@@ -229,8 +222,13 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float
 	<th><span title="Tomb of Sargeras">ToS</span><br />
 		HC M
 	</th>
-	<th></th>
-	<th></th>
+	<th></th>';
+	
+	// GUEST = VIEW ONLY
+	if($_SESSION['guest'] != 'guest') {
+		echo '<th></th>';
+	}
+	echo '
 </tr>
 </thead>
 <tbody>
@@ -489,8 +487,8 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$last_update = '<span style="color: yellowgreen;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
 	}
 	elseif(time('now')-$guild_table['updated'] > '86400') {
-		$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/86400), 2). ' day(s) ago</span>';
-	}
+			$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
+		}
 	
 	// LOGGED OUT TIMER CONVERTER
 	if(time('now')-$guild_table['logout'] <= '86400') {
@@ -597,7 +595,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 		<td>' .$spec['spec']. '</td>
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
-		<td><a href="?edit_legendaries=' .$id['id']. '">' .$legendaries['amount']. '</a></td>
+		<td><a href="?edit_legendaries=' .$id['id']. '" title="Edit legendaries">' .$legendaries['amount']. '</a></td>
 		<td>' .$fetch_general_data['ilvl_on']. ' ' .$fetch_general_data['ilvl_off']. '</td>		
 		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span> <span title="percentage of possible max. AP for this class">(' .$ap_progress. ')</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
@@ -608,8 +606,12 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td>' .$tov_hc. ' ' .$tov_m. '</td>
 		<td>' .$nh_hc. ' ' .$nh_m. '</td>
 		<td>' .$tos_hc. ' ' .$tos_m. '</td>
-		<td><a href="?bench=' .$id['id']. '"><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
-		<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
+		<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>';
+		// GUEST = VIEW ONLY
+		if($_SESSION['guest'] != 'guest') {
+			echo '<td><a href="?bench=' .$id['id']. '"><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>';
+		}
+		echo '
 	</tr>';
 }
 		

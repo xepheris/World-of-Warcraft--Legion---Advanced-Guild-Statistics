@@ -32,7 +32,7 @@ if($check > '1') {
 			var options = {
 				width: 740,
 				height: 250,
-				title: "World Quests (last 30 updates)",
+				title: "World Quests",
 				titleTextStyle: {
 					color: "orange",
 					fontSize: "20",

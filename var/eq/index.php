@@ -1,4 +1,4 @@
-<?php
+t<?php
 
 echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-left: 5%;">';
 
@@ -220,7 +220,7 @@ echo '<p style="text-align: left; color: black; padding-left: 25px; padding-righ
 	...now factor in it\'s current worth: <u>($ap/$threshold)*$worth</u> for classes that have 3 specs; for Demon Hunters it\'s ((($ap/$threshold)*$worth)/2)*3 and for Druids ((($ap/$threshold)*$worth)/4)*3
 	<br />
 	as Artifact Power is an extra inflationary value due to Artifact Knowledge, there\'s an extra penalty of 2.5 on top of it, so ultimately, the formula is<br />
-	<u>($ap/$threshold)*($threhsold/$ap_per_run*$time_per_run/$weighting)/2.5*$class</u>
+	<u>($ap/$threshold)*($threshold/$ap_per_run*$time_per_run/$weighting)/2.5*$class</u>
 	
 	
 	</p>';

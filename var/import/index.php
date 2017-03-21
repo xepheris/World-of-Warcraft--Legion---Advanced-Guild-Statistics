@@ -1,6 +1,9 @@
 <?php
 
 echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);">';
+
+// GUEST = VIEW ONLY
+if($_SESSION['guest'] != 'guest') {
 	
 	if($_SESSION['llogin'] == '0') {
 		$refresh_login = mysqli_query($stream, "UPDATE `ovw_guilds` SET `last_login` = '" .time('now'). "' WHERE `id` = '" .$_SESSION['table']. "'");
@@ -170,5 +173,12 @@ echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15p
 	echo '</div>
 	<div style="width: 5%; float: left;">
 	</div>';
+}
+elseif($_SESSION['guest'] == 'guest') {
+	echo '<span style="color: coral;">Sorry, guests may not edit this setting.<br />
+	<a href="?inspect">Back</a></span>';
+}
+
+echo '</div>';
 
 ?>

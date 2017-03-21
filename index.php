@@ -54,17 +54,39 @@ if(isset($_POST['gname']) && isset($_POST['region']) && isset($_POST['realm']) &
 
 // LOGIN PROCESSING
 if(isset($_POST['guild']) && isset($_POST['pw'])) {
-
-	$check = mysqli_fetch_array(mysqli_query($stream, "SELECT `password` FROM `ovw_guilds` WHERE `id` = '" .$_POST['guild']. "'"));
 	
-	if(md5($_POST['pw']) == $check['password']) {
+	if($_POST['pw'] != '') {
 		
-		$fetch = mysqli_fetch_array(mysqli_query($stream, "SELECT `guild_name`, `realm`, `region`, `shortlink`, `tracked_chars`, `last_login` FROM `ovw_guilds` WHERE `id` = '" .$_POST['guild']. "'"));
+		$check = mysqli_fetch_array(mysqli_query($stream, "SELECT `password` FROM `ovw_guilds` WHERE `id` = '" .$_POST['guild']. "'"));
+	
+		if(md5($_POST['pw']) == $check['password']) {
+		
+			$fetch = mysqli_fetch_array(mysqli_query($stream, "SELECT `guild_name`, `realm`, `region`, `shortlink`, `tracked_chars` FROM `ovw_guilds` WHERE `id` = '" .$_POST['guild']. "'"));
+			$_SESSION['guild'] = $fetch['guild_name'];
+			$_SESSION['region'] = $fetch['region'];
+			$_SESSION['tracked'] = $fetch['tracked_chars'];
+			$_SESSION['shortlink'] = $fetch['shortlink'];
+		
+			$realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `name` FROM `ovw_realms` WHERE `id` = '" .$fetch['realm']. "'"));
+		
+			$_SESSION['realm'] = $realm_name['name'];
+		
+			$_SESSION['table'] = $_POST['guild'];
+		
+			// UPDATE LOGIN TIME
+			$refresh_login = mysqli_query($stream, "UPDATE `ovw_guilds` SET `last_login` = '" .time('now'). "' WHERE `id` = '" .$_SESSION['table']. "'");
+		}
+		elseif(md5($_POST['pw']) != $check['password']) {
+			$login_wrong_pw = '<br /><span style="color: coral; text-align: center;">Sorry, password wrong!</span><br />';
+		}
+	}
+	elseif($_POST['pw'] == '') {
+		$fetch = mysqli_fetch_array(mysqli_query($stream, "SELECT `guild_name`, `realm`, `region`, `shortlink`, `tracked_chars` FROM `ovw_guilds` WHERE `id` = '" .$_POST['guild']. "'"));
+		
 		$_SESSION['guild'] = $fetch['guild_name'];
 		$_SESSION['region'] = $fetch['region'];
-		$_SESSION['share'] = $fetch['shortlink'];
 		$_SESSION['tracked'] = $fetch['tracked_chars'];
-		$_SESSION['llogin'] = $fetch['last_login'];
+		$_SESSION['shortlink'] = $fetch['shortlink'];
 		
 		$realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `name` FROM `ovw_realms` WHERE `id` = '" .$fetch['realm']. "'"));
 		
@@ -72,12 +94,27 @@ if(isset($_POST['guild']) && isset($_POST['pw'])) {
 		
 		$_SESSION['table'] = $_POST['guild'];
 		
-		// UPDATE LOGIN TIME
-		$refresh_login = mysqli_query($stream, "UPDATE `ovw_guilds` SET `last_login` = '" .time('now'). "' WHERE `id` = '" .$_SESSION['table']. "'");
+		$_SESSION['guest'] = 'guest';
 	}
-	elseif(md5($_POST['pw']) != $check['password']) {
-		$login_wrong_pw = '<br /><span style="color: coral; text-align: center;">Sorry, password wrong!</span><br />';
-	}
+}
+
+// SHARED LINK
+if(isset($_GET['sl']) && strlen($_GET['sl']) == '32') {
+
+	$fetch = mysqli_fetch_array(mysqli_query($stream, "SELECT `id`, `guild_name`, `realm`, `region`, `shortlink`, `tracked_chars` FROM `ovw_guilds` WHERE `shortlink` = '" .$_GET['sl']. "'"));
+		
+	$_SESSION['guild'] = $fetch['guild_name'];
+	$_SESSION['region'] = $fetch['region'];
+	$_SESSION['tracked'] = $fetch['tracked_chars'];
+	$_SESSION['shortlink'] = $fetch['shortlink'];
+		
+	$realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `name` FROM `ovw_realms` WHERE `id` = '" .$fetch['realm']. "'"));
+		
+	$_SESSION['realm'] = $realm_name['name'];
+	
+	$_SESSION['table'] = $fetch['id'];
+	
+	$_SESSION['guest'] = 'guest';
 }
 
 echo '<!DOCTYPE html>
@@ -113,6 +150,18 @@ echo '<!DOCTYPE html>
 <body style="margin: 0px; background-color: rgba(56, 66, 88, 0.85); font-family: R-Regular; color: black; font-size: 15px;">
 
 	<div style="width: 100%; height: 100%; margin: 0 auto;">';
+	
+		if(isset($_SESSION['shortlink'])) {
+			if(isset($_GET['sl'])) {
+				unset($_GET['sl']);
+			}
+			foreach($_GET as $get => $value) {
+				$current_share = $current_share.'&' .$get. '=' .$value. '';
+			}
+			$share = "return confirm('Share this link: http://artifactpower.info/dev/?sl=" .$_SESSION['shortlink'].$current_share. "')";
+			$share = ' <span style="color: white;" onclick="' .$share. '">Share</span> ]';
+		}
+		
 		include('var/nav.php');
 
 		if(!isset($_SESSION['guild'])) {

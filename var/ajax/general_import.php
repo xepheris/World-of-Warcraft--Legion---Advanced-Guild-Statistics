@@ -68,7 +68,7 @@ if($data != '') {
 				
 				$en_boss = array("Nythendra", "Elerethe Renferal", "Il'gynoth", "Ursoc", "Dragons of Nightmare", "Cenarius", "Xavius");
 				$tov_boss = array("Odyn", "Guarm", "Helya");
-				$nh_boss = array("Skorpyron", "Chronomatic Anomaly", "Trilliax", "Spellblade Aluriel", "Star Augur Etraeus", "High Botanist Tel'arn", "Krosus", "Tichondrius", "Elisande", "Gul'dan");
+				$nh_boss = array("Skorpyron", "Chronomatic Anomaly", "Trilliax", "Spellblade Aluriel", "Star Augur Etraeus", "High Botanist Tel'arn", "Tichondrius", "Krosus", "Elisande", "Gul'dan");
 				$tos_boss = array("Goroth", "Demonic Inquisition", "Harjatan the Bludger", "Mistress Sassz'ine", "Sisters of the Moon", "The Desolate Host", "Maiden of Vigilance", "Fallen Avatar", "Kil'jaeden");
 				
 				$sql_array = array($legendary_table, $weapon_table, $dungeons_table, $raid_1_table, $raid_2_table, $raid_3_table, $raid_4_table, $equip_table, $general_table);

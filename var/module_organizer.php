@@ -90,7 +90,7 @@ elseif(isset($_GET['compare'])) {
 }
 
 elseif(isset($_GET['source']) && is_numeric($_GET['source']) && isset($_GET['compare1']) && is_numeric($_GET['compare1'])) {
-		
+	
 	echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 	
 	if(!isset($_GET['compare4']) && isset($_GET['compare3']) && is_numeric($_GET['compare3']) && isset($_GET['compare2']) && is_numeric($_GET['compare2'])) {

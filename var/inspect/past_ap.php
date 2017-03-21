@@ -34,7 +34,7 @@ if($check > '1') {
         	var options = {
 				width: 740,
 				height: 250,
-				title: "Artifact Power Gain (last 30 updates)",
+				title: "Artifact Power Gain",
 				titleTextStyle: {
 					color: "orange",
 					fontSize: "20",

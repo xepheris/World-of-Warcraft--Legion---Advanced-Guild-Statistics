@@ -89,12 +89,12 @@ ul {
 	opacity: 1;
 }
 
-@media screen and (max-width: 1740px) {
+@media screen and (max-width: 1803px) {
     #sidebar {
         float: left !important;
 		height: auto !important;
 		margin-left: 5%;
-		min-width: 1500px;
+		min-width: 1563px;
 		margin-top: 0px !important;
 		min-height: 0px !important;
 		max-height: 5% !important;

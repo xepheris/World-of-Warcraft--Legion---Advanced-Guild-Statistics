@@ -71,6 +71,7 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		
 		echo $compare;
 		
+		/*
 		// SHARE SWAP
 		if(isset($_GET['share'])) {
 			$share = '
@@ -79,18 +80,22 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		elseif(!isset($_GET['share'])) {
 			$share = '
 			<a href="?share">Share</a> ]';
-		}
+		}*/
 		
 		echo $share;
-				
-		// IMPORT SWAP		
-		if(isset($_GET['import'])) {
-			$import = '
-			[ <a href="?import" style="text-decoration: underline;">Import</a> ]';
-		}
-		elseif(!isset($_GET['import'])) {
-			$import = '
-			[ <a href="?import">Import</a> ]';
+		
+		
+		// GUEST = VIEW ONLY
+		if($_SESSION['guest'] != 'guest') {
+			// IMPORT SWAP		
+			if(isset($_GET['import'])) {
+				$import = '
+				[ <a href="?import" style="text-decoration: underline;">Import</a> ]';
+			}
+			elseif(!isset($_GET['import'])) {
+				$import = '
+				[ <a href="?import">Import</a> ]';
+			}
 		}
 		
 		echo $import;
