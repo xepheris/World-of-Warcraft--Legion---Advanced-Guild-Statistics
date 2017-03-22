@@ -10,21 +10,30 @@ if($_SESSION['guest'] != 'guest') {
 	}	
 		
 	if(isset($_POST['roles'])) {
+		
+		$amount = count($_POST);
+		$amount = $amount-1;
+		$amount = $amount/2;
+
+		if($amount < '1') {
+			$amount = '1';
+		}
 			
 		echo '<script type="text/javascript">
-			function general_import() {
-				$.ajax({
-					type: "GET",
-					dataType: "html",
-					url: "var/ajax/general_import.php",
-					success: function(data) {
-						$( "#finished").html(data);
-						document.getElementById("loading").style.display = "none";
-					}
-				});
-			}
-			</script>';
-			
+		function general_import() {
+			$.ajax({
+				type: "GET",
+				dataType: "html",
+				url: "var/ajax/general_import.php",
+				success: function(data) {
+					$("#finished").html(data);
+					document.getElementById("loading").style.display = "none";
+				}
+			});
+		}
+		</script>
+		';
+		
 		foreach($_POST as $var => $role) {
 			if($var != 'roles') {
 				$a_or_b = substr($var, '-1');
@@ -45,15 +54,14 @@ if($_SESSION['guest'] != 'guest') {
 		}
 		
 		echo '<span style="text-align: center; color: orange; font-size: 18px;">Maintenance scripts will run now to fetch all necessary information of selected characters.<br />
-		Depending on the amount of characters you imported, this will take up to a few minutes, please stand by!<br />
+		Depending on the amount of characters you imported, this will take up to a few minutes (estimated: <u>' .($amount*16). 's</u>), please stand by!<br />
 		You will recieve a confirmation as soon as the import is finished.
 		<br />
 		<br />
 		<span style="color: coral;">Important: do NOT close this window or navigate to somewhere else during import process!</span>
 		<br />
 		<br />
-		<div id="loading"><img src="img/load.gif" alt="404" onload="general_import()" /></div>
-		<div id="loading2" onload="live_update()"></div>
+		<div id="loading"><img src="img/load.gif" alt="404" onload="general_import();" /></div>
 		<div id="finished"></div>
 		</span>';
 			
@@ -170,9 +178,7 @@ if($_SESSION['guest'] != 'guest') {
 		</form>';
 	}
 	
-	echo '</div>
-	<div style="width: 5%; float: left;">
-	</div>';
+	echo '</div>';
 }
 elseif($_SESSION['guest'] == 'guest') {
 	echo '<span style="color: coral;">Sorry, guests may not edit this setting.<br />

@@ -104,7 +104,7 @@ if($data != '') {
 				require_once('import.php');
 				
 				crawl($char);
-				
+								
 				$i++;
 			}
 		}

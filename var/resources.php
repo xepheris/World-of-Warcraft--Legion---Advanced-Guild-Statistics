@@ -7,7 +7,7 @@ echo '
 	<table style="width: 100%;">
 		<tbody>
 			<tr>
-				<td>Pictures, names and everything else that could be potentially (World of) Warcraft connected belongs to Blizzard Entertainment.</td>
+				<td>Pictures, names and everything else that could be potentially connected to (World of) Warcraft belong to Blizzard Entertainment.</td>
 			</tr>
 			<tr>
 				<td><a href="https://developers.google.com/chart/interactive/docs/gallery" title="Google Charts Gallery">Google Charts</a></td>

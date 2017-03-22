@@ -1,12 +1,3 @@
-<link rel="stylesheet" href="css/flickity.min.css">
-<style type="text/css">
-	.flickity-page-dots {
-		display: none;
-	}
-	.flickity-prev-next-button {
-		display: none;
-	}
-</style>
 <?php
 
 include('var/stream.php');
@@ -18,7 +9,7 @@ echo '
 	<u>Advanced Guild Statistics</u> combines all necessary utilities a raid leader or loot council needs to make roster or loot decisions.<br /><br />Minimalistically pre-processed data helps guilds to min-max raid performance.
 	</p>
 	
-	<div style="width: 50%; height: auto; float: left; padding-top: 15px; min-height: 165px; border-bottom: 1px solid white;">
+	<div style="width: 50%; height: auto; float: left; padding-top: 15px; min-height: 165px;">
 		<span style="color: orange; font-size: 18px;">Login</span>
 		<br />
 		<span style="color: orange; font-size: 12px;">Guests require no password</span>
@@ -76,7 +67,7 @@ echo '
 		<button type="submit">Enter</button>
 		</form>
 	</div>
-	<div style="width: 50%; height: auto; float: left; padding-top: 15px; min-height: 165px; border-bottom: 1px solid white;">
+	<div style="width: 50%; height: auto; float: left; padding-top: 15px; min-height: 165px;">
 		<span style="color: orange; font-size: 18px">Register</span>
 		<br />
 		' .$duplicate_guild. '
@@ -103,9 +94,9 @@ echo '
 		<button type="submit">Register</button>
 		</form>
 	</div>
+	<p style="color: orange; font-size: 18px;">For a testrun, just select any guild from the login menu and login without a password!</p>
 	
-	
-	<table style="width: 100%;">
+	<table style="width: 100%; border-top: 1px solid white;">
 		<thead>
 			<th>Features</th>
 			<th>new version</th>
@@ -174,6 +165,12 @@ echo '
 				<td style="color: coral;">no</td>
 			</tr>
 			<tr>
+				<td>includes SimulationCraft string</td>
+				<td style="color: yellowgreen;">yes</td>
+				<td style="color: coral;">no</td>
+				<td style="color: coral;">no</td>
+			</tr>
+			<tr>
 				<td>compare up to 4 characters</td>
 				<td style="color: yellowgreen;">yes</td>
 				<td style="color: coral;">no</td>
@@ -191,7 +188,7 @@ echo '
 				<td style="color: yellowgreen;">yes</td>
 				<td style="color: coral;">no</td>
 			</tr>
-			<tr style="border-bottom: 1px solid white;">
+			<tr>
 				<td>open source</td>
 				<td style="color: yellowgreen;">yes</td>
 				<td style="color: yellowgreen;">yes</td>
@@ -200,41 +197,6 @@ echo '
 		</tbody>
 	</table>
 	</div>
-	<br />
-	<div style="width: 75%; height: auto; float: left; margin-left: 12.5%;">
-		<div class="main-carousel">
-			<div class="carousel-cell">
-				<img src="img/c4.png" alt="404" title="compare function" />
-			</div>
-			<div class="carousel-cell">
-				<img src="img/c2.png" alt="404" title="inspect selection" />
-			</div>
-			<div class="carousel-cell">
-				<img src="img/c1.png" alt="404" title="roster overview" />
-			</div>
-			<div class="carousel-cell">
-				<img src="img/c3.png" alt="404" title="compare function" />
-			</div>
-			<div class="carousel-cell">
-				<img src="img/c5.png" alt="404" title="compare function" />
-			</div>
-		</div>	
-	</div>
 </div>';
 
 ?>
-
-<script src="js/flickity.pkgd.min.js"></script>
-<script type="text/javascript">
-	var elem = document.querySelector('.main-carousel');
-	var flkty = new Flickity( elem, {
-		cellAlign: 'left',
-		contain: true
-	});
-	
-	var flkty = new Flickity( '.main-carousel', {
-		autoPlay: 4500,
-		adaptiveHeight: true
-	});
-	flkty.playPlayer()
-</script>
