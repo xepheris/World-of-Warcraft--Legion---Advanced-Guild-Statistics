@@ -572,11 +572,11 @@ function crawl($character) {
 
 			}
 			else {
-				echo '<span style="color: coral; text-align: center;">The character ' .$character. ' is not level 110.</span>';
+				echo '<span style="color: coral; text-align: center;">The character ' .$character. ' is not level 110.</span><br />';
 			}
 		}
 		else {
-			echo '<span style="color: coral; text-align: center;">The character ' .$character. ' is no longer in your guild according to the armory.</span>';
+			echo '<span style="color: coral; text-align: center;">The character ' .$character. ' is no longer in your guild according to the armory.</span><br />';
 		}		
 	}
 	else {

@@ -79,12 +79,12 @@ if($_SESSION['guest'] != 'guest') {
 			
 		$key = mysqli_fetch_array(mysqli_query($stream, "SELECT `wow_key` FROM `ovw_api` WHERE `id` = '1'"));
 		
-		$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `name` = '" .$_SESSION['realm']. "'"));
+		$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `name` = '" .addslashes($_SESSION['realm']). "' AND `region` = '" .$_SESSION['region']. "'"));
 		
 		$escaped_guild_name = str_replace(' ', '%20', $_SESSION['guild']);
 		
 		$url = 'https://' .$_SESSION['region']. '.api.battle.net/wow/guild/' .$actual_realm_name['short']. '/' .$escaped_guild_name. '?fields=members&locale=en_GB&apikey=' .$key['wow_key']. '';
-
+				
 		$arrContextOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, ),);
 		
 		$data = @file_get_contents($url, false, stream_context_create($arrContextOptions));

@@ -16,7 +16,7 @@ while($char = mysqli_fetch_array($rows)) {
 $key = mysqli_fetch_array(mysqli_query($stream, "SELECT `wow_key` FROM `ovw_api` WHERE `id` = '1'"));
 
 $escaped_session_guild_name = str_replace(' ', '%20', $_SESSION['guild']);
-$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `name` = '" .$_SESSION['realm']. "'"));
+$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `name` = '" .addslashes($_SESSION['realm']). "'"));
 
 $url = 'https://' .$_SESSION['region']. '.api.battle.net/wow/guild/' .$actual_realm_name['short']. '/' .$escaped_session_guild_name. '?fields=members&locale=en_GB&apikey=' .$key['wow_key']. '';
 
