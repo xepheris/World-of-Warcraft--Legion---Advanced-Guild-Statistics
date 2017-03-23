@@ -107,7 +107,7 @@ enable_4_set="21"';
 		}
 		$slots = array('Head' => 'head', 'Neck' => 'neck', 'Shoulders' => 'shoulders', 'Back' => 'back', 'Chest' => 'chest', 'Wrists' => 'wrists', 'Gloves' => 'gloves', 'Waist' => 'waist', 'Legs' => 'waist', 'Feet' => 'feet', 'Finger1' => 'finger1', 'Finger2' => 'finger2', 'Trinket1' => 'trinket1', 'Trinket2' => 'trinket2', 'Mainhand' => 'main_hand', 'Offhand' => 'off_hand');
 		foreach($slots as $slot => $translated) {
-			if(!empty($_GET['' .$slot. '_name']) && !empty($_GET['' .$slot. '_ilevel']) && !empty($_GET['' .$slot. '_bonus'])) {
+			if(!empty($_GET['' .$slot. '_name']) && !empty($_GET['' .$slot. '_id']) && !empty($_GET['' .$slot. '_ilevel']) && !empty($_GET['' .$slot. '_bonus'])) {
 				
 				${'bonus_' .$slot. ''} = ',bonus_id=' .str_replace(':', '/', $_GET['' .$slot. '_bonus']). '';
 				
@@ -195,6 +195,33 @@ enable_4_set="21"';
 					elseif($_GET['' .$slot. '_enchant'] == '141909') {
 						${'enchant_' .$slot. ''} = ',enchant=600mastery';
 					}
+					elseif($_GET['' .$slot. '_enchant'] == '128551') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_claw';
+					}
+					elseif($_GET['' .$slot. '_enchant'] == '128552') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_distant_army';
+					}
+					elseif($_GET['' .$slot. '_enchant'] == '128553') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_hidden_satyr';
+					}
+					elseif($_GET['' .$slot. '_enchant'] == '141908') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_heavy_hide';
+					}
+					elseif($_GET['' .$slot. '_enchant'] == '141910') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_ancient_priestess';
+					}
+					elseif($_GET['' .$slot. '_enchant'] == '144304') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_master';
+					}
+					elseif($_GET['' .$slot. '_enchant'] == '144305') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_versatile';
+					}
+					elseif($_GET['' .$slot. '_enchant'] == '144306') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_quick';
+					}
+					elseif($_GET['' .$slot. '_enchant'] == '144307') {
+						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_deadly';
+					}
 				}
 				
 				if(!empty($_GET['' .$slot. '_enchant'])) {
@@ -202,7 +229,7 @@ enable_4_set="21"';
 				}
 				
 				echo '
-' .$translated. '=' .$_GET['' .$slot. '_name']. ',ilevel=' .$_GET['' .$slot. '_ilevel']. '' .${'bonus_' .$slot. ''}. '' .${'gem_' .$slot. ''}. '' .${'enchant_' .$slot. ''}. '';
+' .$translated. '=' .$_GET['' .$slot. '_name']. ',id=' .$_GET['' .$slot. '_id']. ',ilevel=' .$_GET['' .$slot. '_ilevel']. '' .${'bonus_' .$slot. ''}. '' .${'gem_' .$slot. ''}. '' .${'enchant_' .$slot. ''}. '';
 			}	
 		}
 	}
@@ -504,7 +531,7 @@ if(!isset($_GET['iterations'])) {
 	<thead>
 	</thead>
 	<tbody>
-	<tr><td colspan="5" style="color: orange; text-align: center;">Replace gear manually</td></tr>';
+	<tr><td colspan="7" style="color: orange; text-align: center;">Replace gear manually</td></tr>';
 	
 	$slots = array('Head', 'Neck', 'Shoulders', 'Back', 'Chest', 'Wrists', 'Gloves', 'Waist', 'Legs', 'Feet', 'Finger1', 'Finger2', 'Trinket1', 'Trinket2', 'Mainhand', 'Offhand');
 	
@@ -513,6 +540,7 @@ if(!isset($_GET['iterations'])) {
 		<tr>
 			<td>' .$slot. '</td>
 			<td><input type="text" placeholder="item name" name="' .$slot. '_name" /></td>
+			<td><input type="text" placeholder="item id" name="' .$slot. '_id" maxlength="6" /></td>
 			<td><input type="text" placeholder="itemlevel" name="' .$slot. '_ilevel" maxlength="3" /></td>
 			<td><input type="text" placeholder="bonus ids from wowhead" name="' .$slot. '_bonus" /></td>
 			<td>
