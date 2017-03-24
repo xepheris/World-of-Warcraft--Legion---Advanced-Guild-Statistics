@@ -18,8 +18,50 @@ if($_SESSION['guest'] != 'guest') {
 		if($amount < '1') {
 			$amount = '1';
 		}
+		
+		
+		
+		echo '
+		<script type="text/javascript">';
+		$fetch_ids = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `logout` = '0' ORDER BY `name` ASC");
+		// SELECT LAST ELEMENT FOR LINK
+		$last_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `logout` = '0' ORDER BY `name` DESC LIMIT 1"));
+				
+		while($id = mysqli_fetch_array($fetch_ids)) {
+	
+			echo '
+			var cell_' .$id['id']. ' = document.getElementsByClassName("' .$id['id']. '");
+			var row' .$id['id']. ' = document.getElementsByClassName("row' .$id['id']. '");
 			
-		echo '<script type="text/javascript">
+			$.ajax({
+				type: "GET",
+				dataType: "html",
+				url: "var/ajax/general_import.php",
+					data: {
+					character: +' .$id['id']. '
+					},
+				success: function (data) {
+					$(cell_' .$id['id']. ').html("<span style=\"color: yellowgreen;\">Imported!</span>");
+					row' .$id['id']. '[0].style.transition = "opacity 1s ease-in-out";
+					row' .$id['id']. '[0].style.opacity = "1";
+					row' .$id['id']. '[0].style.filter = "alpha(opacity=100)";
+				},
+				error: function (data) {
+					$(cell_' .$id['id']. ').html("<span style=\"color: coral;\">Error!</span>");
+					row' .$id['id']. '[0].style.transition = "opacity 1s ease-in-out";
+					row' .$id['id']. '[0].style.opacity = "1";
+					row' .$id['id']. '[0].style.filter = "alpha(opacity=100)";
+				}
+			});			
+			';
+		}
+		echo '
+		
+		$(document).ajaxStop(function () {
+			location.replace("https://artifactpower.info/dev");
+		});
+		</script>
+		<script type="text/javascript">
 		function general_import() {
 			$.ajax({
 				type: "GET",
@@ -27,7 +69,6 @@ if($_SESSION['guest'] != 'guest') {
 				url: "var/ajax/general_import.php",
 				success: function(data) {
 					$("#finished").html(data);
-					document.getElementById("loading").style.display = "none";
 				}
 			});
 		}
@@ -40,31 +81,31 @@ if($_SESSION['guest'] != 'guest') {
 			
 				if($a_or_b == 'a') {
 					$set_role_1 = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `role1` = '" .$role. "' WHERE `name` = '" .substr($var, '0', '-2'). "';");
-					if(!$set_role_1) {
-						echo '<span style="text-align: center; color: coral;">An error occured setting the role for ' .substr($var, '0', '-2'). '. Please try again.</span><br />';
-					}
 				}
 				elseif($a_or_b == 'b') {
 					$set_role_2 = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `role2` = '" .$role. "' WHERE `name` = '" .substr($var, '0', '-2'). "';");
-					if(!$set_role_2) {
-						echo '<span style="text-align: center; color: coral;">An error occured setting the role for ' .substr($var, '0', '-2'). '. Please try again.</span><br />';
-					}
 				}
 			}
 		}
 		
-		echo '<span style="text-align: center; color: orange; font-size: 18px;">Maintenance scripts will run now to fetch all necessary information of selected characters.<br />
-		Depending on the amount of characters you imported, this will take up to a few minutes (estimated: <u>' .($amount*16). 's</u>), please stand by!<br />
-		You will recieve a confirmation as soon as the import is finished.
+		echo '
+		<p style="text-align: center; color: orange; font-size: 18px;">Fetching demanded characters... estimated wait time: <u>' .($amount*16). 's</u><br />
+		Important: do NOT close this window or navigate to somewhere else during import!</p>
+		<table style="margin: 0 auto; text-align: center;" onload="global_import();">
+		<thead>
+		<tr><th>Character</th><th>Status</th></tr>
+		</thead>
+		<tbody>';
+		$all_new_entries = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `logout` = '0'");
+		while($row = mysqli_fetch_array($all_new_entries)) {
+			echo '<tr style="opacity: 0.4;" class="row' .$row['id']. '"><td>' .$row['name']. '</td><td class="' .$row['id']. '"><img src="img/load.gif" alt="404" title="loading" /></td></tr>';
+		}	
+		echo '
+		</tbody>
+		</table>
 		<br />
-		<br />
-		<span style="color: coral;">Important: do NOT close this window or navigate to somewhere else during import process!</span>
-		<br />
-		<br />
-		<div id="loading"><img src="img/load.gif" alt="404" onload="general_import();" /></div>
-		<div id="finished"></div>
-		</span>';
-			
+		<div class="link"></div>';
+		
 	}
 		
 	if(!isset($_POST['c']) && !isset($_POST['roles'])) {		

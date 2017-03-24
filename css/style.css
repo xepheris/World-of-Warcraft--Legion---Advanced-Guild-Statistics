@@ -83,12 +83,6 @@ ul {
 	transition-duration: 500ms;
 }
 
-.white {
-	color: white;
-	font-size: 12px;
-	opacity: 1;
-}
-
 @media screen and (max-width: 1803px) {
     #sidebar {
         float: left !important;

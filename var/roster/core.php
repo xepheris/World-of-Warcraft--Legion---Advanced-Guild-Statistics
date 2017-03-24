@@ -27,6 +27,7 @@ function global_update() {
 	
 	<?php
 	$fetch_ids = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` ORDER BY `name` ASC");
+	$last_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` ORDER BY `name` DESC LIMIT 1"));
 	
 	while($id = mysqli_fetch_array($fetch_ids)) {
 		
@@ -48,7 +49,7 @@ function global_update() {
 			
 			var name_' .$id['id']. ' = document.getElementsByClassName("name"+' .$id['id']. ');
 			
-			$(name_' .$id['id']. ').html("<span class=\"white\">Updating...</span>");
+			$(name_' .$id['id']. ').html("<span style=\"color: white;\"><img src=\"img/load.gif\" alt=\"404\" title=\"loading\" /></span>");
 			
 			$.ajax({
 				type: "GET",
@@ -58,16 +59,26 @@ function global_update() {
 					character: +' .$id['id']. '
 					},
 				success: function (data) {
-					$(name_' .$id['id']. ').html("<span class=\"white\">Updated! Refresh when all are done.</span>");
+					$(name_' .$id['id']. ').html("<span style=\"color: white;\">Updated! Refresh when all are done.</span>");
 					row_' .$id['id']. '[0].style.transition = "opacity 1s ease-in-out";
 					row_' .$id['id']. '[0].style.opacity = "1";
 					row_' .$id['id']. '[0].style.filter = "alpha(opacity=100)";
-				}
+				},
+				error: function (data) {
+					$(name_' .$id['id']. ').html("<span style=\"color: coral;\">Error! Still in guild?</span>");
+					row_' .$id['id']. '[0].style.transition = "opacity 1s ease-in-out";
+					row_' .$id['id']. '[0].style.opacity = "1";
+					row_' .$id['id']. '[0].style.filter = "alpha(opacity=100)";
+		}
 			});
 		}';
 	}
 	echo '
 	}
+	
+	$(document).ajaxStop(function () {
+      location.reload();
+  });
 </script>';
 
 // FETCH GLOBAL TOP ENTRIES
@@ -197,9 +208,8 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float
 <thead>
 <tr>
 	<th></th>
-	<th>Updated</th>
+	<th>Updated (Logout)</th>
 	<th></th>
-	<th>Logout</th>
 	<th>Roles</th>
 	<th>Spec</th>
 	<th>Talents</th>
@@ -234,7 +244,6 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float
 <tbody>
 <tr style="border-bottom: 1px solid white;">
 	<td><i>' .$active_chars['active']. ' characters</i></td>
-	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -589,9 +598,8 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	echo '
 	<tr class="' .$id['id']. '" onclick="select(this.className);">
 		<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a style="min-width: 90px;" href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
-		<td>' .$last_update. '</td>
+		<td>' .$last_update. ' (' .$last_logout. ')</td>
 		<td><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" /></td>
-		<td>' .$last_logout. '</td>
 		<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 		<td>' .$spec['spec']. '</td>
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
