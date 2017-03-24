@@ -2,6 +2,16 @@
 
 echo '
 <script type="text/javascript">
+function settings(str) {
+	var settings = document.getElementsByClassName("settings");
+	
+	$(settings).fadeIn("slow");
+	$(settings).css("display", "initial");
+	
+	
+}
+</script>
+<script type="text/javascript">
 function update(str) {
 	
 	var still = document.getElementsByClassName("still"+str);
@@ -25,7 +35,7 @@ function update(str) {
 };
 
 </script>
-<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-left: 5%;">';
+<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-left: 5%; min-width: 1180px;">';
 
 if(isset($_GET['iterations']) && is_numeric($_GET['iterations']) && isset($_GET['role']) && isset($_GET['fight']) && is_numeric($_GET['length']) && isset($_GET['length'])) {
 	$general = mysqli_fetch_array(mysqli_query($stream, "SELECT `name` FROM `" .$table_name. "` WHERE `id` = '" .$_GET['simc']. "'"));
@@ -105,11 +115,14 @@ disable_4_set="21"';
 			echo '
 enable_4_set="21"';
 		}
-		$slots = array('Head' => 'head', 'Neck' => 'neck', 'Shoulders' => 'shoulders', 'Back' => 'back', 'Chest' => 'chest', 'Wrists' => 'wrists', 'Gloves' => 'gloves', 'Waist' => 'waist', 'Legs' => 'waist', 'Feet' => 'feet', 'Finger1' => 'finger1', 'Finger2' => 'finger2', 'Trinket1' => 'trinket1', 'Trinket2' => 'trinket2', 'Mainhand' => 'main_hand', 'Offhand' => 'off_hand');
+		$slots = array('Head' => 'head', 'Neck' => 'neck', 'Shoulders' => 'shoulders', 'Back' => 'back', 'Chest' => 'chest', 'Wrists' => 'wrists', 'Gloves' => 'gloves', 'Waist' => 'waist', 'Legs' => 'waist', 'Feet' => 'feet', 'Finger1' => 'finger1', 'Finger2' => 'finger2', 'Trinket1' => 'trinket1', 'Trinket2' => 'trinket2');
 		foreach($slots as $slot => $translated) {
 			if(!empty($_GET['' .$slot. '_name']) && !empty($_GET['' .$slot. '_id']) && !empty($_GET['' .$slot. '_ilevel']) && !empty($_GET['' .$slot. '_bonus'])) {
 				
 				${'bonus_' .$slot. ''} = ',bonus_id=' .str_replace(':', '/', $_GET['' .$slot. '_bonus']). '';
+				
+				$_GET['' .$slot. '_name'] = '' .str_replace(' ', '_', $_GET['' .$slot. '_name']). '';
+				$_GET['' .$slot. '_name'] = '' .str_replace(',', '', $_GET['' .$slot. '_name']). '';
 				
 				if(!empty($_GET['' .$slot. '_gem'])) {
 					
@@ -222,10 +235,6 @@ enable_4_set="21"';
 					elseif($_GET['' .$slot. '_enchant'] == '144307') {
 						${'enchant_' .$slot. ''} = ',enchant=mark_of_the_deadly';
 					}
-				}
-				
-				if(!empty($_GET['' .$slot. '_enchant'])) {
-					${'enchant_' .$slot. ''} = ',enchant=' .$_GET['' .$slot. '_enchant']. '';
 				}
 				
 				echo '
@@ -392,18 +401,20 @@ if(!isset($_GET['iterations'])) {
 		</select>
 		</td>
 	</tr>
+	
+	<tr>
+		<td colspan="2" style="color: orange; text-align: center;"><span id="settings" onclick="settings()" style="color: white;">Show advanced settings</span></td>
+	</tr>
+	
 	</tbody>
 	</table>
 	
 	<br />
 	
-	<table style="margin: 0 auto; text-align: left;">
+	<table style="margin: 0 auto; text-align: left; display: none;" class="settings">
 	<thead>
 	</thead>
 	<tbody>		
-	<tr>
-		<td colspan="2" style="color: orange; text-align: center;">Optional settings</td>
-	</tr>
 	
 	<tr>
 		<td>Swap talents</td>
@@ -455,8 +466,9 @@ if(!isset($_GET['iterations'])) {
 	</table>
 	
 	<br />
+	<br />
 	
-	<table style="margin: 0 auto; text-align: left;">
+	<table style="margin: 0 auto; text-align: left; display: none;" class="settings">
 	<thead>
 	</thead>
 	<tbody>
@@ -526,14 +538,16 @@ if(!isset($_GET['iterations'])) {
 	</table>
 	
 	<br />
+	<br />
 	
-	<table style="margin: 0 auto; text-align: left;">
+	<table style="margin: 0 auto; text-align: left; display: none;" class="settings">
 	<thead>
 	</thead>
 	<tbody>
-	<tr><td colspan="7" style="color: orange; text-align: center;">Replace gear manually</td></tr>';
+	<tr><td colspan="7" style="color: orange; text-align: center;">Replace gear manually</td></tr>
+	<tr><td colspan="7" style="text-align: center;"><img src="img/simc.png" alt="404" title="SimC Wowhead Help1" /></td></tr>';
 	
-	$slots = array('Head', 'Neck', 'Shoulders', 'Back', 'Chest', 'Wrists', 'Gloves', 'Waist', 'Legs', 'Feet', 'Finger1', 'Finger2', 'Trinket1', 'Trinket2', 'Mainhand', 'Offhand');
+	$slots = array('Head', 'Neck', 'Shoulders', 'Back', 'Chest', 'Wrists', 'Gloves', 'Waist', 'Legs', 'Feet', 'Finger1', 'Finger2', 'Trinket1', 'Trinket2');
 	
 	foreach($slots as $slot) {
 		echo '
