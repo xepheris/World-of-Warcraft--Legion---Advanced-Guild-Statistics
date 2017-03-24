@@ -9,7 +9,7 @@ $table_name = '' . $_SESSION[ 'table' ] . '_' . $_SESSION[ 'guild' ] . '_' . $_S
 $key = mysqli_fetch_array( mysqli_query( $stream, "SELECT `wow_key` FROM `ovw_api` WHERE `id` = '1'" ) );
 
 $escaped_session_guild_name = str_replace( ' ', '%20', $_SESSION[ 'guild' ] );
-$actual_realm_name = mysqli_fetch_array( mysqli_query( $stream, "SELECT `short` FROM `ovw_realms` WHERE `name` = '" . addslashes( $_SESSION[ 'realm' ] ) . "'" ) );
+$actual_realm_name = mysqli_fetch_array( mysqli_query( $stream, "SELECT `short` FROM `ovw_realms` WHERE `id` = '" .$_GET['realm']. "'" ) );
 
 $old = mysqli_fetch_array( mysqli_query( $stream, "SELECT `updated`, `realm` FROM `" . $table_name . "` WHERE `id` = '" . $_GET[ 'character' ] . "'" ) );
 
