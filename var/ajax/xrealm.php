@@ -50,25 +50,26 @@ if($data != '') {
 				
 				// PUSH INTO ARRAY: ID -> REALM NUMBER
 				$import[$char_id] = $realm;
-								
+				
 			}
 		}
 	}
 }
 
+
 $last_entry = end($import);
 
-echo '{';
+echo '[';
 
 foreach($import as $id => $realm) {
 	if($realm != $last_entry) {
-		echo '"id":"' .$id. '", "realm_id":"' .$realm. '", ';
+		echo '{"id":"' .$id. '", "realm_id":"' .$realm. '"},';
 	}
 	elseif($realm == $last_entry) {
-		echo '"id":"' .$id. '", "realm_id":"' .$realm. '"';
+		echo '{"id":"' .$id. '", "realm_id":"' .$realm. '"}';
 	}
 }
 
-echo '}';
+echo ']';
 
 ?>

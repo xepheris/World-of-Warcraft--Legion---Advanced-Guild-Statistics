@@ -21,78 +21,48 @@ if($_SESSION['guest'] != 'guest') {
 		// X-REALM SUPPORT SCRIPT
 		echo '
 		<script type="text/javascript">
-		
-		var xrealm = $.ajax({
+		var k = 0;		
+		$.ajax({
 			type : "POST",
 			url: "var/ajax/xrealm.php",
 			type: "json",
-			success: function (data) {
-				var returnedData = JSON.parse(\'data\');
-				for (var x = 0; x < returnedData.length; x++) {
-                	content = returnedData[x].id;
-                	content += "<br>";
-                	content += returnedData[x].realm_id;
-                	content += "<br>";
-                	$(".test").html(content)
-            	}				
+			data: "{}",
+			success: function (response) {
+				for(var i=0; i<response.length; i++) {
+					
+					$.ajax({
+						type: "GET",
+						dataType: "html",
+						url: "var/ajax/general_import.php",
+						data: {
+							character: +response[i].id,
+							realm: +response[i].realm_id
+						},
+						success: function (data) {
+							var cell = document.getElementsByClassName(response[k].id);
+							var row = document.getElementsByClassName("row_"+response[k].id);
+							$(cell).html("<span style=\"color: yellowgreen;\">Imported!</span>");
+							row[0].style.transition = "opacity 1s ease-in-out";
+							row[0].style.opacity = "1";
+							row[0].style.filter = "alpha(opacity=100)";
+							k++;
+						},
+						error: function (data) {
+							var cell = document.getElementsByClassName(response[k].id);
+							var row = document.getElementsByClassName("row_"+response[k].id);
+							$(cell).html("<span style=\"color: coral;\">Error!</span>");
+							row[0].style.transition = "opacity 1s ease-in-out";
+							row[0].style.opacity = "1";
+							row[0].style.filter = "alpha(opacity=100)";
+							k++;
+						}
+					})
+				}
 			}
-			});
-				
-		$.when(xrealm)
- 			.then(function() {
-			
-		';
-	
-		
-		// BEGIN IMPORT
-		
-		foreach($import as $id => $realm_id) {
-						
-			echo '
-			var cell_' .$id. ' = document.getElementsByClassName("' .$id. '");
-			var row' .$id. ' = document.getElementsByClassName("row' .$id. '");
-			
-			$.ajax({
-				type: "GET",
-				dataType: "html",
-				url: "var/ajax/general_import.php",
-					data: {
-					character: +' .$id. ',
-					realm: +' .$realm_id. '
-					},
-				success: function (data) {
-					$(cell_' .$id. ').html("<span style=\"color: yellowgreen;\">Imported!</span>");
-					row' .$id. '[0].style.transition = "opacity 1s ease-in-out";
-					row' .$id. '[0].style.opacity = "1";
-					row' .$id. '[0].style.filter = "alpha(opacity=100)";
-				},
-				error: function (data) {
-					$(cell_' .$id. ').html("<span style=\"color: coral;\">Error!</span>");
-					row' .$id. '[0].style.transition = "opacity 1s ease-in-out";
-					row' .$id. '[0].style.opacity = "1";
-					row' .$id. '[0].style.filter = "alpha(opacity=100)";
-				}
-			});			
-			';
-		}
-		echo '
-		
-		
-		}
-		)
-		
-		</script>
-		<script type="text/javascript">
-		function general_import() {
-			$.ajax({
-				type: "GET",
-				dataType: "html",
-				url: "var/ajax/general_import.php",
-				success: function(data) {
-					$("#finished").html(data);
-				}
-			});
-		}
+		});
+		$(document).ajaxStop(function () {
+			location.replace("http://artifactpower.info/dev/);
+		});
 		</script>
 		';
 		
@@ -119,7 +89,7 @@ if($_SESSION['guest'] != 'guest') {
 		<tbody>';
 		$all_new_entries = mysqli_query($stream, "SELECT `id`, `name` FROM `" .$table_name. "` WHERE `logout` = '0'");
 		while($row = mysqli_fetch_array($all_new_entries)) {
-			echo '<tr style="opacity: 0.4;" class="row' .$row['id']. '"><td>' .$row['name']. '</td><td class="' .$row['id']. '"><img src="img/load.gif" alt="404" title="loading" /></td></tr>';
+			echo '<tr style="opacity: 0.4;" class="row_' .$row['id']. '"><td>' .$row['name']. '</td><td class="' .$row['id']. '"><img src="img/load.gif" alt="404" title="loading" /></td></tr>';
 		}	
 		echo '
 		</tbody>

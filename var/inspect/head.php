@@ -70,7 +70,8 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; padding-bottom: 
 
 // REGULAR CONTENT
 
-$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `name` = '" .$_SESSION['realm']. "'"));
+$realm_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `realm` FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
+$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `id` = '" .$realm_id['realm']. "'"));
 
 echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5);" class="inspect">
 ' .$error. '

@@ -38,10 +38,14 @@ function update(str) {
 <div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; margin-top: 15px; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-left: 5%; min-width: 1180px;">';
 
 if(isset($_GET['iterations']) && is_numeric($_GET['iterations']) && isset($_GET['role']) && isset($_GET['fight']) && is_numeric($_GET['length']) && isset($_GET['length'])) {
+	
+	$realm_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `realm` FROM `" .$table_name. "` WHERE `id` = '" .$_GET['simc']. "'"));
+	$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `id` = '" .$realm_id['realm']. "'"));
+
 	$general = mysqli_fetch_array(mysqli_query($stream, "SELECT `name` FROM `" .$table_name. "` WHERE `id` = '" .$_GET['simc']. "'"));
 	
 	echo '<p style="color: orange; font-size: 18px;">SimulationCraft string</p>
-	<textarea style="width: 750px; height: 500px;">armory=' .$_SESSION['region']. ',' .$_SESSION['realm']. ',' .$general['name']. '
+	<textarea style="width: 750px; height: 500px;" onclick="this.focus();this.select()" readonly="readonly">armory=' .$_SESSION['region']. ',' .$actual_realm_name['short']. ',' .$general['name']. '
 name="' .$general['name']. '"
 role="' .$_GET['role']. '"';
 	if(isset($_GET['skill'])) {
@@ -251,7 +255,7 @@ max_time="' .$_GET['length']. '"
 calculate_scale_factors="1"
 scale_only="stamina,strength,intellect,agility,crit,mastery,vers,haste"
 fixed_time="1"</textarea>
-<p style="color: orange; font-size: 18px;">Can be directly used online on <a href="https://raidbots.com/simbot/advanced" title="Raidbots - online simcrafting">Raidbots.com</a> or within the <a href="http://simulationcraft.org/download.html" title="SimulationCraft download">program</a>.<br />
+<p style="color: orange; font-size: 18px;">Run it now on <a href="https://raidbots.com/simbot/advanced" title="Raidbots - online simcrafting">Raidbots.com</a> or within the <a href="http://simulationcraft.org/download.html" title="SimulationCraft download">program</a>.<br />
 <a href="?inspect=' .$_GET['simc']. '">Back to your profile</a></p>';
 	
 }
@@ -348,8 +352,12 @@ if(!isset($_GET['iterations'])) {
 		<img src="img/update.png" alt="404" style="width: 21px;" onclick="update(this.id);" id="' .$_GET['simc']. '" class="still' .$_GET['simc']. '" /><span  class="name' .$_GET['simc']. '"></span></p>';
 	}
 	
+	$realm_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `realm` FROM `" .$table_name. "` WHERE `id` = '" .$_GET['simc']. "'"));
+	$actual_realm_name = mysqli_fetch_array(mysqli_query($stream, "SELECT `short` FROM `ovw_realms` WHERE `id` = '" .$realm_id['realm']. "'"));
+	
 	echo '<p style="color: orange; font-size: 18px;">Generating SimulationCraft string for ' .$general['name']. '</p>
 	' .$warning. '
+	<p style="color: orange; font-size: 18px;">Quick pre-sim without modifier on <a href="https://raidbots.com/simbot/stats?region=' .$_SESSION['region']. '&realm=' .$actual_realm_name['short']. '&name=' .$general['name']. '" title="Raidbots.com - online simcrafting">Raidbots.com</a>.</p>
 	<form method="GET" action="">
 	<input type="text" hidden value="' .$_GET['simc']. '" name="simc" />
 	<table style="margin: 0 auto; text-align: left;">
