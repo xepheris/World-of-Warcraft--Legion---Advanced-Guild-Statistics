@@ -35,11 +35,11 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		<span class="nav">';
 		
 		// ROSTER SWAP		
-		if(isset($_GET['import']) || isset($_GET['inspect']) || isset($_GET['compare']) || isset($_GET['source']) || isset($_GET['contact']) || isset($_GET['change_role']) || isset($_GET['change_name']) || isset($_GET['edit_legendaries'])) {
+		if(isset($_GET['import']) || isset($_GET['inspect']) || isset($_GET['compare']) || isset($_GET['source']) || isset($_GET['contact']) || isset($_GET['change_role']) || isset($_GET['simc']) || isset($_GET['change_name']) || isset($_GET['edit_legendaries'])) {
 			$roster = '
 			[ <a href="http://artifactpower.info/dev/">Roster</a>';
 		}
-		elseif(!isset($_GET['import']) && !isset($_GET['inspect']) && !isset($_GET['compare']) && !isset($_GET['source']) && !isset($_GET['contact']) && !isset($_GET['change_name']) && !isset($_GET['change_role']) && !isset($_GET['edit_legendaries'])) {
+		elseif(!isset($_GET['import']) && !isset($_GET['inspect']) && !isset($_GET['compare']) && !isset($_GET['source']) && !isset($_GET['contact']) && !isset($_GET['change_name']) && !isset($_GET['simc']) && !isset($_GET['change_role']) && !isset($_GET['edit_legendaries'])) {
 			$roster = '
 			[ <a href="http://artifactpower.info/dev/" style="text-decoration: underline;">Roster</a>';
 			$update = '<br /><br />[ <a class="global_update" onclick="global_update();">update all characters</a> ]';
@@ -71,20 +71,20 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		
 		echo $compare;
 		
-		/*
-		// SHARE SWAP
-		if(isset($_GET['share'])) {
-			$share = '
-			<a href="?share" style="text-decoration: underline;">Share</a> ]';
+		// SIMC SWAP
+		if(isset($_GET['simc'])) {
+			$simc = '
+			<a href="?simc" style="text-decoration: underline;">SimCraft</a>';
 		}
-		elseif(!isset($_GET['share'])) {
-			$share = '
-			<a href="?share">Share</a> ]';
-		}*/
+		elseif(!isset($_GET['simc'])) {
+			$simc = '
+			<a href="?simc">SimCraft</a>';
+		}
+		
+		echo $simc;
 		
 		echo $share;
-		
-		
+				
 		// GUEST = VIEW ONLY
 		if($_SESSION['guest'] != 'guest') {
 			// IMPORT SWAP		

@@ -27,27 +27,6 @@ elseif(isset($_GET['contact'])) {
 
 }
 
-// BENCH
-elseif(isset($_GET['bench']) && is_numeric($_GET['bench'])) {
-	
-	include('bench/index.php');
-
-}
-
-// UNBENCH
-elseif(isset($_GET['unbench']) && is_numeric($_GET['unbench'])) {
-	
-	include('unbench/index.php');
-
-}
-
-// KICK
-elseif(isset($_GET['kick']) && is_numeric($_GET['kick'])) {
-	
-	include('kick/index.php');
-	
-}
-
 // MANUALLY CHANGE NAME VIA INSPECT MODULE
 
 elseif(isset($_GET['change_name']) && is_numeric($_GET['change_name'])) {
@@ -193,7 +172,6 @@ elseif(isset($_GET['inspect'])) {
 else {
 	
 	echo '
-	<script type="text/javascript" src="js/roster_update.js"></script>
 	<div style="width: 80%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 
 	// AUTO REDIRECT
@@ -213,7 +191,8 @@ else {
 	var bench = document.getElementById("bench").offsetHeight;
 	var sidebar = document.getElementById("sidebar");
 	sidebar.style.height = roster+bench-15+"px";
-	</script>';
+	</script>
+	<script type="text/javascript" src="js/functions.js"></script>';
 	
 }
 

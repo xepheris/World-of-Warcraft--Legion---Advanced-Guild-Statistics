@@ -1,10 +1,13 @@
 <?php
 
-echo '<div style="width: 90%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); margin-top: 15px; margin-left: 5%;">';
+session_start();
+
+include( 'stream.php' );
+
+$table_name = '' . $_SESSION[ 'table' ] . '_' . $_SESSION[ 'guild' ] . '_' . $_SESSION[ 'region' ] . '_' . $_SESSION[ 'realm' ] . '';
 
 // GUEST = VIEW ONLY
 if($_SESSION['guest'] != 'guest') {
-	echo '<span style="color: yellowgreen; text-align: center; font-size: 20px;">removing...</span>';
 				
 	$kick = mysqli_query($stream, "DROP TABLE `" .$_SESSION['table']. "_" .$_GET['kick']. "_dungeons`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_equip`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_general`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_legendaries`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_1`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_2`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_3`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_raid_4`, `" .$_SESSION['table']. "_" .$_GET['kick']. "_weapons`;");
 		
@@ -15,13 +18,6 @@ if($_SESSION['guest'] != 'guest') {
 		
 	$_SESSION['tracked'] = $_SESSION['tracked']-1;
 		
-	echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
 }
-elseif($_SESSION['guest'] == 'guest') {
-	echo '<span style="color: coral;">Sorry, guests may not edit this setting.<br />
-	<a href="?inspect=' .$_GET['kick']. '">Back</a></span>';
-}
-	
-echo '</div>';
 
 ?>

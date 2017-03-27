@@ -4,19 +4,6 @@
 	}
 </style>
 
-
-<script type="text/javascript">
-function select(str) {
-	var row = document.getElementsByClassName(str);
-	
-	if($(row).hasClass('selected')) {
-	   $(row).removeClass('selected');
-	}
-	else {
-		$(row).addClass('selected');
-	}
-}
-</script>
 <script type="text/javascript">
 function global_update() {
 	
@@ -617,7 +604,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>';
 		// GUEST = VIEW ONLY
 		if($_SESSION['guest'] != 'guest') {
-			echo '<td><a href="?bench=' .$id['id']. '"><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>';
+			echo '<td><img src="img/bench.png" alt="404" title="Bench ' .$guild_table['name']. '" style="width: 21px;" id="' .$id['id']. '" onclick="bench(this.id);" /></td>';
 		}
 		echo '
 	</tr>';

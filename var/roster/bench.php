@@ -364,8 +364,8 @@ if($benchcheck['id'] != '') {
 			<td >' .$nh_hc. ' ' .$nh_m. '</td>
 			<td>' .$tos_hc. ' ' .$tos_m. '</td>
 			<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
-			<td><a href="?unbench=' .$id['id']. '"><img src="img/unbench.png" alt="404" title="Unbench ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
-			<td><a href="?kick=' .$id['id']. '"><img src="img/kick.png" alt="404" title="Kick ' .$guild_table['name']. '" style="width: 21px;" /></a></td>
+			<td><img src="img/unbench.png" alt="404" title="Unbench ' .$guild_table['name']. '" style="width: 21px;" id="' .$id['id']. '" onclick="unbench(this.id);" /></td>
+			<td><img src="img/kick.png" alt="404" title="Kick ' .$guild_table['name']. '" style="width: 21px;" id="' .$id['id']. '" onclick="kick(this.id);" /></a></td>
 		</tr>';
 	}
 		
