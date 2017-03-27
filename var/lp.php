@@ -95,6 +95,7 @@ echo '
 		</form>
 	</div>
 	<p style="color: orange; font-size: 18px;">For a testrun, just select any guild from the login menu and login without a password!</p>
+	<p style="color: coral; font-size: 16px;">27/3/17 known issues: Warcraftlogs API currently does not work for Russian realms</p>
 	
 	<table style="width: 100%; border-top: 1px solid white;">
 		<thead>
@@ -165,7 +166,7 @@ echo '
 				<td style="color: coral;">no</td>
 			</tr>
 			<tr>
-				<td>includes SimulationCraft string</td>
+				<td>includes SimulationCraft string generation with many options</td>
 				<td style="color: yellowgreen;">yes</td>
 				<td style="color: coral;">no</td>
 				<td style="color: coral;">no</td>

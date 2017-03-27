@@ -484,7 +484,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	}
 	elseif(time('now')-$guild_table['updated'] > '86400') {
 			$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
-		}
+	}
 	
 	// LOGGED OUT TIMER CONVERTER
 	if(time('now')-$guild_table['logout'] <= '86400') {
@@ -581,12 +581,19 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$mythics = $fetch_dungeon_data['mythic'];
 	}
 	
+	if(time('now')-$guild_table['updated'] < '300') {
+		$update_icon = '<img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px; display: none;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" />';
+	}
+	elseif(time('now')-$guild_table['updated'] >= '300') {
+		$update_icon = '<img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" />';
+	}
+	
 	// ACTUAL TABLE ROW CONTENT
 	echo '
 	<tr class="' .$id['id']. '" onclick="select(this.className);">
 		<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a style="min-width: 90px;" href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
 		<td>' .$last_update. ' (' .$last_logout. ')</td>
-		<td><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" /></td>
+		<td>' .$update_icon. '</td>
 		<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 		<td>' .$spec['spec']. '</td>
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>

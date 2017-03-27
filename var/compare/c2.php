@@ -56,7 +56,8 @@ foreach($_GET as $user_id) {
 		<a href="http://eu.battle.net/wow/de/tool/talent-calculator#' .$general_char_data['talents']. '" title="WoW Talent Calculator link">' .$spec['spec']. '</a>
 		<span style="color: ' .$class_color['colorhex']. ';">' .$class_color['class']. '</span>
 		<br />
-		<a href="" style="text-transform: uppercase; color: orange;" title="AGS External View">AGS External View</a> | 
+		<a href="" style="text-transform: uppercase; color: orange;" title="AGS External View">AGS External View</a> |
+		<a href="?simc=' .$user_id. '" title="SimCraft string builder"><span style="font-family: Lucida Grande, Arial, sans-serif;">SimCraft</span></a> | 
 		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$_SESSION['realm']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;" title="WoWProgress profile link">WoWProgress</a> | 
 		' .$warcraftlogs_link. '
 		<br />

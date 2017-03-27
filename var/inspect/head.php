@@ -86,7 +86,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 
 	<div style="padding-right: 6px; text-align: right;">
 		<a href="" style="text-transform: uppercase; font-size: 20px; color: orange;" title="AGS External View">AGS External View</a> | 
-		<a href="?simc=' .$_GET['inspect']. '" title="SimCraft string builder"><span style="font-family: Lucida Grande",Arial,sans-serif;">SimCraft</span></a> |
+		<a href="?simc=' .$_GET['inspect']. '" title="SimCraft string builder"><span style="font-family: Lucida Grande, Arial, sans-serif;">SimCraft</span></a> |
 		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$actual_realm_name['short']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;" title="WoWProgress profile link">WoWProgress</a> | 
 		' .$warcraftlogs_link. '
 	</div>

@@ -11,9 +11,8 @@ if($benchcheck['id'] != '') {
 	<thead>
 	<tr>
 		<th></th>
-		<th>Last update</th>
+		<th>Updated (Logout)</th>
 		<th></th>
-		<th>Last logout</th>
 		<th>Roles</th>
 		<th>Spec</th>
 		<th>Talents</th>
@@ -346,9 +345,8 @@ if($benchcheck['id'] != '') {
 		echo '
 		<tr class="' .$id['id']. '">
 			<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
-			<td>' .$last_update. '</td>
+			<td>' .$last_update. ' (' .$last_logout. ')</td>
 			<td><img src="img/update.png" alt="404" title="Update ' .$guild_table['name']. '" style="width: 21px;" onclick="update(this.id);" id="' .$id['id']. '" class="still' .$id['id']. '" /></td>
-			<td>' .$last_logout. '</td>
 			<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 			<td>' .$spec['spec']. '</td>
 			<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
