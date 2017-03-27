@@ -35,7 +35,7 @@ if(isset($_POST['gname']) && isset($_POST['region']) && isset($_POST['realm']) &
 			
 				$insert_new_guild = mysqli_query($stream, "INSERT INTO `ovw_guilds` (`guild_name`, `region`, `realm`, `shortlink`, `registered`, `password`, `last_login`, `tracked_chars`) VALUES ('" .$_POST['gname']. "', '" .$_POST['region']. "', '" .$realm_id['id']. "', '" .md5($_POST['gname'].$_POST['region'].$_POST['realm']). "', '" .time('now'). "', '" .md5($_POST['pw']). "', '0', '0')");
 				
-				$fetch = mysqli_fetch_array(mysqli_query($stream, "SELECT `guild_name`, `realm`, `region`, `shortlink`, `tracked_chars` FROM `ovw_guilds` WHERE `guild_name` = '" .$_POST['gname']. "'"));
+				$fetch = mysqli_fetch_array(mysqli_query($stream, "SELECT `id`, `guild_name`, `realm`, `region`, `shortlink`, `tracked_chars` FROM `ovw_guilds` WHERE `guild_name` = '" .$_POST['gname']. "'"));
 				$_SESSION['guild'] = $fetch['guild_name'];
 				$_SESSION['region'] = $fetch['region'];
 				$_SESSION['tracked'] = $fetch['tracked_chars'];
@@ -45,7 +45,7 @@ if(isset($_POST['gname']) && isset($_POST['region']) && isset($_POST['realm']) &
 		
 				$_SESSION['realm'] = $realm_name['name'];
 		
-				$_SESSION['table'] = $_POST['guild'];
+				$_SESSION['table'] = $fetch['id'];
 		
 				// UPDATE LOGIN TIME
 				$refresh_login = mysqli_query($stream, "UPDATE `ovw_guilds` SET `last_login` = '" .time('now'). "' WHERE `id` = '" .$_SESSION['table']. "'");

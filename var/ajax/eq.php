@@ -13,7 +13,8 @@ foreach($artifact_knowledge_levels as $current_ak => $increase) {
 }
 				
 $worth = (($threshold/$ap_per_10_or_higher_key)*1431)/150;
-								
+
+// CLASS NORMALIZATION								
 if($data['class'] == '11') {
 	$eq_ap = (((($artifact_power/$threshold)*$worth)/4)*3)/2.5;
 }

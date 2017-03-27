@@ -9,12 +9,15 @@ header('Content-type: application/json');
 
 $table_name = '' . $_SESSION[ 'table' ] . '_' . $_SESSION[ 'guild' ] . '_' . $_SESSION[ 'region' ] . '_' . $_SESSION[ 'realm' ] . '';
 
-$rows = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `class` = '0'");
+$rows = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `class` = '0' ORDER BY `name` ASC");
 $update_this = array();
 
 while($char_id = mysqli_fetch_array($rows)) {
 	array_push($update_this, $char_id['id']);
 }
+
+$last_id = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `class` = '0' ORDER BY `name` DESC LIMIT 1"));
+$last_id = $last_id['id'];
 
 $key = mysqli_fetch_array(mysqli_query($stream, "SELECT `wow_key` FROM `ovw_api` WHERE `id` = '1'"));
 
@@ -50,7 +53,6 @@ if($data != '') {
 				
 				// PUSH INTO ARRAY: ID -> REALM NUMBER
 				$import[$char_id] = $realm;
-				
 			}
 		}
 	}
@@ -62,10 +64,10 @@ $last_entry = end($import);
 echo '[';
 
 foreach($import as $id => $realm) {
-	if($realm != $last_entry) {
+	if($id != $last_id) {
 		echo '{"id":"' .$id. '", "realm_id":"' .$realm. '"},';
 	}
-	elseif($realm == $last_entry) {
+	elseif($id == $last_id) {
 		echo '{"id":"' .$id. '", "realm_id":"' .$realm. '"}';
 	}
 }

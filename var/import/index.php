@@ -18,6 +18,7 @@ if($_SESSION['guest'] != 'guest') {
 		if($amount < '1') {
 			$amount = '1';
 		}
+		
 		// X-REALM SUPPORT SCRIPT
 		echo '
 		<script type="text/javascript">
@@ -61,7 +62,7 @@ if($_SESSION['guest'] != 'guest') {
 			}
 		});
 		$(document).ajaxStop(function () {
-			location.replace("http://artifactpower.info/dev/);
+			location.replace("http://artifactpower.info/dev/");
 		});
 		</script>
 		';
