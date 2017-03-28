@@ -1,2 +1,4 @@
 *.xml
 img/wip.jpg
+
+var/admin.php

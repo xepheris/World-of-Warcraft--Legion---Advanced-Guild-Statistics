@@ -95,6 +95,10 @@ $eq = $world_quests*1+($m0*$eq_weights['m0'])
 	+($tos_m_bosskills*$eq_weights['tos_m'])
 	+$eq_ap
 	+(($ilvlaverage-850)*$eq_weights['itemlevel']);
+
+if($eq < '0') {
+	$eq = '0';
+}
 				
 $update_guild_table = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `eq` = '" .$eq. "'  WHERE `name` = '" .$character. "'");
 

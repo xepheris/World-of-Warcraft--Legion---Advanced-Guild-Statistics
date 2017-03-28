@@ -445,7 +445,7 @@ fixed_time="1"</textarea>
 
 		echo '<p style="color: orange; font-size: 18px;">Generating SimulationCraft string for ' . $general[ 'name' ] . '</p>
 	' . $warning . '
-	<p style="color: orange; font-size: 18px;">Quick pre-sim without modifier on <a href="https://raidbots.com/simbot/stats?region=' . $_SESSION[ 'region' ] . '&realm=' . $actual_realm_name[ 'short' ] . '&name=' . $general[ 'name' ] . '" title="Raidbots.com - online simcrafting">Raidbots.com</a>.</p>
+	<p style="color: orange; font-size: 18px;">Quick pre-sim without modifier on <a href="https://raidbots.com/simbot/stats?region=' . strtolower($_SESSION[ 'region' ]) . '&realm=' . strtolower($actual_realm_name[ 'short' ]) . '&name=' . strtolower($general[ 'name' ]) . '" title="Raidbots.com - online simcrafting">Raidbots.com</a>.</p>
 	<form method="GET" action="">
 	<input type="text" hidden value="' . $_GET[ 'simc' ] . '" name="simc" />
 	<table style="margin: 0 auto; text-align: left;">
