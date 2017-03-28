@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 28. Mrz 2017 um 11:00
+-- Erstellungszeit: 28. Mrz 2017 um 11:17
 -- Server Version: 5.6.34
 -- PHP-Version: 5.6.30-he.0
 
@@ -287,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `ovw_legendaries` (
   `class` varchar(19) COLLATE latin1_german2_ci NOT NULL,
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `item_id` (`item_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=196 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=200 ;
 
 --
 -- Daten für Tabelle `ovw_legendaries`
@@ -487,7 +487,11 @@ INSERT INTO `ovw_legendaries` (`id`, `name`, `item_id`, `class`) VALUES
 (192, 'Mannoroth''s Bloodletting Manacles', 137107, '1'),
 (193, 'Kakushan''s Stormscale Gauntlets', 137108, '1'),
 (194, 'Timeless Stratagem', 143728, '1'),
-(195, '', 138489, '1');
+(195, 'Kargath''s Sacrificed Hands\n', 138489, '1'),
+(196, 'Celumbra, the Night''s Dichotomy', 146666, '5, 8, 9'),
+(197, 'Rethu''s Incessant Courage', 146667, '1, 2, 6'),
+(198, 'Vigilance Perch', 146668, '3, 7'),
+(199, 'The Sentinel''s Eternal Refuge', 146669, '4, 10, 11, 12');
 
 -- --------------------------------------------------------
 
