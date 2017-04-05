@@ -420,7 +420,8 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						$rep_stormheim = $criterias[$key_stormheim];
 						$rep_azsuna = $criterias[$key_azsuna];
 						$rep_wardens = $criterias[$key_wardens];
-									
+						
+														
 						// GENERAL INFORMATION
 						$update_guild_table = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `logout` = '" .$logout. "', `updated` = '" .time('now'). "', `talents` = '" .$talent_calc_var. "' WHERE `name` = '" .$character. "'");
 						

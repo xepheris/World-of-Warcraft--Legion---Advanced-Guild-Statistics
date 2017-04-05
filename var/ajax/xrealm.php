@@ -44,7 +44,7 @@ if($data != '') {
 			$name = mysqli_fetch_array(mysqli_query($stream, "SELECT `name` FROM `" .$table_name. "` WHERE `id` = '" .$char_id. "'"));
 			$name = $name['name'];
 						
-			if($members['character']['name'] == $name) {
+			if($members['character']['name'] == $name && $members['character']['level'] == '110') {
 				$realm = $members['character']['realm'];
 								
 				$realm = mysqli_fetch_array(mysqli_query($stream, "SELECT `id` FROM `ovw_realms` WHERE `region` = '" .$_SESSION['region']. "' AND `name` = '" .addslashes($realm). "'"));
