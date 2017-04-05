@@ -1,6 +1,6 @@
 <?php
 
-// written by Xepheris, March 2017 - xepheris.dh.tank@gmail.com
+// written by Xepheris, March 2017 - admin@gerritalex.de
 // MIT License in case anyone ever wants to use this
 
 function crawl($character) {
@@ -370,8 +370,7 @@ function crawl($character) {
 				$key_stormheim = array_search('30501', $data['achievements']['criteria']);
 				$key_azsuna = array_search('30498', $data['achievements']['criteria']);
 				$key_wardens = array_search('30496', $data['achievements']['criteria']);
-				// Legionfall Exalted Achievement ID = 11545 => criteria -> below
-				#$key_brokenshore = array_search('', $data['achievements']['criteria']);
+				$key_legionfall = array_search('35977', $data['achievements']['criteria']);
 					
 				// MYTHIC PLUS NUMBERS
 				$key_mythicplus2 = array_search('33096', $data['achievements']['criteria']);
@@ -403,6 +402,7 @@ function crawl($character) {
 				$rep_stormheim = $criterias[$key_stormheim];
 				$rep_azsuna = $criterias[$key_azsuna];
 				$rep_wardens = $criterias[$key_wardens];
+				$rep_legionfall = $criterias[$key_legionfall];
 					
 				
 				// GENERAL INFORMATION

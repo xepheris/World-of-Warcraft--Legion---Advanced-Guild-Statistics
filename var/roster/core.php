@@ -203,7 +203,7 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float
 	<th>Legendaries</th>
 	<th>Itemlevel</th>	
 	<th><span title="Artifact Power">AP</span></th>
-	<th><span title="Artifact Level">AL</span> <span title="Artifact Knowledge">(AK)</span></th>
+	<th>Traits <span title="Artifact Knowledge">(AK)</span></th>
 	<th>Mythics<br />(M+ Achv)</th>
 	<th>World Quests</th>
 	<th><a href="?eq" title="What is EQ?">EQ</th>
@@ -300,7 +300,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		elseif($fetch_general_data['alvl'] > '35' && $fetch_general_data['alvl'] < '52') {
 			$alvl_color = 'orange';
 		}
-		elseif($fetch_general_data['alvl'] == '52') {
+		elseif($fetch_general_data['alvl'] >= '52') {
 			$alvl_color = 'yellowgreen';
 		}
 	}
@@ -328,7 +328,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		elseif($fetch_general_data['ak'] > '26' && $fetch_general_data['ak'] < '50') {
 			$ak_color = 'orange';
 		}
-		elseif($fetch_general_data['ak'] == '50') {
+		elseif($fetch_general_data['ak'] >= '50') {
 			$ak_color = 'yellowgreen';
 		}
 	}
@@ -542,35 +542,20 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	// MUST-HAVE-AP THRESHOLD CONVERTER
 	if($guild_table['class'] == '11') {
 			
-		if($fetch_general_data['ak'] <= '25') {
-			$threshold = '261243112';
-		}
-		elseif($fetch_general_data['ak'] > '25') {
-			$threshold = '8915065320';
-		}
+		$threshold = '8915065320';		
 		
 		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
 	}
 	elseif($guild_table['class'] == '12') {
 		
-		if($fetch_general_data['ak'] <= '25') {
-			$threshold = '130621556';
-		}
-		elseif($fetch_general_data['ak'] > '25') {
-			$threshold = '522486224';
-		}
-		
+		$threshold = '4457532660';
+				
 		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
 	}
 	elseif($guild_table['class'] != '11' && $guild_table['class'] != '12') {
 		
-		if($fetch_general_data['ak'] <= '25') {
-			$threshold = '195932334';
-		}
-		elseif($fetch_general_data['ak'] > '25') {
-			$threshold = '783729336';
-		}
-		
+		$threshold = '6686298990';
+				
 		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
 	}
 	
@@ -599,7 +584,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 		<td><a href="?edit_legendaries=' .$id['id']. '" title="Edit legendaries">' .$legendaries['amount']. '</a></td>
 		<td>' .$fetch_general_data['ilvl_on']. ' ' .$fetch_general_data['ilvl_off']. '</td>		
-		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span> <span title="percentage of possible max. AP for this class">(' .$ap_progress. ')</span></td>
+		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span> <span title="percentage of needed AP to have each spec at 1 Concordance point">(' .$ap_progress. ')</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 		<td style="min-width: 80px;">' .$mythics. ' ' .$m_achievement. '</td>
 		<td>' .$fetch_general_data['wq']. '</td>

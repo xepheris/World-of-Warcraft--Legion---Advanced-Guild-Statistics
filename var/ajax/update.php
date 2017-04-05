@@ -1,6 +1,6 @@
 <?php
 
-// written by Xepheris, March 2017 - xepheris.dh.tank@gmail.com
+// written by Xepheris, March 2017 - admin@gerritalex.de
 // MIT License in case anyone ever wants to use this
 
 if(isset($_GET['character']) && is_numeric($_GET['character'])) {

@@ -62,7 +62,7 @@ if($_SESSION['guest'] != 'guest') {
 			}
 		});
 		$(document).ajaxStop(function () {
-			location.replace("http://artifactpower.info/dev/");
+			location.replace("http://ags.gerritalex.de/");
 		});
 		</script>
 		';
@@ -214,7 +214,7 @@ if($_SESSION['guest'] != 'guest') {
 	echo '</div>';
 }
 elseif($_SESSION['guest'] == 'guest') {
-	echo '<span style="color: coral;">Sorry, guests may not edit this setting.<br />
+	echo '<span style="color: coral;">Sorry, guests may not import characters. Please wait until characters have been imported.<br />
 	<a href="?inspect">Back</a></span>';
 }
 
