@@ -136,6 +136,11 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 							if(!empty($data['items']['offHand']['itemLevel'])) {
 								$ohilvl = $data['items']['offHand']['itemLevel'];
 							}
+							
+							$traits = '0';				
+							foreach($data['items']['mainHand']['artifactTraits'] as $trait) {
+								$traits = $traits+$trait['rank'];
+							}
 						
 							// CONVERT BONUS LIST
 							foreach($data['items']['mainHand']['bonusLists'] as $bonus) {
@@ -174,6 +179,11 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 							// IF MAINHAND HAS ITEMLEVEL AS WELL
 							if(!empty($data['items']['mainHand']['itemLevel'])) {
 								$mhilvl = $data['items']['mainHand']['itemLevel'];
+							}
+							
+							$traits = '0';				
+							foreach($data['items']['offHand']['artifactTraits'] as $trait) {
+								$traits = $traits+$trait['rank'];
 							}
 					
 							// CONVERT BONUS LIST
@@ -411,7 +421,7 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						$mythic_plus10 = $criterias[$key_mythicplus10];
 						$mythic_plus15 = $criterias[$key_mythicplus15];
 						$artifact_power = $criterias[$key_artifactpower];
-						$artifact_level = $criterias[$key_artifactlevel];
+						$artifact_level = $traits-3;
 						$artifact_knowledge = $criterias[$key_artifactknowledge];
 						$world_quests = $criterias[$key_worldquests];
 						$rep_suramar = $criterias[$key_suramar];
@@ -420,8 +430,7 @@ if(isset($_GET['character']) && is_numeric($_GET['character'])) {
 						$rep_stormheim = $criterias[$key_stormheim];
 						$rep_azsuna = $criterias[$key_azsuna];
 						$rep_wardens = $criterias[$key_wardens];
-						
-														
+									
 						// GENERAL INFORMATION
 						$update_guild_table = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `logout` = '" .$logout. "', `updated` = '" .time('now'). "', `talents` = '" .$talent_calc_var. "' WHERE `name` = '" .$character. "'");
 						

@@ -199,6 +199,11 @@ if ( $data != '' ) {
 				if ( !empty( $data[ 'items' ][ 'offHand' ][ 'itemLevel' ] ) ) {
 					$ohilvl = $data[ 'items' ][ 'offHand' ][ 'itemLevel' ];
 				}
+				
+				$traits = '0';				
+				foreach($data['items']['mainHand']['artifactTraits'] as $trait) {
+					$traits = $traits+$trait['rank'];
+				}
 
 				// CONVERT BONUS LIST
 				foreach ( $data[ 'items' ][ 'mainHand' ][ 'bonusLists' ] as $bonus ) {
@@ -245,6 +250,11 @@ if ( $data != '' ) {
 				// IF MAINHAND HAS ITEMLEVEL AS WELL
 				if ( !empty( $data[ 'items' ][ 'mainHand' ][ 'itemLevel' ] ) ) {
 					$mhilvl = $data[ 'items' ][ 'mainHand' ][ 'itemLevel' ];
+				}
+				
+				$traits = '0';				
+				foreach($data['items']['offHand']['artifactTraits'] as $trait) {
+					$traits = $traits+$trait['rank'];
 				}
 
 				// CONVERT BONUS LIST
@@ -490,7 +500,7 @@ if ( $data != '' ) {
 			$mythic_plus10 = $criterias[ $key_mythicplus10 ];
 			$mythic_plus15 = $criterias[ $key_mythicplus15 ];
 			$artifact_power = $criterias[ $key_artifactpower ];
-			$artifact_level = $criterias[ $key_artifactlevel ];
+			$artifact_level = $traits-3;
 			$artifact_knowledge = $criterias[ $key_artifactknowledge ];
 			$world_quests = $criterias[ $key_worldquests ];
 			$rep_suramar = $criterias[ $key_suramar ];

@@ -118,6 +118,11 @@ function crawl($character) {
 					if(!empty($data['items']['offHand']['itemLevel'])) {
 						$ohilvl = $data['items']['offHand']['itemLevel'];
 					}
+					
+					$traits = '0';				
+					foreach($data['items']['mainHand']['artifactTraits'] as $trait) {
+						$traits = $traits+$trait['rank'];
+					}
 						
 					// CONVERT BONUS LIST
 					foreach($data['items']['mainHand']['bonusLists'] as $bonus) {
@@ -156,6 +161,11 @@ function crawl($character) {
 					// IF MAINHAND HAS ITEMLEVEL AS WELL
 					if(!empty($data['items']['mainHand']['itemLevel'])) {
 						$mhilvl = $data['items']['mainHand']['itemLevel'];
+					}
+					
+					$traits = '0';				
+					foreach($data['items']['offHand']['artifactTraits'] as $trait) {
+						$traits = $traits+$trait['rank'];
 					}
 					
 					// CONVERT BONUS LIST
@@ -370,7 +380,8 @@ function crawl($character) {
 				$key_stormheim = array_search('30501', $data['achievements']['criteria']);
 				$key_azsuna = array_search('30498', $data['achievements']['criteria']);
 				$key_wardens = array_search('30496', $data['achievements']['criteria']);
-				$key_legionfall = array_search('35977', $data['achievements']['criteria']);
+				// Legionfall Exalted Achievement ID = 11545 => criteria -> below
+				#$key_brokenshore = array_search('', $data['achievements']['criteria']);
 					
 				// MYTHIC PLUS NUMBERS
 				$key_mythicplus2 = array_search('33096', $data['achievements']['criteria']);
@@ -393,7 +404,7 @@ function crawl($character) {
 				$mythic_plus10 = $criterias[$key_mythicplus10];
 				$mythic_plus15 = $criterias[$key_mythicplus15];
 				$artifact_power = $criterias[$key_artifactpower];
-				$artifact_level = $criterias[$key_artifactlevel];
+				$artifact_level = $traits-3;
 				$artifact_knowledge = $criterias[$key_artifactknowledge];
 				$world_quests = $criterias[$key_worldquests];
 				$rep_suramar = $criterias[$key_suramar];
@@ -402,7 +413,6 @@ function crawl($character) {
 				$rep_stormheim = $criterias[$key_stormheim];
 				$rep_azsuna = $criterias[$key_azsuna];
 				$rep_wardens = $criterias[$key_wardens];
-				$rep_legionfall = $criterias[$key_legionfall];
 					
 				
 				// GENERAL INFORMATION
