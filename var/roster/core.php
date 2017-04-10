@@ -2,11 +2,17 @@
 	.selected {
 		border: 3px solid orange;
 	}
+	th.sorted.ascending:after {
+		content: "  \2191";
+	}
+	th.sorted.descending:after {
+		content: " \2193";
+	}
 </style>
 <script type="text/javascript">
 $(document).ready(function() 
     { 
-        $("#sort").tablesorter(); 
+        $("#sort").tablesort(); 
     } 
 ); 
 </script>
@@ -194,6 +200,7 @@ $active_chars = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) as 
 		$ap_arraysum = '' .number_format(array_sum($ap_array)/$active_chars['active']/1000000000000). ' T';
 	}
 
+	$ap_sort = '' .array_sum($ap_array)/$active_chars['active']. '';
 
 
 echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); min-width: 1563px;">
@@ -246,16 +253,16 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float
 	<td></td>
 	<td></td>
 	<td></td>
-	<td><i>' .round(array_sum($itemlevel_array)/$active_chars['active'], 2). ' (' .round(array_sum($itemlevel_off_array)/$active_chars['active'], 2). ')</i></td>
-	<td>' .$ap_arraysum. '</td>
-	<td><i>' .round(array_sum($alvl_array)/$active_chars['active'], 2). ' (' .round(array_sum($ak_array)/$active_chars['active'], 2). ')</i></td>
+	<td data-sort-value="' .round(array_sum($itemlevel_array)/$active_chars['active'], 2). '"><i>' .round(array_sum($itemlevel_array)/$active_chars['active'], 2). ' (' .round(array_sum($itemlevel_off_array)/$active_chars['active'], 2). ')</i></td>
+	<td data-sort-value="' .$ap_sort. '">' .$ap_arraysum. '</td>
+	<td data-sort-value="' .round(array_sum($alvl_array)/$active_chars['active'], 0). '"><i>' .round(array_sum($alvl_array)/$active_chars['active'], 2). ' (' .round(array_sum($ak_array)/$active_chars['active'], 2). ')</i></td>
 	<td><i>' .round(array_sum($mythic_array)/$active_chars['active'], 0). '</i></td>
 	<td><i>' .round(array_sum($wq_array)/$active_chars['active'], 0). '</i></td>
 	<td><i>' .round($eq_avg['eq_sum']/$active_chars['active'], 0). '</i></td>
-	<td><i>' .round(array_sum($en_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($en_m_array)/$active_chars['active'], 1). '</i></td>
-	<td><i>' .round(array_sum($tov_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tov_m_array)/$active_chars['active'], 1). '</i></td>
-	<td><i>' .round(array_sum($nh_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($nh_m_array)/$active_chars['active'], 1). '</i></td>
-	<td><i>' .round(array_sum($tos_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tos_m_array)/$active_chars['active'], 1). '</i></td>
+	<td data-sort-value="' .round(array_sum($en_m_array)/$active_chars['active'], 1). '"><i>' .round(array_sum($en_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($en_m_array)/$active_chars['active'], 1). '</i></td>
+	<td data-sort-value="' .round(array_sum($tov_m_array)/$active_chars['active'], 1). '"><i>' .round(array_sum($tov_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tov_m_array)/$active_chars['active'], 1). '</i></td>
+	<td data-sort-value="' .round(array_sum($nh_m_array)/$active_chars['active'], 1). '"><i>' .round(array_sum($nh_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($nh_m_array)/$active_chars['active'], 1). '</i></td>
+	<td data-sort-value="' .round(array_sum($tos_m_array)/$active_chars['active'], 1). '"><i>' .round(array_sum($tos_hc_array)/$active_chars['active'], 1). ' | ' .round(array_sum($tos_m_array)/$active_chars['active'], 1). '</i></td>
 	<td></td>
 	<td></td>
 </tr>';
@@ -528,16 +535,22 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 
 	// TOPLIST CHECK
 	if($fetch_general_data['ilvl_on'] == $itemlevel_equipped_cap) {
-		$fetch_general_data['ilvl_on'] = '<span style="color: yellowgreen;">' .$fetch_general_data['ilvl_on']. '</span>';
+		$ilvl_on = '<span style="color: yellowgreen;">' .$fetch_general_data['ilvl_on']. '</span>';
+	}
+	else {
+		$ilvl_on = $fetch_general_data['ilvl_on'];
 	}
 	if($fetch_general_data['ilvl_off'] == $itemlevel_bags_cap) {
-		$fetch_general_data['ilvl_off'] = '<span style="color: yellowgreen;">(' .$fetch_general_data['ilvl_off']. ')</span>';
+		$ilvl_off = '<span style="color: yellowgreen;">(' .$fetch_general_data['ilvl_off']. ')</span>';
 	}
 	elseif($fetch_general_data['ilvl_off'] != $itemlevel_bags_cap) {
-		$fetch_general_data['ilvl_off'] = '(' .$fetch_general_data['ilvl_off']. ')';
+		$ilvl_off = '(' .$fetch_general_data['ilvl_off']. ')';
 	}
 	if($fetch_general_data['wq'] == $wq_cap) {
-		$fetch_general_data['wq'] = '<span style="color: yellowgreen;">' .$fetch_general_data['wq']. '</span>';
+		$wq = '<span style="color: yellowgreen;">' .$fetch_general_data['wq']. '</span>';
+	}
+	else {
+		$wq = $fetch_general_data['wq'];
 	}
 	if($fetch_general_data['ap'] == $ap_cap) {
 		$ap = '<span style="color: yellowgreen;">' .$ap. '</span>';
@@ -545,7 +558,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	if($guild_table['eq'] == $eq_cap['eq_cap']) {
 		$eq = '<span style="color: yellowgreen;">' .$guild_table['eq']. '</span>';
 	}
-	elseif($fetch_general_data['eq'] != $eq_cap['eq_cap']) {
+	else {
 		$eq = $guild_table['eq'];
 	}
 	
@@ -567,22 +580,22 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 	echo '
 	<tr class="' .$id['id']. '" onclick="select(this.className);">
 		<td class="name' .$id['id']. '" style="background-color: ' .$class_color['color']. ';"><a style="min-width: 90px;" href="?inspect=' .$id['id']. '" title="Inspect ' .$guild_table['name']. '">' .$guild_table['name']. '</a></td>
-		<td>' .$last_update. ' (' .$last_logout. ')</td>
+		<td data-sort-value="' .$guild_table['logout']. '">' .$last_update. ' (' .$last_logout. ')</td>
 		<td>' .$update_icon. '</td>
 		<td><a href="?change_role=' .$id['id']. '">' .$role1. ' ' .$role2. '</a></td>
 		<td>' .$spec['spec']. '</td>
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 		<td><a href="?edit_legendaries=' .$id['id']. '" title="Edit legendaries">' .$legendaries['amount']. '</a></td>
-		<td>' .$fetch_general_data['ilvl_on']. ' ' .$fetch_general_data['ilvl_off']. '</td>		
-		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span></td>
+		<td data-sort-value="' .$fetch_general_data['ilvl_on']. '">' .$ilvl_on. ' ' .$ilvl_off. '</td>		
+		<td data-sort-value="' .$fetch_general_data['ap']. '"><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
-		<td style="min-width: 80px;">' .$mythics. ' ' .$m_achievement. '</td>
-		<td>' .$fetch_general_data['wq']. '</td>
-		<td>' .$eq. '</td>
-		<td>' .$en_hc. '  ' .$en_m. '</td>
-		<td>' .$tov_hc. ' ' .$tov_m. '</td>
-		<td>' .$nh_hc. ' ' .$nh_m. '</td>
-		<td>' .$tos_hc. ' ' .$tos_m. '</td>
+		<td data-sort-value="' .$fetch_dungeon_data['mythic']. '" style="min-width: 80px;">' .$mythics. ' ' .$m_achievement. '</td>
+		<td data-sort-value="' .$fetch_general_data['wq']. '">' .$wq. '</td>
+		<td data-sort-value="' .$guild_table['eq']. '">' .$eq. '</td>
+		<td data-sort-value="' .$en_mythic_progress['en_m']. '">' .$en_hc. '  ' .$en_m. '</td>
+		<td data-sort-value="' .$tov_mythic_progress['tov_m']. '">' .$tov_hc. ' ' .$tov_m. '</td>
+		<td data-sort-value="' .$nh_mythic_progress['nh_m']. '">' .$nh_hc. ' ' .$nh_m. '</td>
+		<td data-sort-value="' .$tos_mythic_progress['tos_m']. '">' .$tos_hc. ' ' .$tos_m. '</td>
 		<td><a href="?inspect=' .$id['id']. '"><img src="img/inspect.png" alt="404" title="Inspect ' .$guild_table['name']. '" style="width: 21px;" /></a></td>';
 		// GUEST = VIEW ONLY
 		if($_SESSION['guest'] != 'guest') {

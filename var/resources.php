@@ -43,7 +43,7 @@ echo '
 				<td><a href="https://github.com/PHPMailer/PHPMailer" title="PHPMailer">PHPMailer</a>
 			</tr>
 			<tr>
-				<td><a href="http://tablesorter.com/docs/" title="tablesorter jquery plugin">Tablesorter - Jquery Table Sort Plugin</a>
+				<td><a href="https://github.com/kylefox/jquery-tablesort" title="tablesort jquery plugin">Tablesort - Jquery Table Sort Plugin</a>
 			</tr>
 			<tr>
 				<td>time of Funnypun, Jixzy and Tharilzun @ Blackmoore_EU (thanks)</td>

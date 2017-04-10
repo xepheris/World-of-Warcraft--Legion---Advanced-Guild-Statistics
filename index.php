@@ -153,7 +153,7 @@ echo '<!DOCTYPE html>
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<link rel="stylesheet" href="css/style.css" />
 	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
+	<script type="text/javascript" src="js/jquery.tablesort.min.js"></script>
 	<script>
 	(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
