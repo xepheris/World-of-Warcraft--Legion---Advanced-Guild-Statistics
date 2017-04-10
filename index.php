@@ -91,6 +91,7 @@ if ( isset( $_POST[ 'guild' ] ) && isset( $_POST[ 'pw' ] ) ) {
 			$_SESSION[ 'realm' ] = $realm_name[ 'name' ];
 
 			$_SESSION[ 'table' ] = $_POST[ 'guild' ];
+			
 
 			// UPDATE LOGIN TIME
 			$refresh_login = mysqli_query( $stream, "UPDATE `ovw_guilds` SET `last_login` = '" . time( 'now' ) . "' WHERE `id` = '" . $_SESSION[ 'table' ] . "'" );
@@ -112,6 +113,7 @@ if ( isset( $_POST[ 'guild' ] ) && isset( $_POST[ 'pw' ] ) ) {
 		$_SESSION[ 'table' ] = $_POST[ 'guild' ];
 
 		$_SESSION[ 'guest' ] = 'guest';
+		
 	}
 }
 
@@ -132,6 +134,7 @@ if ( isset( $_GET[ 'sl' ] ) && strlen( $_GET[ 'sl' ] ) == '32' ) {
 	$_SESSION[ 'table' ] = $fetch[ 'id' ];
 
 	$_SESSION[ 'guest' ] = 'guest';
+	
 }
 
 echo '<!DOCTYPE html>
@@ -150,6 +153,7 @@ echo '<!DOCTYPE html>
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<link rel="stylesheet" href="css/style.css" />
 	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
 	<script>
 	(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -211,5 +215,6 @@ echo '
 </html>';
 
 mysqli_close( $stream );
+
 
 ?>

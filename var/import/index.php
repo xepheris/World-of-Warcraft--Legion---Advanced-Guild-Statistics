@@ -100,11 +100,17 @@ if($_SESSION['guest'] != 'guest') {
 		
 	}
 		
-	if(!isset($_POST['c']) && !isset($_POST['roles'])) {		
+	if(!isset($_POST['c']) && !isset($_POST['roles'])) {
+		
+		$count_faulty = mysqli_num_rows(mysqli_query($stream, "SELECT * FROM `" .$table_name. "` WHERE `realm` = '0' AND `class` = '0' AND `logout` = '0' AND `updated` = '0'"));
+		
+		if($count_faulty > 0) {
+			echo '<p style="color: coral;">Warning: you currently have unfinished imports/corrupted data in your roster. <a href="?debug">Click here to debug.</a></p>';
+		}
 					
 		$table_start = mysqli_query($stream, "CREATE TABLE IF NOT EXISTS `" .$table_name. "` (`id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL, `realm` smallint(4) NOT NULL, `class` tinyint(2) NOT NULL, `logout` int(10) NOT NULL, `updated` int(10) NOT NULL, `spec` tinyint(2) NOT NULL, `status` tinyint(1) NOT NULL, `role1` tinyint(1) NOT NULL, `role2` tinyint(1) NOT NULL, `talents` varchar(12) NOT NULL, `wlogs_id` int(9) NOT NULL, `eq` int(10) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `name` (`name`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1 ;");			
 			
-		echo '<span style="color: orange; font-size: 18px;">Character Import, individually by Guild rank<br /><span style="font-size: 12px;">only showing characters that have not been imported yet</span></span>
+		echo '<span style="color: orange; font-size: 18px;">Character Import, individually by Guild rank<br /><span style="font-size: 12px;">only showing characters that have not been imported yet<br />beware: you need to assign at least one role per character in the upcoming step - make sure you are motivated enough to do that for potentially all characters in your guild, else you might want to just import 10 to actually test the page :)<br />there is currently no way to abort the importing process once started unless you write a ticket!</span></span>
 		<br />
 		<br />
 		<form method="POST" style="text-align: center;">

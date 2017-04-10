@@ -3,7 +3,13 @@
 		border: 3px solid orange;
 	}
 </style>
-
+<script type="text/javascript">
+$(document).ready(function() 
+    { 
+        $("#sort").tablesorter(); 
+    } 
+); 
+</script>
 <script type="text/javascript">
 function global_update() {
 	
@@ -66,8 +72,9 @@ function global_update() {
 	$(document).ajaxStop(function () {
       location.reload();
   });
-</script>';
-
+</script>
+<script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script>';
+	
 // FETCH GLOBAL TOP ENTRIES
 $all_ids = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `status` = '0' ORDER BY `name` ASC");
 $id_array = array();
@@ -168,30 +175,32 @@ rsort($mythic_array);
 $eq_avg = mysqli_fetch_array(mysqli_query($stream, "SELECT SUM(`eq`) AS `eq_sum` FROM `" .$table_name. "` WHERE `status` = '0'"));
 $eq_cap = mysqli_fetch_array(mysqli_query($stream, "SELECT `eq` AS `eq_cap` FROM `" .$table_name. "` WHERE `status` = '0' ORDER BY `eq` DESC LIMIT 1"));
 
+$active_chars = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) as `active` FROM `" .$table_name. "` WHERE `status` = '0'"));
+	
 // AP READABILITY CONVERTER
-	if(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) <= '3') {
-		$ap_arraysum = number_format(array_sum($ap_array)/$_SESSION['tracked']);
+	if(strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) <= '3') {
+		$ap_arraysum = number_format(array_sum($ap_array)/$active_chars['active']);
 	}
-	elseif(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) > '3' && strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) < '7') {
-		$ap_arraysum = '' .number_format(array_sum($ap_array)/$_SESSION['tracked']/1000). ' K';
+	elseif(strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) > '3' && strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) < '7') {
+		$ap_arraysum = '' .number_format(array_sum($ap_array)/$active_chars['active']/1000). ' K';
 	}
-	elseif(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) > '6' && strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) < '10') {
-		$ap_arraysum = '' .number_format(array_sum($ap_array)/$_SESSION['tracked']/1000000). ' M';
+	elseif(strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) > '6' && strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) < '10') {
+		$ap_arraysum = '' .number_format(array_sum($ap_array)/$active_chars['active']/1000000). ' M';
 	}
-	elseif(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) > '10' && strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) < '14') {
-		$ap_arraysum = '' .number_format(array_sum($ap_array)/$_SESSION['tracked']/1000000000). ' B';
+	elseif(strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) > '10' && strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) < '14') {
+		$ap_arraysum = '' .number_format(array_sum($ap_array)/$active_chars['active']/1000000000). ' B';
 	}
-	elseif(strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) > '14' && strlen(round(array_sum($ap_array)/$_SESSION['tracked'], 0)) < '18') {
-		$ap_arraysum = '' .number_format(array_sum($ap_array)/$_SESSION['tracked']/1000000000000). ' T';
+	elseif(strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) > '14' && strlen(round(array_sum($ap_array)/$active_chars['active'], 0)) < '18') {
+		$ap_arraysum = '' .number_format(array_sum($ap_array)/$active_chars['active']/1000000000000). ' T';
 	}
 
-$active_chars = mysqli_fetch_array(mysqli_query($stream, "SELECT COUNT(`id`) as `active` FROM `" .$table_name. "` WHERE `status` = '0'"));
+
 
 echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float: left; background-color: #84724E; box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -moz-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); -webkit-box-shadow: 0px 10px 35px 10px rgba(0,0,0,0.5); min-width: 1563px;">
 ' .$error. '
-<span style="color: orange; text-align: center; font-size: 20px;">Current Roster</span>
+<span style="color: orange; text-align: center; font-size: 20px;">Current Roster (temporary hint: click on a column to sort, click on a row to highlight!)</span>
 <div>
-<table style="margin: 0 auto; margin-top: 15px; width: 100%; min-width: 1500px;">
+<table style="margin: 0 auto; margin-top: 15px; width: 100%; min-width: 1500px;" id="sort">
 <thead>
 <tr>
 	<th></th>
@@ -238,7 +247,7 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float
 	<td></td>
 	<td></td>
 	<td><i>' .round(array_sum($itemlevel_array)/$active_chars['active'], 2). ' (' .round(array_sum($itemlevel_off_array)/$active_chars['active'], 2). ')</i></td>
-	<td><i title="7.1 must have: ' .round((((array_sum($ap_array)/$active_chars['active'])/65310778)*100), 2). '% | 7.2 must have: ' .round((((array_sum($ap_array)/$active_chars['active'])/2228766330)*100), 2). '%">' .$ap_arraysum. '</i></td>
+	<td>' .$ap_arraysum. '</td>
 	<td><i>' .round(array_sum($alvl_array)/$active_chars['active'], 2). ' (' .round(array_sum($ak_array)/$active_chars['active'], 2). ')</i></td>
 	<td><i>' .round(array_sum($mythic_array)/$active_chars['active'], 0). '</i></td>
 	<td><i>' .round(array_sum($wq_array)/$active_chars['active'], 0). '</i></td>
@@ -252,6 +261,7 @@ echo '<div id="roster" style="width: 100%; height: 60%; padding-top: 15px; float
 </tr>';
 
 // BUILD ROSTER TABLE
+	
 $fetch_ids = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `status` = '0' ORDER BY `name` ASC");
 
 while($id = mysqli_fetch_array($fetch_ids)) {
@@ -539,26 +549,6 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		$eq = $guild_table['eq'];
 	}
 	
-	// MUST-HAVE-AP THRESHOLD CONVERTER
-	if($guild_table['class'] == '11') {
-			
-		$threshold = '8915065320';		
-		
-		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
-	}
-	elseif($guild_table['class'] == '12') {
-		
-		$threshold = '4457532660';
-				
-		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
-	}
-	elseif($guild_table['class'] != '11' && $guild_table['class'] != '12') {
-		
-		$threshold = '6686298990';
-				
-		$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
-	}
-	
 	if($fetch_dungeon_data['mythic'] == $mythic_array['0']) {
 		$mythics = '<span style="color: yellowgreen;">' .$fetch_dungeon_data['mythic']. '</span>';
 	}
@@ -584,7 +574,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 		<td><a href="?edit_legendaries=' .$id['id']. '" title="Edit legendaries">' .$legendaries['amount']. '</a></td>
 		<td>' .$fetch_general_data['ilvl_on']. ' ' .$fetch_general_data['ilvl_off']. '</td>		
-		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span> <span title="percentage of needed AP to have each spec at 1 Concordance point">(' .$ap_progress. ')</span></td>
+		<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span></td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 		<td style="min-width: 80px;">' .$mythics. ' ' .$m_achievement. '</td>
 		<td>' .$fetch_general_data['wq']. '</td>

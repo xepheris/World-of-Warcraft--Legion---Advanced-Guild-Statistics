@@ -97,6 +97,17 @@ elseif(isset($_GET['source']) && is_numeric($_GET['source']) && isset($_GET['com
 	echo '</div>';
 }
 
+// DEBUG
+
+elseif(isset($_GET['debug'])) {
+	
+	echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
+	
+	include('debug/index.php');
+	
+	echo '</div>';
+}
+
 // INSPECT
 
 elseif(isset($_GET['inspect'])) {
@@ -116,7 +127,7 @@ elseif(isset($_GET['inspect'])) {
 		echo '<div style="width: 90%; margin-left: 5%; height: auto; padding-bottom: 15px; padding-top: 15px; float: left; text-align: center;">';
 	
 		if($_SESSION['tracked'] == '0') {
-			echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
+			echo '<meta http-equiv="refresh" content="0;url=http://ags.gerritalex.de/?import" />';
 		}
 		elseif($_SESSION['tracked'] != '0') {
 			
@@ -176,7 +187,7 @@ else {
 
 	// AUTO REDIRECT
 	if($_SESSION['tracked'] == '0') {
-		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/?import" />';
+		echo '<meta http-equiv="refresh" content="0;url=http://ags.gerritalex.de/?import" />';
 	}
 	elseif($_SESSION['tracked'] != '0') {
 		
