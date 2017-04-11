@@ -71,6 +71,7 @@ echo '
 		<span style="color: orange; font-size: 18px">Register</span>
 		<br />
 		' .$duplicate_guild. '
+		' .$password_fail. '
 		' .$new_guild_insert_fail. '
 		' .$new_guild_insert_success. '
 		' .$new_guild_name_fail. '
@@ -95,7 +96,15 @@ echo '
 		</form>
 	</div>
 	<p style="color: orange; font-size: 18px;">For a testrun, just select any guild from the login menu and login without a password!</p>
-	<p style="color: coral; font-size: 16px;">27/3/17 known issues: Warcraftlogs API currently does not work for Russian realms</p>
+	<p style="color: yellowgreen; font-size: 16px;">
+	
+	11/4/17 news:<br />
+	– inspect subpage now supports set pieces<br />
+	– Cathedral of Eternal Night tracking included - only new characters though so please reimport if you want this metric to be tracked<br />
+	– Legionfall reputation tracking now included (there\'s no possibility to track Nethershards by the way)!<br />
+	– Sorting is back! Click on a column to sort your roster<br />
+	– Debug menu added for bugged out/accidentally closed imports</p>
+	<p style="color: coral; font-size: 16px;">5/4/17 known issues:<br />– very rarely, a characters API data is corrupted - this is not in my hands, please simply remove these (benching shows delete button)<br />– Warcraftlogs API currently does not support Russian realms</p>
 	
 	<table style="width: 100%; border-top: 1px solid white;">
 		<thead>

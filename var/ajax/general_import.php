@@ -9,7 +9,7 @@ $table_name = '' . $_SESSION[ 'table' ] . '_' . $_SESSION[ 'guild' ] . '_' . $_S
 $key = mysqli_fetch_array( mysqli_query( $stream, "SELECT `wow_key` FROM `ovw_api` WHERE `id` = '1'" ) );
 
 $escaped_session_guild_name = str_replace( ' ', '%20', $_SESSION[ 'guild' ] );
-$actual_realm_name = mysqli_fetch_array( mysqli_query( $stream, "SELECT `short` FROM `ovw_realms` WHERE `id` = '" .$_GET['realm']. "'" ) );
+$actual_realm_name = mysqli_fetch_array( mysqli_query( $stream, "SELECT `short` FROM `ovw_realms` WHERE `id` = '" . $_GET[ 'realm' ] . "'" ) );
 
 $old = mysqli_fetch_array( mysqli_query( $stream, "SELECT `updated`, `realm` FROM `" . $table_name . "` WHERE `id` = '" . $_GET[ 'character' ] . "'" ) );
 
@@ -199,10 +199,10 @@ if ( $data != '' ) {
 				if ( !empty( $data[ 'items' ][ 'offHand' ][ 'itemLevel' ] ) ) {
 					$ohilvl = $data[ 'items' ][ 'offHand' ][ 'itemLevel' ];
 				}
-				
-				$traits = '0';				
-				foreach($data['items']['mainHand']['artifactTraits'] as $trait) {
-					$traits = $traits+$trait['rank'];
+
+				$traits = '0';
+				foreach ( $data[ 'items' ][ 'mainHand' ][ 'artifactTraits' ] as $trait ) {
+					$traits = $traits + $trait[ 'rank' ];
 				}
 
 				// CONVERT BONUS LIST
@@ -251,10 +251,10 @@ if ( $data != '' ) {
 				if ( !empty( $data[ 'items' ][ 'mainHand' ][ 'itemLevel' ] ) ) {
 					$mhilvl = $data[ 'items' ][ 'mainHand' ][ 'itemLevel' ];
 				}
-				
-				$traits = '0';				
-				foreach($data['items']['offHand']['artifactTraits'] as $trait) {
-					$traits = $traits+$trait['rank'];
+
+				$traits = '0';
+				foreach ( $data[ 'items' ][ 'offHand' ][ 'artifactTraits' ] as $trait ) {
+					$traits = $traits + $trait[ 'rank' ];
 				}
 
 				// CONVERT BONUS LIST
@@ -469,6 +469,11 @@ if ( $data != '' ) {
 				$mplus = '2';
 			}
 
+			// DUNGEONS
+			$key_cen_normal = array_search( '36204', $data[ 'achievements' ][ 'criteria' ] );
+			$key_cen_heroic = array_search( '36215', $data[ 'achievements' ][ 'criteria' ] );
+			$key_cen_mythic = array_search( '36216', $data[ 'achievements' ][ 'criteria' ] );
+
 			// REPUTATION
 			$key_highmountain = array_search( '30497', $data[ 'achievements' ][ 'criteria' ] );
 			$key_valsharah = array_search( '30500', $data[ 'achievements' ][ 'criteria' ] );
@@ -476,8 +481,7 @@ if ( $data != '' ) {
 			$key_stormheim = array_search( '30501', $data[ 'achievements' ][ 'criteria' ] );
 			$key_azsuna = array_search( '30498', $data[ 'achievements' ][ 'criteria' ] );
 			$key_wardens = array_search( '30496', $data[ 'achievements' ][ 'criteria' ] );
-			// Legionfall Exalted Achievement ID = 11545 => criteria -> below
-			#$key_brokenshore = array_search('', $data['achievements']['criteria']);
+			$key_legionfall = array_search( '35977', $data[ 'achievements' ][ 'criteria' ] );
 
 			// MYTHIC PLUS NUMBERS
 			$key_mythicplus2 = array_search( '33096', $data[ 'achievements' ][ 'criteria' ] );
@@ -500,7 +504,7 @@ if ( $data != '' ) {
 			$mythic_plus10 = $criterias[ $key_mythicplus10 ];
 			$mythic_plus15 = $criterias[ $key_mythicplus15 ];
 			$artifact_power = $criterias[ $key_artifactpower ];
-			$artifact_level = $traits-3;
+			$artifact_level = $traits - 3;
 			$artifact_knowledge = $criterias[ $key_artifactknowledge ];
 			$world_quests = $criterias[ $key_worldquests ];
 			$rep_suramar = $criterias[ $key_suramar ];
@@ -509,12 +513,31 @@ if ( $data != '' ) {
 			$rep_stormheim = $criterias[ $key_stormheim ];
 			$rep_azsuna = $criterias[ $key_azsuna ];
 			$rep_wardens = $criterias[ $key_wardens ];
+			$rep_legionfall = $criterias[ $key_legionfall ];
+
+			if ( $key_cen_normal != '' ) {
+				$cen_normal = $criterias[ $key_cen_normal ];
+			} else {
+				$cen_normal = '0';
+			}
+
+			if ( $key_cen_heroic != '' ) {
+				$cen_heroic = $criterias[ $key_cen_heroic ];
+			} else {
+				$cen_heroic = '0';
+			}
+
+			if ( $key_cen_mythic != '' ) {
+				$cen_mythic = $criterias[ $key_cen_mythic ];
+			} else {
+				$cen_mythic = '0';
+			}
 
 
 			// GENERAL INFORMATION
 			$update_guild_table = mysqli_query( $stream, "UPDATE `" . $table_name . "` SET `logout` = '" . $logout . "', `updated` = '" . time( 'now' ) . "', `talents` = '" . $talent_calc_var . "' WHERE `id` = '" . $_GET[ 'character' ] . "'" );
 
-			$general_table = mysqli_query( $stream, "INSERT INTO `" . $_SESSION[ 'table' ] . "_" . $_GET[ 'character' ] . "_general` (`ilvl_on`, `ilvl_off`, `alvl`, `ak`, `ap`, `m2`, `m5`, `m10`, `m15`, `m_achv`, `wq`, `rep_nightfallen`, `rep_valarjar`, `rep_wardens`, `rep_farondis`, `rep_highmountain`, `rep_dreamweaver`) VALUES ('" . $ilvlaverage . "', '" . $ilvlaveragebags . "', '" . $artifact_level . "', '" . $artifact_knowledge . "', '" . $artifact_power . "', '" . $mythic_plus2 . "', '" . $mythic_plus5 . "', '" . $mythic_plus10 . "', '" . $mythic_plus15 . "', '" . $mplus . "', '" . $world_quests . "', '" . $rep_suramar . "', '" . $rep_stormheim . "', '" . $rep_wardens . "', '" . $rep_azsuna . "', '" . $rep_highmountain . "', '" . $rep_valsharah . "');" );
+			$general_table = mysqli_query( $stream, "INSERT INTO `" . $_SESSION[ 'table' ] . "_" . $_GET[ 'character' ] . "_general` (`ilvl_on`, `ilvl_off`, `alvl`, `ak`, `ap`, `m2`, `m5`, `m10`, `m15`, `m_achv`, `wq`, `rep_nightfallen`, `rep_valarjar`, `rep_wardens`, `rep_farondis`, `rep_highmountain`, `rep_dreamweaver`, `rep_legionfall`) VALUES ('" . $ilvlaverage . "', '" . $ilvlaveragebags . "', '" . $artifact_level . "', '" . $artifact_knowledge . "', '" . $artifact_power . "', '" . $mythic_plus2 . "', '" . $mythic_plus5 . "', '" . $mythic_plus10 . "', '" . $mythic_plus15 . "', '" . $mplus . "', '" . $world_quests . "', '" . $rep_suramar . "', '" . $rep_stormheim . "', '" . $rep_wardens . "', '" . $rep_azsuna . "', '" . $rep_highmountain . "', '" . $rep_valsharah . "', '" . $rep_legionfall . "');" );
 
 			// EQUIP INSERTION
 			$items = array( '1' => 'head', '2' => 'neck', '3' => 'shoulder', '4' => 'back', '5' => 'chest', '6' => 'wrist', '7' => 'hands', '8' => 'waist', '9' => 'legs', '10' => 'feet', '11' => 'finger1', '12' => 'finger2', '13' => 'trinket1', '14' => 'trinket2' );
@@ -583,7 +606,7 @@ if ( $data != '' ) {
 			// DUNGEON INSERTION
 
 			$dungeon_1_insertion = mysqli_query( $stream, "INSERT INTO `" . $_SESSION[ 'table' ] . "_" . $_GET[ 'character' ] . "_dungeons` (`id`, `normal`, `heroic`, `mythic`) VALUES ('1', '" . $brh_normal . "', '" . $brh_heroic . "', '" . $brh_mythic . "')" );
-			#$dungeon_2_insertion = mysqli_query($stream, "INSERT INTO `" .$guild_id['id']. "_" .$fetch_char_id['id']. "_dungeons` (`id`, `normal`, `heroic`, `mythic`) VALUES ('2', '" .$cen_normal. "', '" .$cen_heroic. "', '" .$cen_mythic. "')");
+			$dungeon_2_insertion = mysqli_query( $stream, "INSERT INTO `" . $_SESSION[ 'table' ] . "_" . $_GET[ 'character' ] . "_dungeons` (`id`, `normal`, `heroic`, `mythic`) VALUES ('2', '" . $cen_normal . "', '" . $cen_heroic . "', '" . $cen_mythic . "')" );
 			$dungeon_3_insertion = mysqli_query( $stream, "INSERT INTO `" . $_SESSION[ 'table' ] . "_" . $_GET[ 'character' ] . "_dungeons` (`id`, `normal`, `heroic`, `mythic`) VALUES ('3', '0', '0', '" . $cos_mythic . "')" );
 			$dungeon_4_insertion = mysqli_query( $stream, "INSERT INTO `" . $_SESSION[ 'table' ] . "_" . $_GET[ 'character' ] . "_dungeons` (`id`, `normal`, `heroic`, `mythic`) VALUES ('4', '" . $dht_normal . "', '" . $dht_heroic . "', '" . $dht_mythic . "')" );
 			$dungeon_5_insertion = mysqli_query( $stream, "INSERT INTO `" . $_SESSION[ 'table' ] . "_" . $_GET[ 'character' ] . "_dungeons` (`id`, `normal`, `heroic`, `mythic`) VALUES ('5', '" . $eoa_normal . "', '" . $eoa_heroic . "', '" . $eoa_mythic . "')" );
@@ -690,8 +713,8 @@ if ( $data != '' ) {
 				( $tos_m_bosskills * $eq_weights[ 'tos_m' ] ) +
 				$eq_ap +
 				( ( $ilvlaverage - 850 ) * $eq_weights[ 'itemlevel' ] );
-			
-			if($eq < '0') {
+
+			if ( $eq < '0' ) {
 				$eq = '0';
 			}
 
