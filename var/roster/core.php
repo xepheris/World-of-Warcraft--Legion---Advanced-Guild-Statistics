@@ -78,8 +78,7 @@ function global_update() {
 	$(document).ajaxStop(function () {
       location.reload();
   });
-</script>
-<script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script>';
+</script>';
 	
 // FETCH GLOBAL TOP ENTRIES
 $all_ids = mysqli_query($stream, "SELECT `id` FROM `" .$table_name. "` WHERE `status` = '0' ORDER BY `name` ASC");
@@ -515,23 +514,36 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 			$last_logout = '' .round(((time('now')-$guild_table['logout'])/86400), 2). ' days ago';
 		}
 	}
+	
+	// OLD VALUE CHECK
+	$check = mysqli_fetch_array(mysqli_query($stream, "SELECT `ap` FROM `" .$_SESSION['table']. "_" .$id['id']. "_past` ORDER BY `ap` DESC LIMIT 1"));
+	
+	if($check['ap'] != '') {
+		$incr = round((($fetch_general_data['ap']/$check['ap'])-1)*100, 2);
+		if($incr != '0') {
+			$incr = '<sup style="color: silver; cursor: help;" title="' .number_format($check['ap']). '">+' .$incr. '%</sup>';
+		}
+		else {
+			$incr = '';
+		}
+	}
 
 	// AP READABILITY CONVERTER
 	if(strlen($fetch_general_data['ap']) <= '3') {
 		$ap = number_format($fetch_general_data['ap']);
 	}
 	elseif(strlen($fetch_general_data['ap']) > '3' && strlen($fetch_general_data['ap']) < '7') {
-		$ap = '' .number_format($fetch_general_data['ap']/1000). ' K';
+		$ap = '' .number_format($fetch_general_data['ap']/1000, 2). ' K' .$sup. '';
 	}
 	elseif(strlen($fetch_general_data['ap']) >= '7' && strlen($fetch_general_data['ap']) < '10') {
-		$ap = '' .number_format($fetch_general_data['ap']/1000000). ' M';
+		$ap = '' .number_format($fetch_general_data['ap']/1000000, 2). ' M' .$sup. '';
 	}
 	elseif(strlen($fetch_general_data['ap']) >= '10' && strlen($fetch_general_data['ap']) < '14') {
-		$ap = '' .number_format($fetch_general_data['ap']/1000000000). ' B';
+		$ap = '' .number_format($fetch_general_data['ap']/1000000000, 2). ' B' .$sup. '';
 	}
 	elseif(strlen($fetch_general_data['ap']) >= '14' && strlen($fetch_general_data['ap']) < '18') {
-		$ap = '' .number_format($fetch_general_data['ap']/1000000000000). ' T';
-	}
+		$ap = '' .number_format($fetch_general_data['ap']/1000000000000, 2). ' T' .$sup. '';
+	}	
 
 	// TOPLIST CHECK
 	if($fetch_general_data['ilvl_on'] == $itemlevel_equipped_cap) {
@@ -587,7 +599,7 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 		<td><a href="?edit_legendaries=' .$id['id']. '" title="Edit legendaries">' .$legendaries['amount']. '</a></td>
 		<td data-sort-value="' .$fetch_general_data['ilvl_on']. '">' .$ilvl_on. ' ' .$ilvl_off. '</td>		
-		<td data-sort-value="' .$fetch_general_data['ap']. '"><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span></td>
+		<td data-sort-value="' .$fetch_general_data['ap']. '"><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span> ' .$incr. '</td>
 		<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 		<td data-sort-value="' .$fetch_dungeon_data['mythic']. '" style="min-width: 80px;">' .$mythics. ' ' .$m_achievement. '</td>
 		<td data-sort-value="' .$fetch_general_data['wq']. '">' .$wq. '</td>
@@ -603,6 +615,8 @@ while($id = mysqli_fetch_array($fetch_ids)) {
 		}
 		echo '
 	</tr>';
+	
+	unset($incr);
 }
 		
 echo '</tbody>

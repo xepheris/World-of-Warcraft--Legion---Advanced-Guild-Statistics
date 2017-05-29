@@ -673,10 +673,38 @@ if ( isset( $_GET[ 'character' ] ) && is_numeric( $_GET[ 'character' ] ) ) {
 						}
 
 						$key = mysqli_fetch_array( mysqli_query( $stream, "SELECT `wlogs_key` FROM `ovw_api` WHERE `id` = '1'" ) );
-
+						
+						if($_SESSION[ 'realm' ] == 'ревущий-фьорд') {
+							$wlogs_debug_realm = 'ревущии-фьорд';
+						}
+						elseif($_SESSION[ 'realm' ] == 'Ясеневый лес') {
+							$wlogs_debug_realm = 'Ясеневыи-лес';
+						}
+						elseif($_SESSION[ 'realm' ] == 'Разувий') {
+							$wlogs_debug_realm = 'Разувии';
+						}
+						elseif($_SESSION[ 'realm' ] == 'Черный Шрам') {
+							$wlogs_debug_realm = 'Черныи-Шрам';
+						}
+						elseif($_SESSION[ 'realm' ] == 'Борейская тундра') {
+							$wlogs_debug_realm = 'Бореиская-тундра';
+						}
+						elseif($_SESSION[ 'realm' ] == 'Confrérie du Thorium') {
+							$wlogs_debug_realm = 'Confrerie-du-Thorium';
+						}
+						elseif($_SESSION[ 'realm' ] == 'Chants éternels') {
+							$wlogs_debug_realm = 'Chants-eternels';
+						}
+						elseif($_SESSION[ 'realm' ] == 'La Croisade écarlate') {
+							$wlogs_debug_realm = 'La-Croisade-ecarlate';
+						}
+						else {
+							$wlogs_debug_realm = $_SESSION[ 'realm' ];
+						}
+						
 						foreach ( $zones as $zone_id => $name ) {
 
-							$url = 'https://www.warcraftlogs.com/v1/parses/character/' . $character . '/' . $_SESSION[ 'realm' ] . '/' . $_SESSION[ 'region' ] . '?zone=' . $zone_id . '&metric=' . $metric . '&api_key=' . $key[ 'wlogs_key' ] . '';
+							$url = 'https://www.warcraftlogs.com/v1/parses/character/' . $character . '/' . $wlogs_debug_realm . '/' . $_SESSION[ 'region' ] . '?zone=' . $zone_id . '&metric=' . $metric . '&api_key=' . $key[ 'wlogs_key' ] . '';
 
 							$arrContextOptions = array( 'ssl' => array( 'verify_peer' => false, 'verify_peer_name' => false, ), );
 

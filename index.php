@@ -16,7 +16,7 @@ if ( isset( $_POST[ 'gname' ] ) && isset( $_POST[ 'region' ] ) && isset( $_POST[
 		$realm_id = mysqli_fetch_array( mysqli_query( $stream, "SELECT `id` FROM `ovw_realms` WHERE `short` = '" . $_POST[ 'realm' ] . "' AND `region` = '" . $_POST[ 'region' ] . "'" ) );
 
 		$check = mysqli_fetch_array( mysqli_query( $stream, "SELECT `id` FROM `ovw_guilds` WHERE `guild_name` = '" . $_POST[ 'gname' ] . "' AND `region` = '" . $_POST[ 'region' ] . "' AND `realm` = '" . $realm_id[ 'id' ] . "'" ) );
-		
+
 		if ( $check != '' && !empty( $check ) ) {
 			$duplicate_guild = '<br /><span style="color: coral; text-align: center;">The guild you tried to insert already exists! Please ask your guild about the password.<br />If your guild has been claimed by someone unknown, write me a <u onclick="' . $contact . '">mail</u> with proof that you are a spokesperson and I will reset the password.<br /></span>';
 		} else {
@@ -38,7 +38,7 @@ if ( isset( $_POST[ 'gname' ] ) && isset( $_POST[ 'region' ] ) && isset( $_POST[
 				if ( $data[ 'name' ] == $_POST[ 'gname' ] ) {
 
 					$insert_new_guild = mysqli_query( $stream, "INSERT INTO `ovw_guilds` (`guild_name`, `region`, `realm`, `shortlink`, `registered`, `password`, `last_login`, `tracked_chars`) VALUES ('" . $_POST[ 'gname' ] . "', '" . $_POST[ 'region' ] . "', '" . $realm_id[ 'id' ] . "', '" . md5( $_POST[ 'gname' ] . $_POST[ 'region' ] . $_POST[ 'realm' ] ) . "', '" . time( 'now' ) . "', '" . md5( $_POST[ 'pw' ] ) . "', '0', '0')" );
-					
+
 					/*
 					$fetch = mysqli_fetch_array( mysqli_query( $stream, "SELECT `id`, `guild_name`, `realm`, `region`, `shortlink`, `tracked_chars` FROM `ovw_guilds` WHERE `guild_name` = '" . $_POST[ 'gname' ] . "'" ) );
 					$_SESSION[ 'guild' ] = $fetch[ 'guild_name' ];
@@ -91,7 +91,7 @@ if ( isset( $_POST[ 'guild' ] ) && isset( $_POST[ 'pw' ] ) ) {
 			$_SESSION[ 'realm' ] = $realm_name[ 'name' ];
 
 			$_SESSION[ 'table' ] = $_POST[ 'guild' ];
-			
+
 
 			// UPDATE LOGIN TIME
 			$refresh_login = mysqli_query( $stream, "UPDATE `ovw_guilds` SET `last_login` = '" . time( 'now' ) . "' WHERE `id` = '" . $_SESSION[ 'table' ] . "'" );
@@ -113,7 +113,7 @@ if ( isset( $_POST[ 'guild' ] ) && isset( $_POST[ 'pw' ] ) ) {
 		$_SESSION[ 'table' ] = $_POST[ 'guild' ];
 
 		$_SESSION[ 'guest' ] = 'guest';
-		
+
 	}
 }
 
@@ -134,8 +134,9 @@ if ( isset( $_GET[ 'sl' ] ) && strlen( $_GET[ 'sl' ] ) == '32' ) {
 	$_SESSION[ 'table' ] = $fetch[ 'id' ];
 
 	$_SESSION[ 'guest' ] = 'guest';
-	
+
 }
+
 
 echo '<!DOCTYPE html>
 <html lang="en">
@@ -183,6 +184,15 @@ echo '
 <body style="margin: 0px; background-color: rgba(56, 66, 88, 0.85); font-family: R-Regular; color: black; font-size: 15px;">
 
 	<div style="width: 100%; height: 100%; margin: 0 auto;">';
+
+// EXTERNAL EQ
+if ( isset( $_GET[ 'eq' ] ) ) {
+
+	include( 'var/eq/index.php' );
+	mysqli_close( $stream );
+	die();
+
+}
 
 if ( isset( $_SESSION[ 'shortlink' ] ) ) {
 	if ( isset( $_GET[ 'sl' ] ) ) {

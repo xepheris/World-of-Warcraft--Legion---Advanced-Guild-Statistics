@@ -4,11 +4,11 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 
 	// LOGGED OUT
 	if(!isset($_SESSION['guild'])) {
-		echo '<a href="http://artifactpower.info/dev/"><span style="color: orange; font-size: 26px;">Advanced Guild Statistics</span></a>
+		echo '<a href="http://ags.gerritalex.de/"><span style="color: orange; font-size: 26px;">Advanced Guild Statistics</span></a>
 		<br />
 		<br />
 		<span class="nav">
-		<a href="http://artifactpower.info/dev">Login & Register</a> |
+		<a href="http://ags.gerritalex.de">Login & Register</a> |
 		<a href="?resources">Resources & Inspirations</a> |
 		<span style="color: white;" onclick="' .$contact. '">Contact</span> |
 		<div class="dd">
@@ -16,7 +16,7 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 			<div class="dd-c">
 				<a href="http://reddit.com/r/competitivewow" style="color: black;">Competitive WoW subreddit</a>
 				<br />
-				<a href="http://check.artifactpower.info" style="color: black;">Advanced Armory Access</a>
+				<a href="http://armory.gerritalex.de" style="color: black;">Advanced Armory Access</a>
 				<br />
 				<a href="http://youtube.com/c/Xepheris" style="color: black;">High M+ Vengeance Demon Hunter VODs</a>
 				<br />
@@ -29,7 +29,7 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 	}
 	// LOGGED IN
 	elseif(isset($_SESSION['guild'])) {
-		echo '<a href="http://artifactpower.info/dev/"><span style="color: orange; font-size: 26px; text-transform: uppercase;">' .$_SESSION['guild']. ' (' .$_SESSION['region']. '-' .$_SESSION['realm']. ')</span></a>
+		echo '<a href="http://ags.gerritalex.de/"><span style="color: orange; font-size: 26px; text-transform: uppercase;">' .$_SESSION['guild']. ' (' .$_SESSION['region']. '-' .$_SESSION['realm']. ')</span></a>
 		<br />
 		<br />
 		<span class="nav">';
@@ -37,11 +37,11 @@ echo '<div style="width: 100%; height: auto; padding-top: 15px; text-align: cent
 		// ROSTER SWAP		
 		if(isset($_GET['import']) || isset($_GET['inspect']) || isset($_GET['compare']) || isset($_GET['source']) || isset($_GET['contact']) || isset($_GET['change_role']) || isset($_GET['simc']) || isset($_GET['change_name']) || isset($_GET['edit_legendaries'])) {
 			$roster = '
-			[ <a href="http://artifactpower.info/dev/">Roster</a>';
+			[ <a href="http://ags.gerritalex.de/">Roster</a>';
 		}
 		elseif(!isset($_GET['import']) && !isset($_GET['inspect']) && !isset($_GET['compare']) && !isset($_GET['source']) && !isset($_GET['contact']) && !isset($_GET['change_name']) && !isset($_GET['simc']) && !isset($_GET['change_role']) && !isset($_GET['edit_legendaries'])) {
 			$roster = '
-			[ <a href="http://artifactpower.info/dev/" style="text-decoration: underline;">Roster</a>';
+			[ <a href="http://ags.gerritalex.de/" style="text-decoration: underline;">Roster</a>';
 			$update = '<br /><br />[ <a class="global_update" onclick="global_update();">update all characters</a> ]';
 		}
 		

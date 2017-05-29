@@ -37,7 +37,7 @@ if(isset($_POST['add_legendaries'])) {
 	}
 	
 	echo '<span style="color: orange; text-align: center; font-size: 18px;">Legendaries have been successfully added! You will be redirected to your profile in 3 seconds.</span>
-	<meta http-equiv="refresh" content="3;url=http://artifactpower.info/dev/?inspect=' .$_GET['edit_legendaries']. '" />';
+	<meta http-equiv="refresh" content="3;url=http://ags.gerritalex.de/?inspect=' .$_GET['edit_legendaries']. '" />';
 }
 	
 if(!isset($_POST['add_legendaries']) && !isset($_GET['rmv'])) {

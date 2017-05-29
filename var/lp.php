@@ -89,7 +89,7 @@ echo '
 			<option disabled>CN API currently unavailable, sorry</option>
 		</select>
 		<div id="realms">
-		</div>					
+		</div>
 		<input type="password" name="pw" required placeholder="3+ characters password" minlength="3" value="' .$_POST['pw']. '"/>
 		<br />
 		<button type="submit">Register</button>
@@ -97,14 +97,13 @@ echo '
 	</div>
 	<p style="color: orange; font-size: 18px;">For a testrun, just select any guild from the login menu and login without a password!</p>
 	<p style="color: yellowgreen; font-size: 16px;">
-	
-	11/4/17 news:<br />
-	– inspect subpage now supports set pieces<br />
-	– Cathedral of Eternal Night tracking included - only new characters though so please reimport if you want this metric to be tracked<br />
-	– Legionfall reputation tracking now included (there\'s no possibility to track Nethershards by the way)!<br />
-	– Sorting is back! Click on a column to sort your roster<br />
-	– Debug menu added for bugged out/accidentally closed imports</p>
-	<p style="color: coral; font-size: 16px;">5/4/17 known issues:<br />– very rarely, a characters API data is corrupted - this is not in my hands, please simply remove these (benching shows delete button)<br />– Warcraftlogs API currently does not support Russian realms</p>
+	29/5/17 news:<br />
+	- added link to <a href="https://wowanalyzer.com/#/" title="WoW Analyzer">WoW Analyzer</a><br />
+	24/5/17 news:<br />
+	concerning a recent ticket:<br />
+	- if within a x-realm guild two characters have the exact same name across two servers, they won\'t be distinguishable for me
+	</p>
+	<p style="color: coral; font-size: 16px;"></p>
 	
 	<table style="width: 100%; border-top: 1px solid white;">
 		<thead>

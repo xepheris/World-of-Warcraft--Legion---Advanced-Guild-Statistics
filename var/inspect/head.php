@@ -3,16 +3,24 @@
 $general_char_data = mysqli_fetch_array(mysqli_query($stream, "SELECT * FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
 
 if($general_char_data['wlogs_id'] != '0') {
-	$warcraftlogs_link = '<a href="https://www.warcraftlogs.com/rankings/character/' .$general_char_data['wlogs_id']. '/latest" title="WarcraftLogs profile link">
-			<span style="font-family: Avenir, Arial, sans-serif; color: rgb(30,180,135); text-shadow: 2px 2px 10px black;">WARCRAFT</span>
-			<span style="font-family: Avenir, Arial, sans-serif; color: rgb(230,230,230); text-shadow: 2px 2px 10px black;">LOGS</span>
-		</a>';
+	$warcraftlogs_link = '
+	<a href="https://www.warcraftlogs.com/rankings/character/' .$general_char_data['wlogs_id']. '/latest" title="WarcraftLogs profile link">
+		<span style="font-family: Avenir, Arial, sans-serif; color: rgb(30,180,135); text-shadow: 2px 2px 10px black;">WARCRAFT</span>
+		<span style="font-family: Avenir, Arial, sans-serif; color: rgb(230,230,230); text-shadow: 2px 2px 10px black;">LOGS</span>
+	</a>
+	| <a href="https://wowanalyzer.com/#/" title="World of Warcraft Log Analyzer" style="color: #e45a5a;">
+		WoW Analyzer
+	</a>';
 }
 elseif($general_char_data['wlogs_id'] == '0') {
-	$warcraftlogs_link = '<a href="https://www.warcraftlogs.com/rankings/character/' .$general_char_data['wlogs_id']. '/latest" title="WarcraftLogs profile could not be found" style="pointer-events: none;">
-			<span style="font-family: Avenir, Arial, sans-serif; color: grey; text-shadow: 2px 2px 10px black;">WARCRAFT</span>
-			<span style="font-family: Avenir, Arial, sans-serif; color: grey; text-shadow: 2px 2px 10px black;">LOGS</span>
-		</a>';
+	$warcraftlogs_link = '
+	<a href="https://www.warcraftlogs.com/rankings/character/' .$general_char_data['wlogs_id']. '/latest" title="WarcraftLogs profile could not be found" style="pointer-events: none;">
+		<span style="font-family: Avenir, Arial, sans-serif; color: grey; text-shadow: 2px 2px 10px black;">WARCRAFT</span>
+		<span style="font-family: Avenir, Arial, sans-serif; color: grey; text-shadow: 2px 2px 10px black;">LOGS</span>
+	</a>
+	| <a href="https://wowanalyzer.com/#/" title="World of Warcraft Log Analyzer" style="pointer-events: none; color: grey;">
+		WoW Analyzer
+	</a>';
 }
 
 switch ($general_char_data['role1']) {
@@ -85,7 +93,7 @@ echo '<div style="width: 100%; height: 60%; padding-top: 15px; padding-bottom: 1
 	</div>
 
 	<div style="padding-right: 6px; text-align: right;">
-		<a href="" style="text-transform: uppercase; font-size: 20px; color: orange;" title="AGS External View">AGS External View</a> | 
+		<a href="http://armory.gerritalex.de/?r=' .$_SESSION['region']. '&s=' .$actual_realm_name['short']. '&c=' .$general_char_data['name']. '" style="text-transform: uppercase; font-size: 20px; color: orange;" title="armory.gerritalex.de">External View</a> | 
 		<a href="?simc=' .$_GET['inspect']. '" title="SimCraft string builder"><span style="font-family: Lucida Grande, Arial, sans-serif;">SimCraft</span></a> |
 		<a href="http://www.wowprogress.com/character/' .$_SESSION['region']. '/' .$actual_realm_name['short']. '/' .$general_char_data['name']. '" style="font-family:verdana,arial,sans-serif;" title="WoWProgress profile link">WoWProgress</a> | 
 		' .$warcraftlogs_link. '
@@ -223,7 +231,7 @@ elseif($general_table['ak'] < '12') {
 // CHECK FOR PREVIOUS VALUES
 $past_check = mysqli_fetch_array(mysqli_query($stream, "SELECT `ap`, `wq` FROM `" .$_SESSION['table']. "_" .$_GET['inspect']. "_past` ORDER BY `timestamp` DESC LIMIT 1"));
 if($past_check['ap'] != '' && $general_table['ap'] != $past_check['ap']) {
-	$past_ap = '<span style="color: yellowgreen;" title="last update: ' .number_format($past_check['ap']). '">(+' .round(($general_table['ap']/$past_check['ap'])-1, 3). '%)</span>';
+	$past_ap = '<span style="color: yellowgreen;" title="last update: ' .number_format($past_check['ap']). '">(+' .round(((($general_table['ap']/$past_check['ap'])-1)*100), 3). '%)</span>';
 }
 if($past_check['wq'] != '' && $general_table['wq'] != $past_check['wq']) {
 	$past_wq = '<span style="color: yellowgreen;" title="last update: ' .$past_check['wq']. '">(+' .($general_table['wq']-$past_check['wq']). ')</span>';

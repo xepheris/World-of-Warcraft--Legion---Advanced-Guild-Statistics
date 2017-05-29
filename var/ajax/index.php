@@ -13,7 +13,7 @@ if($_SESSION['guest'] != 'guest') {
 	$bench = mysqli_query($stream, "UPDATE `" .$table_name. "` SET `status` = '1' WHERE `id` = '" .$_GET['bench']. "'");
 	
 	if($bench) {
-		echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
+		echo '<meta http-equiv="refresh" content="0;url=http://ags.gerritalex.de/" />';
 	}
 	elseif(!$bench) {
 		$error = '<span style="color: coral; text-align: center;">Could not <u>bench</u> player (ID ' .$_GET['bench']. ') at this moment. Please try again.<br />If the problem persists, please contact me via the contact form.</span>';

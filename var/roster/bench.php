@@ -307,40 +307,18 @@ if($benchcheck['id'] != '') {
 			$last_update = '<span style="color: coral;">' .round(((time('now')-$guild_table['updated'])/3600), 2). ' hrs ago</span>';
 		}
 		
-		// MUST-HAVE-AP THRESHOLD CONVERTER
-		if($guild_table['class'] == '11') {
-			
-			if($fetch_general_data['ak'] <= '25') {
-				$threshold = '261243112';
+		// OLD VALUE CHECK
+		$check = mysqli_fetch_array(mysqli_query($stream, "SELECT `ap` FROM `" .$_SESSION['table']. "_" .$id['id']. "_past` ORDER BY `ap` DESC LIMIT 1"));
+	
+		if($check['ap'] != '') {
+			$incr = round((($fetch_general_data['ap']/$check['ap'])-1)*100, 2);
+			if($incr != '0') {
+				$incr = '<sup style="color: silver; font-size: 12px;" title="' .number_format($check['ap']). '">+' .$incr. '%</sup>';
 			}
-			elseif($fetch_general_data['ak'] > '25') {
-				$threshold = '8915065320';
+			else {
+				$incr = '';
 			}
-			
-			$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
-		}
-		elseif($guild_table['class'] == '12') {
-			
-			if($fetch_general_data['ak'] <= '25') {
-				$threshold = '130621556';
-			}
-			elseif($fetch_general_data['ak'] > '25') {
-				$threshold = '522486224';
-			}
-			
-			$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
-		}
-		elseif($guild_table['class'] != '11' && $guild_table['class'] != '12') {
-			
-			if($fetch_general_data['ak'] <= '25') {
-				$threshold = '195932334';
-			}
-			elseif($fetch_general_data['ak'] > '25') {
-				$threshold = '783729336';
-			}
-			
-			$ap_progress = '' .(round($fetch_general_data['ap']/$threshold, 4)*100). '%';
-		}		
+		}	
 		
 		echo '
 		<tr class="' .$id['id']. '">
@@ -352,7 +330,7 @@ if($benchcheck['id'] != '') {
 			<td><a href="http://eu.battle.net/wow/en/tool/talent-calculator#' .$guild_table['talents']. '" title="WoW Talent Calculator">Calc</a></td>
 			<td><a href="?edit_legendaries=' .$id['id']. '">' .$legendaries['amount']. '</a></td>
 			<td>' .$fetch_general_data['ilvl_on']. ' (' .$fetch_general_data['ilvl_off']. ')</td>			
-			<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. ' (' .$ap_progress. ')</span></td>
+			<td><span title="' .number_format($fetch_general_data['ap']). '">' .$ap. '</span> ' .$incr. '</td>
 			<td>' .$artifact_level. ' (' .$artifact_knowledge. ')</td>
 			<td>' .$fetch_dungeon_data['mythic']. ' (' .$m_achievement. ')</td>
 			<td>' .$fetch_general_data['wq']. '</td>

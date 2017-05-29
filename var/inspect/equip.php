@@ -17,54 +17,190 @@ echo '<script defer src="http://wow.zamimg.com/widgets/power.js"></script>
 $class = mysqli_fetch_array(mysqli_query($stream, "SELECT `class` FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
 $class = $class['class'];
 
+$general_char_data = mysqli_fetch_array(mysqli_query($stream, "SELECT `spec` FROM `" .$table_name. "` WHERE `id` = '" .$_GET['inspect']. "'"));
+$spec = mysqli_fetch_array(mysqli_query($stream, "SELECT `spec` FROM `ovw_weapons` WHERE `id` = '" .$general_char_data['spec']. "'"));
+$spec = $spec['spec'];
+
 switch ($class) {
 	case 1:
 		$t19 = array(138351, 138354, 138357, 138360, 138363, 138374);
 		$t20 = array(147187, 147188, 147189, 147190, 147191, 147192);
+		switch ($spec) {
+			case 'Fury':
+				$trait_spec = '71';
+				break;
+			case 'Arms':
+				$trait_spec = '72';
+				break;
+			case 'Protection':
+				$trait_spec = '73';
+				break;
+		}
 		break;
 	case 2:
 		$t19 = array(138350, 138353, 138356, 138359, 138362, 138369);
 		$t20 = array(147157, 147158, 147159, 147160, 147161, 147162);
+		switch ($spec) {
+			case 'Holy':
+				$trait_spec = '65';
+				break;
+			case 'Protection':
+				$trait_spec = '66';
+				break;
+			case 'Retribution':
+				$trait_spec = '70';
+				break;
+		}
 		break;
 	case 3:
 		$t19 = array(138339, 138340, 138342, 138344, 138347, 138368);
 		$t20 = array(147139, 147140, 147141, 147142, 147143, 147144);
+		switch ($spec) {
+			case 'Beast Mastery':
+				$trait_spec = '253';
+				break;
+			case 'Marksmanship':
+				$trait_spec = '254';
+				break;
+			case 'Survival':
+				$trait_spec = '255';
+				break;
+		}
 		break;
 	case 4:
 		$t19 = array(138326, 138329, 138332, 138335, 138338, 138371);
 		$t20 = array(147169, 147170, 147171, 147172, 147173, 147174);
+		switch ($spec) {
+			case 'Assassination':
+				$trait_spec = '259';
+				break;
+			case 'Outlaw':
+				$trait_spec = '260';
+				break;
+			case 'Sublety':
+				$trait_spec = '261';
+				break;
+		}
 		break;
 	case 5:
 		$t19 = array(138310, 138313, 138316, 138319, 138322, 138370);
 		$t20 = array(147163, 147164, 147165, 147166, 147167, 147168);
+		switch ($spec) {
+			case 'Discipline':
+				$trait_spec = '256';
+				break;
+			case 'Holy':
+				$trait_spec = '257';
+				break;
+			case 'Shadow':
+				$trait_spec = '258';
+				break;
+		}
 		break;
 	case 6:
 		$t19 = array(138349, 138352, 138355, 138358, 138361, 138364);
 		$t20 = array(147121, 147122, 147123, 147124, 147125, 147126);
+		switch ($spec) {
+			case 'Blood':
+				$trait_spec = '250';
+				break;
+			case 'Frost':
+				$trait_spec = '251';
+				break;
+			case 'Unholy':
+				$trait_spec = '252';
+				break;
+		}
 		break;
 	case 7:
 		$t19 = array(138341, 138343, 138345, 138346, 138348, 138372);
 		$t20 = array(147175, 147176, 147177, 147178, 147179, 147180);
+		switch ($spec) {
+			case 'Elemental':
+				$trait_spec = '262';
+				break;
+			case 'Enhancement':
+				$trait_spec = '263';
+				break;
+			case 'Restoration':
+				$trait_spec = '264';
+				break;
+		}
 		break;
 	case 8:
 		$t19 = array(138309, 138312, 138315, 138318, 138321, 138365);
 		$t20 = array(147145, 147146, 147147, 147148, 147149, 147150);
+		switch ($spec) {
+			case 'Arcane':
+				$trait_spec = '62';
+				break;
+			case 'Fire':
+				$trait_spec = '63';
+				break;
+			case 'Frost':
+				$trait_spec = '64';
+				break;
+		}
 		break;
 	case 9:
-		$t19 = array(138311, 138314, 138317, 138320, 137323, 138373);
+		$t19 = array(138311, 138314, 138317, 138320, 138323, 138373);
 		$t20 = array(147181, 147182, 147183, 147184, 147185, 147186);
+		switch ($spec) {
+			case 'Affliction':
+				$trait_spec = '265';
+				break;
+			case 'Demonology':
+				$trait_spec = '266';
+				break;
+			case 'Destruction':
+				$trait_spec = '267';
+				break;
+		}
 		break;
 	case 10:
 		$t19 = array(138325, 138328, 138331, 138334, 138337, 138367);
 		$t20 = array(147151, 147152, 147153, 147154, 147155, 147156);
+		switch ($spec) {
+			case 'Brewmaster':
+				$trait_spec = '268';
+				break;
+			case 'Mistweaver':
+				$trait_spec = '270';
+				break;
+			case 'Windwalker':
+				$trait_spec = '269';
+				break;
+		}
 		break;
 	case 11:
 		$t19 = array(138324, 138327, 138330, 138333, 138336, 138366);
 		$t20 = array(147133, 147134, 147135, 147136, 147137, 147138);
+		switch ($spec) {
+			case 'Balance':
+				$trait_spec = '102';
+				break;
+			case 'Feral':
+				$trait_spec = '103';
+				break;
+			case 'Guardian':
+				$trait_spec = '104';
+				break;
+			case 'Restoration':
+				$trait_spec = '105';
+				break;
+		}
 		break;
 	case 12:
 		$t19 = array(138375, 138376, 138377, 138378, 138379, 138380);
 		$t20 = array(147127, 147128, 147129, 147130, 147131, 147132);
+		switch ($spec) {
+			case 'Havoc':
+				$trait_spec = '577';
+				break;
+			case 'Vengeance':
+				$trait_spec = '581';
+				break;
+		}
 }
 
 $t19_pcs = array();
@@ -120,12 +256,25 @@ foreach($slots as $id => $slot) {
 	if($item_info['itemlevel'] == '940') {
 		$rarity = '#ff8000';
 	}
+	else {
+		$rarity = 'black';
+	}
+	
+	if(in_array($item_info['itemid'], $t19)) {
+		$set_info = '<span style="color: pink;">[T19]</span>';
+	}
+	elseif(in_array($item_info['itemid'], $t20)) {
+		$set_info = '<span style="color: chartreuse;">[T20]</span>';
+	}
+	else {
+		$set_info = '';
+	}
 			
 	// ENCHANT CHECK
 	
 	echo '<tr>
 		<td>' .$slot. '</td>
-		<td><a href="http://wowhead.com/?item=' .$item_info['itemid']. '&bonus=' .$item_info['bonus']. '" rel="ench=' .$item_info['enchant']. '&gems=' .$item_info['gem']. '&pcs=' .$set. '">' .$item_info['itemid']. '</a></td>
+		<td><a href="http://wowhead.com/?item=' .$item_info['itemid']. '&bonus=' .$item_info['bonus']. '" rel="ench=' .$item_info['enchant']. '&gems=' .$item_info['gem']. '&pcs=' .$set. '">' .$item_info['itemid']. '</a> ' .$set_info. '</td>
 		<td><span style="color: ' .$rarity. ';">' .$item_info['itemlevel']. '</span></td>
 		<td>' .$enchant. ' ' .$gem. ' </td>
 	</tr>';
@@ -144,7 +293,7 @@ echo '</tbody>
 
 for($i = '1'; $i <= '3'; $i++) {
 	if($weapon['r' .$i. ''] != '0') {
-		echo '<td><a href="http://wowhead.com/?item=' .$weapon['r' .$i. '']. '" rel="bonus=' .$weapon['bonus_r' .$i. '']. '">' .$weapon['r' .$i. '']. '</a></td>';
+		echo '<td><a href="http://wowhead.com/?item=' .$weapon['r' .$i. '']. '&spec=' .$trait_spec. '" rel="bonus=' .$weapon['bonus_r' .$i. '']. '">' .$weapon['r' .$i. '']. '</a></td>';
 	}
 	elseif($weapon['r' .$i. ''] == '0') {
 		echo '<td>no relic in slot ' .$i. '</td>';

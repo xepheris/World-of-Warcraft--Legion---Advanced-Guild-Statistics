@@ -2,7 +2,7 @@
 
 if ( !isset( $_POST[ 'content' ] ) ) {
 	echo '<span style="font-size: 20px; color: orange;">Contact</span>
-	<p style="font-size: 16px; color: orange;">if you wish a reply, please manually write a email to <u>ags_feedback@gmail.com</u>.</p>
+	<p style="font-size: 16px; color: orange;">if you wish a reply, please manually write a email to <u>ags@gerritalex.de</u>.</p>
 	<form method="post" action="">
 	<input type="text" value="' . $_SESSION[ 'guild' ] . '" name="guild" hidden required />
 	<input type="text" value="' . $_SESSION[ 'region' ] . '" name="region" hidden required />
@@ -30,7 +30,7 @@ if ( !isset( $_POST[ 'content' ] ) ) {
 
 	$mail->CharSet = 'UTF-8';
 
-	$mail->setFrom( 'no-reply@artifactpower.info', 'Advanced Guild Statistics' );
+	$mail->setFrom( 'ags@gerritalex.de', 'Advanced Guild Statistics' );
 
 	if ( $_POST[ 'type' ] == '1' ) {
 		$subject = 'Bug Report';
@@ -43,7 +43,7 @@ if ( !isset( $_POST[ 'content' ] ) ) {
 
 	$mail->Subject = '' . $subject . '';
 
-	$mail->addAddress( 'xhs207ga@gmail.com' );
+	$mail->addAddress( 'ags@gerritalex.de' );
 
 	$mail->msgHTML( '<!doctype html>
 	<html>
@@ -92,7 +92,7 @@ if ( !isset( $_POST[ 'content' ] ) ) {
 		echo '<p style="color: coral;">Mail failed to send:<br />' . $mail->ErrorInfo . '<br />Please copy this information and send it manually to xhs207ga@gmail.com, thanks!</p>';
 	} else {
 		echo '<p style="color: yellowgreen;; text-align: center;">Your mail has been sent, thanks! Will be looking into it shortly.<br />
-		<a href="http://artifactpower.info/dev">Back to your roster</a></p>';
+		<a href="http://ags.gerritalex.de">Back to your roster</a></p>';
 	}
 }
 

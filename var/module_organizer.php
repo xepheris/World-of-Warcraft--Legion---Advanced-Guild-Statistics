@@ -208,3 +208,8 @@ else {
 }
 
 ?>
+
+
+<script type="text/javascript">
+	ga('send', 'pageview', location.pathname);
+</script>

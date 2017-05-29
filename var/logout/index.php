@@ -8,6 +8,6 @@ echo '<div style="width: 90%;  margin-left: 5%; height: auto; padding-bottom: 15
 	session_unset();
 	
 	echo '</div></div>';
-	echo '<meta http-equiv="refresh" content="0;url=http://artifactpower.info/dev/" />';
+	echo '<meta http-equiv="refresh" content="0;url=http://ags.gerritalex.de/" />';
 
 ?>
